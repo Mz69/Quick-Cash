@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".employer_landing">
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coordinatorLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/recom_worker"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:text="Account settings"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="442dp" />
+
+        <Button
+            android:id="@+id/past_workers"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:text="Past Employees"
+            app:layout_constraintStart_toStartOf="@+id/fav_worker"
+            tools:layout_editor_absoluteY="289dp" />
+
+        <Button
+            android:id="@+id/past_jobs_emper"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:text="Past Jobs"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="238dp" />
+
+        <EditText
+            android:id="@+id/editTextTextMultiLine"
+            android:layout_width="215dp"
+            android:layout_height="125dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:text="U"
+            tools:layout_editor_absoluteX="185dp"
+            tools:layout_editor_absoluteY="538dp" />
+
+        <Button
+            android:id="@+id/Recom_worker"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:text="Recommendations"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="391dp" />
+
+        <Button
+            android:id="@+id/fav_worker"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:text="Favorite Employees"
+            app:layout_constraintStart_toStartOf="@+id/Recom_worker"
+            tools:layout_editor_absoluteY="340dp" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#03A9F4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/gallery_thumb"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="124dp"
+            android:layout_height="38dp"
+            android:text="Employer"
+            tools:layout_editor_absoluteX="143dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="111dp"
+            android:layout_height="38dp"
+            android:text="logout"
+            tools:layout_editor_absoluteX="284dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <Button
+            android:id="@+id/post_job"
+            android:layout_width="322dp"
+            android:layout_height="89dp"
+            android:text="Post A Job"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="115dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="538dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="-6dp" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="Recom_worker,fav_worker,past_jobs_emper,past_workers"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="1dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="244dp"
+            android:layout_height="48dp"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="670dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
