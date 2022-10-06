@@ -16,12 +16,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/*
+/**
 This class is adapted from the FirebaseUI tutorial.
 Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
  */
+
 public class SignInActivity extends AppCompatActivity {
 
+    // After a successful sign-in, the MainActivity is launched.
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             (result) -> {
@@ -31,6 +33,8 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Note that the sign-in launcher disables Smart Lock.
+        // This is recommended, otherwise an error is thrown.
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
@@ -38,17 +42,4 @@ public class SignInActivity extends AppCompatActivity {
         signInLauncher.launch(signInIntent);
 
     }
-
-    /*public void signingOut(View view) {
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                        finish();
-                    }
-                });
-    }*/
-
 }

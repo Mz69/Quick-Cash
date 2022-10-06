@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
+        /** Sign-out implementation adapted from FirebaseUI Auth guide.
+            Source: Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
+         */
         if (view.getId() == R.id.signOutButton) {
             AuthUI.getInstance()
                     .signOut(this)
