@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/employeeEmployerlink"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".employee_landing">
+
+    <ImageView
+        android:id="@+id/logo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="a image of the user who has an employee role"
+        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintEnd_toStartOf="@+id/employee"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/account_setting2"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Account settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Recom_boss" />
+
+    <Button
+        android:id="@+id/past_boss"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:text="Past Employers"
+        app:layout_constraintBottom_toTopOf="@+id/fav_boss"
+        app:layout_constraintStart_toStartOf="@+id/fav_boss" />
+
+    <Button
+        android:id="@+id/past_jobs_employee"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:text="Past Jobs"
+        app:layout_constraintBottom_toTopOf="@+id/past_boss"
+        app:layout_constraintStart_toStartOf="@+id/past_boss" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="215dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="61dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="User reviews/info will dynamiclly update from database later"
+        app:layout_constraintStart_toEndOf="@+id/userPhotoemployee"
+        app:layout_constraintTop_toBottomOf="@+id/account_setting2" />
+
+    <Button
+        android:id="@+id/Recom_boss"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Recommendations"
+        app:layout_constraintBottom_toTopOf="@+id/account_setting2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/fav_boss"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:text="Favorite Employees"
+        app:layout_constraintBottom_toTopOf="@+id/Recom_boss"
+        app:layout_constraintStart_toStartOf="@+id/Recom_boss" />
+
+    <Button
+        android:id="@+id/employee"
+        android:layout_width="148dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="41dp"
+        android:text="Employee"
+        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintEnd_toStartOf="@+id/logout2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/logout2"
+        android:layout_width="116dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="46dp"
+        android:text="logout"
+        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintStart_toEndOf="@+id/employee" />
+
+    <Button
+        android:id="@+id/find_job"
+        android:layout_width="322dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="34dp"
+        android:text="Find A Job"
+        app:layout_constraintBottom_toTopOf="@+id/past_jobs_employee"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/userPhotoemployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="53dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_setting2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="-6dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="Recom_boss,fav_boss,past_jobs_employee,past_boss"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="1dp" />
+
+    <RatingBar
+        android:id="@+id/ratingEmployee"
+        android:layout_width="244dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoemployee" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

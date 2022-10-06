@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/recom_worker"
+            android:id="@+id/account_setting2"
             android:layout_width="387dp"
             android:layout_height="51dp"
             android:text="Account settings"
@@ -21,15 +21,15 @@
             tools:layout_editor_absoluteY="442dp" />
 
         <Button
-            android:id="@+id/past_workers"
+            android:id="@+id/past_boss"
             android:layout_width="387dp"
             android:layout_height="51dp"
             android:text="Past Employees"
-            app:layout_constraintStart_toStartOf="@+id/fav_worker"
+            app:layout_constraintStart_toStartOf="@+id/fav_boss"
             tools:layout_editor_absoluteY="289dp" />
 
         <Button
-            android:id="@+id/past_jobs_emper"
+            android:id="@+id/past_jobs_employee"
             android:layout_width="387dp"
             android:layout_height="51dp"
             android:text="Past Jobs"
@@ -48,7 +48,7 @@
             tools:layout_editor_absoluteY="538dp" />
 
         <Button
-            android:id="@+id/Recom_worker"
+            android:id="@+id/Recom_boss"
             android:layout_width="387dp"
             android:layout_height="51dp"
             android:text="Recommendations"
@@ -56,11 +56,11 @@
             tools:layout_editor_absoluteY="391dp" />
 
         <Button
-            android:id="@+id/fav_worker"
+            android:id="@+id/fav_boss"
             android:layout_width="387dp"
             android:layout_height="51dp"
             android:text="Favorite Employees"
-            app:layout_constraintStart_toStartOf="@+id/Recom_worker"
+            app:layout_constraintStart_toStartOf="@+id/Recom_boss"
             tools:layout_editor_absoluteY="340dp" />
 
         <ImageView
@@ -74,23 +74,23 @@
             tools:layout_editor_absoluteX="16dp" />
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="124dp"
-            android:layout_height="38dp"
+            android:id="@+id/employee"
+            android:layout_width="148dp"
+            android:layout_height="58dp"
             android:text="Employer"
-            tools:layout_editor_absoluteX="143dp"
+            tools:layout_editor_absoluteX="121dp"
             tools:layout_editor_absoluteY="16dp" />
 
         <Button
-            android:id="@+id/button4"
-            android:layout_width="111dp"
-            android:layout_height="38dp"
+            android:id="@+id/logout2"
+            android:layout_width="116dp"
+            android:layout_height="53dp"
             android:text="logout"
-            tools:layout_editor_absoluteX="284dp"
+            tools:layout_editor_absoluteX="279dp"
             tools:layout_editor_absoluteY="16dp" />
 
         <Button
-            android:id="@+id/post_job"
+            android:id="@+id/find_job"
             android:layout_width="322dp"
             android:layout_height="89dp"
             android:text="Post A Job"
@@ -98,7 +98,7 @@
             tools:layout_editor_absoluteY="115dp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/userPhotoemployee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="50dp"
@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="left"
-            app:constraint_referenced_ids="Recom_worker,fav_worker,past_jobs_emper,past_workers"
+            app:constraint_referenced_ids="Recom_boss,fav_boss,past_jobs_employee,past_boss"
             tools:layout_editor_absoluteX="8dp" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -128,7 +128,7 @@
             app:layout_constraintGuide_begin="1dp" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/ratingEmployee"
             android:layout_width="244dp"
             android:layout_height="48dp"
             tools:layout_editor_absoluteX="36dp"
