@@ -17,7 +17,7 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="a image of the user who has an employee role"
-        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintBottom_toTopOf="@+id/post_job"
         app:layout_constraintEnd_toStartOf="@+id/employee"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
@@ -87,7 +87,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="41dp"
         android:text="Employee"
-        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintBottom_toTopOf="@+id/post_job"
         app:layout_constraintEnd_toStartOf="@+id/logout2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,11 +99,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="46dp"
         android:text="logout"
-        app:layout_constraintBottom_toTopOf="@+id/find_job"
+        app:layout_constraintBottom_toTopOf="@+id/post_job"
         app:layout_constraintStart_toEndOf="@+id/employee" />
 
     <Button
-        android:id="@+id/find_job"
+        android:id="@+id/post_job"
         android:layout_width="322dp"
         android:layout_height="89dp"
         android:layout_marginStart="50dp"
@@ -154,6 +154,7 @@
         android:layout_marginLeft="36dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="13dp"
+        android:contentDescription="start rating out of 5 for employee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPhotoemployee" />
