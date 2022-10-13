@@ -76,7 +76,7 @@
         android:id="@+id/fav_boss"
         android:layout_width="387dp"
         android:layout_height="51dp"
-        android:text="Favorite Employees"
+        android:text="Favorite Employers"
         app:layout_constraintBottom_toTopOf="@+id/Recom_boss"
         app:layout_constraintStart_toStartOf="@+id/Recom_boss" />
 
