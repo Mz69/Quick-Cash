@@ -14,8 +14,10 @@
         android:theme="@style/Theme.QuickCashG18"
         tools:targetApi="31">
         <activity
-            android:name=".SignInActivity"
-            android:exported="false" />
+            android:name=".employer_landing"
+            android:exported="false"
+            android:label="@string/title_activity_employer_landing"
+            android:theme="@style/Theme.QuickCashG18.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

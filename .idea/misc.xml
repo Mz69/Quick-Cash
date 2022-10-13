@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23642578125000002" />
-        <entry key="app/src/main/res/layout/activity_main2.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.2053070068359375" />
-        <entry key="app/src/main/res/layout/toolbar.xml" value="0.23620758056640626" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/activity_employee_landing.xml" value="0.1" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/activity_employer_landing.xml" value="0.22" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/content_employer_landing.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/content_main.xml" value="0.2" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/employer_landing.xml" value="0.1871345029239766" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/fragment_first.xml" value="0.22" />
+        <entry key="..\:/Users/angel/git/CSCI3130/GroupProject/course-project-3130-g18/app/src/main/res/layout/fragment_first2.xml" value="0.14130434782608695" />
       </map>
     </option>
   </component>
@@ -15,5 +19,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.22" />
+      </ProjectState>
+    </option>
   </component>
 </project>
