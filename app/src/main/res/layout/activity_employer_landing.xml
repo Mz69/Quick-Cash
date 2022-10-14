@@ -9,6 +9,17 @@
 
 
         <Button
+            android:id="@+id/profileEmployer"
+            android:layout_width="387dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="48dp"
+            android:text="Profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Recom_boss" />
+
+        <Button
             android:id="@+id/account_setting2"
             android:layout_width="387dp"
             android:layout_height="51dp"
@@ -38,20 +49,6 @@
             android:text="Past Jobs"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_job" />
-
-        <EditText
-            android:id="@+id/editTextTextMultiLine"
-            android:layout_width="215dp"
-            android:layout_height="125dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="7dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:text="user information that will update dynamimly in future to include stats like number of jobs posted, how long they are user etc"
-            app:layout_constraintBottom_toTopOf="@+id/ratingEmployee"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/Recom_boss"
@@ -86,13 +83,13 @@
             app:srcCompat="@android:drawable/gallery_thumb" />
 
         <Button
-            android:id="@+id/employee"
+            android:id="@+id/role"
             android:layout_width="148dp"
             android:layout_height="58dp"
             android:layout_marginStart="37dp"
             android:layout_marginLeft="37dp"
             android:layout_marginTop="16dp"
-            android:text="Employer"
+            android:text="Role: Employer"
             app:layout_constraintStart_toEndOf="@+id/logo"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +101,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="16dp"
             android:text="logout"
-            app:layout_constraintStart_toEndOf="@+id/employee"
+            app:layout_constraintStart_toEndOf="@+id/role"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -117,17 +114,6 @@
             android:text="Post A Job"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
-
-        <ImageView
-            android:id="@+id/userPhotoemployee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="45dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_setting2"
-            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -150,16 +136,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="1dp" />
-
-        <RatingBar
-            android:id="@+id/ratingEmployee"
-            android:layout_width="244dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="4dp"
-            android:contentDescription="a star rating for the employer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userPhotoemployee" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
