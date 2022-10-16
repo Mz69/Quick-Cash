@@ -15,7 +15,8 @@
         android:layout_marginLeft="8dp"
         android:text="Profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Recom_boss" />
+        app:layout_constraintTop_toBottomOf="@+id/Recom_boss"
+        tools:ignore="DuplicateClickableBoundsCheck" />
 
     <ImageView
         android:id="@+id/logo2"
@@ -33,7 +34,7 @@
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <Button
-        android:id="@+id/account_setting2"
+        android:id="@+id/account_setting"
         android:layout_width="387dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
@@ -41,6 +42,16 @@
         android:text="Account settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Recom_boss" />
+
+    <Button
+        android:id="@+id/profileEmployee"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/employerProfile" />
 
     <Button
         android:id="@+id/past_boss"
@@ -65,7 +76,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="Recommendations"
-        app:layout_constraintBottom_toTopOf="@+id/account_setting2"
+        app:layout_constraintBottom_toTopOf="@+id/account_setting"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
