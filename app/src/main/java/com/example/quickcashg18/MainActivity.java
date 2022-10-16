@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Sign-in the user, if necessary.
         commenceSignIn();
-
+        startActivity(new Intent(this, employee_landing.class));
         setContentView(R.layout.activity_main);
 
         Button signOutButton = findViewById(R.id.signOutButton);
