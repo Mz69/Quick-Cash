@@ -102,12 +102,12 @@ public class SignInInstrumentedTest {
         intended(hasComponent(employee_landing.class.getName()));
     }
 
-    @Test
+    /*@Test
     public void signOut() throws InterruptedException {
         signInValidAccountCaller();
         onView(withId(R.id.logout2)).perform(click());
         Thread.sleep(500);
         //intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName()), times(2));
-    }
+    }*/
 
 }
