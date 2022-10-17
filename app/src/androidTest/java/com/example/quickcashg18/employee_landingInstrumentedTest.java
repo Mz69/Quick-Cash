@@ -60,9 +60,17 @@ public class employee_landingInstrumentedTest {
 
     @Test
     public void signOut() throws InterruptedException {
+        Thread.sleep(1000);
         onView(withId(R.id.logout2)).perform(click());
-        Thread.sleep(500);
+        Thread.sleep(1500);
         intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName()));
+    }
+
+    @Test
+    public void switchRoleToEmployer() throws InterruptedException {
+        onView(withId(R.id.role)).perform(click());
+        Thread.sleep(1000);
+        intended(hasComponent(employer_landing.class.getName()));
     }
 
 }
