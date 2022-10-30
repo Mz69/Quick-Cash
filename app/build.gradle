@@ -30,6 +30,7 @@ android {
         viewBinding true
     }
     buildToolsVersion '30.0.3'
+    namespace 'com.example.quickcashg18'
 }
 
 dependencies {
