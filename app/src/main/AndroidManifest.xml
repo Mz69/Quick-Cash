@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.quickcashg18">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -36,6 +35,9 @@
         </activity>
         <activity
             android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".employer_job_creation"
             android:exported="false" />
         <activity
             android:name=".employee_landing"
