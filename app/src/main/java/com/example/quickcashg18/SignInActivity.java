@@ -23,11 +23,11 @@ Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth
 
 public class SignInActivity extends AppCompatActivity {
 
-    // After a successful sign-in, the MainActivity is launched.
+    // After a successful sign-in, the employee landing page is launched.
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             (result) -> {
-                startActivity(new Intent(this, employee_landing.class));
+                startActivity(new Intent(this, MainActivity.class));
             });
 
     @Override

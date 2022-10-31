@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Sign-in the user, if necessary.
         commenceSignIn();
-        startActivity(new Intent(this, employee_landing.class));
+        startActivity(new Intent(this, MapsActivity.class));
+        finish();
         setContentView(R.layout.activity_main);
 
         Button signOutButton = findViewById(R.id.signOutButton);
