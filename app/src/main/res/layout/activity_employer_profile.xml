@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmployeeProfile">
+    tools:context=".EmployerProfile">
 
     <include
         android:id="@+id/include2"
@@ -14,68 +14,58 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="-1dp" />
 
-    <EditText
-        android:id="@+id/enterJobTitleEmployee"
+    <TextView
+        android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Job Title"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Employer Preferences"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employeeProfileTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
     <EditText
-        android:id="@+id/enterMinHourlyWageEmployee"
+        android:id="@+id/enterHourlyWageEmployer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:hint="Enter Min. Hourly Wage"
+        android:hint="Enter Hourly Wage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterJobTitleEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
     <EditText
-        android:id="@+id/enterMinHoursEmployee"
+        android:id="@+id/enterMinHoursEmployer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:hint="Enter Min. Hours"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHourlyWageEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/enterHourlyWageEmployer" />
 
     <EditText
-        android:id="@+id/enterMaxHoursEmployee"
+        android:id="@+id/enterMaxHoursEmployer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:hint="Enter Max. Hours"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHoursEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/enterMinHoursEmployer" />
 
     <Button
-        android:id="@+id/applyEmployeeProfileChanges"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="Apply Changes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployee" />
-
-    <TextView
-        android:id="@+id/employeeProfileTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Employee Preferences"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include2" />
+        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
