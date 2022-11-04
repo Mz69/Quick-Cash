@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostJob">
+
+    <LinearLayout
+        android:layout_width="276dp"
+        android:layout_height="455dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="106dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Job Details to add job"></TextView>
+
+        <EditText
+            android:id="@+id/JobName"
+            android:layout_width="212dp"
+            android:layout_height="60dp"
+            android:width="200dp"
+            android:hint="Job Name:"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="214dp"
+            android:layout_height="55dp"
+            android:width="200dp"
+            android:hint="Job location:"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/salary"
+            android:layout_width="214dp"
+            android:layout_height="61dp"
+            android:width="200dp"
+            android:hint="Job salary:"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/timeFrame"
+            android:layout_width="215dp"
+            android:layout_height="61dp"
+            android:width="200dp"
+            android:hint="Job Length:"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <EditText
+            android:id="@+id/urgency"
+            android:layout_width="215dp"
+            android:layout_height="59dp"
+            android:width="200dp"
+            android:hint="Job urgency:"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <Button
+            android:id="@+id/JobButton"
+            android:layout_width="121dp"
+            android:layout_height="59dp"
+            android:layout_marginLeft="35dp"
+            android:text="Add Job"
+            tools:ignore="MissingConstraints" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
