@@ -54,6 +54,11 @@ public class SignInInstrumentedTest {
     }
 
     @Test
+    public void failSignInInstrumented() {
+        assertEquals(1, 0);
+    }
+
+    @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
