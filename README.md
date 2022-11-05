@@ -85,6 +85,9 @@ You can also document commands to lint the code or run tests. These steps help t
 ## Authors and acknowledgment
 Show your appreciation to those who have contributed to the project.
 
+The PostJob class as well as the corresponding Post Job xml file had a lot of code reused from a previous group (Due to a change in group members). The code was written by me (Riley Chamberlain) so all the code is my work
+however, much of it was previously used for iteration 1 in my previous group
+ 
 ## License
 For open source projects, say how it is licensed.
 

@@ -18,6 +18,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
         private FirebaseDatabase firebaseJobDB;
         private DatabaseReference jobName;
+        Toast errorMsg = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +70,33 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
 
         // method checks if all the job details have been entered
         protected boolean isJobValid() {
-            if (!getJobName().isEmpty() && !getLocation().isEmpty() && !getTimeFrame().isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
-                return true;
+            String timeFrame = getTimeFrame();
+            // validating that all the fields have been entered
+            if (!getJobName().isEmpty() && !getLocation().isEmpty() && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
+                // validating if a proper urgency status was entered
+                if (!getUrgency().equals("Urgent") || !getUrgency().equals("Not Urgent")) {
+                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
+                    return false;
+                }
+                // checking if the time frame of the job contains proper unit of length (mins, hours, days or weeks)
+                if (timeFrame.contains("minutes") || timeFrame.contains("hours") || timeFrame.contains("days") || timeFrame.contains("weeks")) {
+                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter a valid length of time for the job", Toast.LENGTH_LONG);
+                    return false;
+                }
+
+                // checking to see if an integer was entered for the job salary
+                try {
+                    int salary;
+                    salary = Integer.parseInt(getSalary());
+                    return true;
+                } catch (NumberFormatException e) {
+                    errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
+                }
+                return false;
+
             }
             else {
+                errorMsg = Toast.makeText(getApplicationContext(), "Not all fields are filled out", Toast.LENGTH_LONG);
                 return false;
             }
         }
@@ -108,7 +132,6 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
             }
             else if(!isJobValid()) {
                 // displaying an error message job information is not fully entered
-                Toast errorMsg = Toast.makeText(getApplicationContext(), "Not all fields are filled out", Toast.LENGTH_LONG);
                 errorMsg.show();
             }
 
