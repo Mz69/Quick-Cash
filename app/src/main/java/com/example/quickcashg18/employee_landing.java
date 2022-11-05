@@ -12,6 +12,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class employee_landing extends AppCompatActivity {
 
@@ -23,6 +25,8 @@ public class employee_landing extends AppCompatActivity {
         signOutButton.setOnClickListener(this::onClicklogout);
         Button roleSwitch = findViewById(R.id.role);
         roleSwitch.setOnClickListener(this::onClickRole);
+        Button profile = findViewById(R.id.profileEmployee);
+        profile.setOnClickListener(this::onClickProfile);
     }
 
     private void commenceSignIn() {
@@ -51,5 +55,11 @@ public class employee_landing extends AppCompatActivity {
            Intent roleSwitch= (new Intent(employee_landing.this, employer_landing.class));
            startActivity(roleSwitch);
     }
+
+    public void onClickProfile(View view) {
+        Intent goProfile = new Intent(employee_landing.this, EmployeeProfile.class);
+        startActivity(goProfile);
+    }
+
 }
 

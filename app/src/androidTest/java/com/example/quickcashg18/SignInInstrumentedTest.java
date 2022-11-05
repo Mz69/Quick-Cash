@@ -74,7 +74,7 @@ public class SignInInstrumentedTest {
     @Test
     public void signUpInvalidPassword() throws InterruptedException {
         onView(withId(com.firebase.ui.auth.R.id.email))
-                .perform(typeText("helloworld@dal.ca"))
+                .perform(typeText("DONOTREGISTERTHISEMAIL@dal.ca"))
                 .perform(pressImeActionButton());
         Thread.sleep(1000);
         onView(withId(com.firebase.ui.auth.R.id.name))
@@ -85,20 +85,9 @@ public class SignInInstrumentedTest {
                 .perform(pressImeActionButton());
     }
 
-    // To avoid code copy paste in tests relying on sign-in
-    private void signInValidAccountCaller() throws InterruptedException {
-        onView(withId(com.firebase.ui.auth.R.id.email)).perform(typeText("zc615905@dal.ca"));
-        onView(withId(com.firebase.ui.auth.R.id.button_next)).perform(click());
-        Thread.sleep(1000);
-        onView(withId(com.firebase.ui.auth.R.id.password)).perform(typeText("password"));
-        Thread.sleep(500);
-        onView(withId(com.firebase.ui.auth.R.id.password)).perform(pressImeActionButton());
-        Thread.sleep(1000);
-    }
-
     @Test
     public void signInValidAccount() throws InterruptedException {
-        signInValidAccountCaller();
+        CommonTestFunctions.signInValidAccount();
         intended(hasComponent(employee_landing.class.getName()));
     }
 
