@@ -127,6 +127,7 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText("Oct31-Nov2"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
+        //this is here to account for time it take to lower keyboard in slow emulator
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
         onView(withText("Not all fields are filled out"))
