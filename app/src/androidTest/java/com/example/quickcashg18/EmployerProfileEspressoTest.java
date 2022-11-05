@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -48,23 +49,23 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.AuthProvider;
 
-public class EmployeeProfileEspressoTest {
+public class EmployerProfileEspressoTest {
 
     // Note that we start from SignInActivity for security reasons.
     @Rule
     public ActivityScenarioRule<SignInActivity> myRule = CommonTestFunctions.signInRule();
 
     /**
-     * Since all our espresso tests for EmployeeProfile
+     * Since all our espresso tests for EmployerProfile
      * will be simply reading and writing from the backend,
      * we assume the following database structure, with
      * the names of each leaf being replaced with the
      * values of the constants intended.
      * FirebaseConstants.USER
-     * |    EmployeeProfile.PREFERENCES
-     * |    |   EmployeeProfile.JOB_TITLE
-     * |    |   EmployeeProfile.MIN_HOURLY_WAGE
+     * |    EmployerProfile.PREFERENCES
+     * |    |   EmployerProfile.HOURLY_WAGE
      * |    |   EmployeeProfile.MIN_HOURS
+     * |    |   EmployeeProfile.MAX_HOURS
      *
      * We will test writing a valid set of preferences
      * and writing various invalid sets of preferences
@@ -74,12 +75,11 @@ public class EmployeeProfileEspressoTest {
      * so that the tests can run arbitrarily many times.
      */
 
-    private final String VALID_JOB_TITLE = "Software Engineer";
-    private final String VALID_MIN_HOURLY_WAGE = "13.50";
+    private final String VALID_HOURLY_WAGE = "13.50";
     private final String VALID_MIN_HOURS = "10";
     private final String VALID_MAX_HOURS = "40";
 
-    private final String INVALID_MIN_HOURLY_WAGE = "hi";
+    private final String INVALID_HOURLY_WAGE = "hi";
     private final String INVALID_MIN_HOURS = "43.";
     private final String INVALID_MAX_HOURS = "-1";
 
@@ -87,10 +87,9 @@ public class EmployeeProfileEspressoTest {
     private DatabaseReference userRef = firebaseDB.getReference()
             .child(FirebaseConstants.USER)
             .child(CommonTestFunctions.getTestUserID())
-            .child(EmployeeProfile.PREFERENCES);
+            .child(EmployerProfile.PREFERENCES);
 
-    private String actualJobTitle;
-    private String actualMinHourlyWage;
+    private String actualHourlyWage;
     private String actualMinHours;
     private String actualMaxHours;
 
@@ -102,64 +101,61 @@ public class EmployeeProfileEspressoTest {
     @AfterClass
     public static void tearDown() { System.gc(); }
 
-    private void enterValidJobTitle() {
-        onView(withId(R.id.enterJobTitleEmployee)).perform(typeText(VALID_JOB_TITLE));
+    private ViewInteraction getHourlyWageField() {
+        return onView(withId(R.id.enterHourlyWageEmployer));
     }
 
-    private void enterValidMinHourlyWage() {
-        onView(withId(R.id.enterMinHourlyWageEmployee)).perform(typeText(VALID_MIN_HOURLY_WAGE));
+    private ViewInteraction getMinHoursField() {
+        return onView(withId(R.id.enterMinHoursEmployer));
+    }
+
+    private ViewInteraction getMaxHoursField() {
+        return onView(withId(R.id.enterMaxHoursEmployer));
+    }
+
+    private ViewInteraction getApplyChangesButton() {
+        return onView(withId(R.id.applyEmployerProfileChanges));
+    }
+
+    private void enterValidHourlyWage() {
+        getHourlyWageField().perform(typeText(VALID_HOURLY_WAGE));
     }
 
     private void enterValidMinHours() {
-        onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(VALID_MIN_HOURS));
+        getMinHoursField().perform(typeText(VALID_MIN_HOURS));
     }
 
     private void enterValidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(VALID_MAX_HOURS));
+        getMaxHoursField().perform(typeText(VALID_MAX_HOURS));
     }
 
     private void enterInvalidMinHourlyWage() {
-        onView(withId(R.id.enterMinHourlyWageEmployee)).perform(typeText(INVALID_MIN_HOURLY_WAGE));
+        getHourlyWageField().perform(typeText(INVALID_HOURLY_WAGE));
     }
 
     private void enterInvalidMinHours() {
-        onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(INVALID_MIN_HOURS));
+        getMinHoursField().perform(typeText(INVALID_MIN_HOURS));
     }
 
     private void enterInvalidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(INVALID_MAX_HOURS));
+        getMaxHoursField().perform(typeText(INVALID_MAX_HOURS));
     }
 
     private void applyChanges() {
-        onView(withId(R.id.applyEmployeeProfileChanges)).perform(click());
+        getApplyChangesButton().perform(click());
     }
 
-    private void setupQueryTestUserJobTitle() {
+    private void setupQueryTestUserHourlyWage() {
         Query query = userRef.orderByKey();
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualJobTitle = snapshot.child(EmployeeProfile.JOB_TITLE).getValue(String.class);
+                actualHourlyWage = snapshot.child(EmployerProfile.HOURLY_WAGE).getValue(String.class);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployeeProfileEspressoTest.setupQueryTestUserJobTitle()", error.getMessage());
-            }
-        });
-    }
-
-    private void setupQueryTestUserMinHourlyWage() {
-        Query query = userRef.orderByKey();
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMinHourlyWage = snapshot.child(EmployeeProfile.MIN_HOURLY_WAGE).getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMinHourlyWage()", error.getMessage());
+                Log.e("EmployerProfileEspressoTest.setupQueryTestUserHourlyWage()", error.getMessage());
             }
         });
     }
@@ -169,12 +165,12 @@ public class EmployeeProfileEspressoTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMinHours = snapshot.child(EmployeeProfile.MIN_HOURS).getValue(String.class);
+                actualMinHours = snapshot.child(EmployerProfile.MIN_HOURS).getValue(String.class);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMinHours()", error.getMessage());
+                Log.e("EmployerProfileEspressoTest.setupQueryTestUserMinHours()", error.getMessage());
             }
         });
     }
@@ -184,25 +180,22 @@ public class EmployeeProfileEspressoTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMaxHours = snapshot.child(EmployeeProfile.MAX_HOURS).getValue(String.class);
+                actualMaxHours = snapshot.child(EmployerProfile.MAX_HOURS).getValue(String.class);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMaxHours()", error.getMessage());
+                Log.e("EmployerProfileEspressoTest.setupQueryTestUserMaxHours()", error.getMessage());
             }
         });
     }
 
     private void resetTestUserDB() {
-        System.out.println("Is this running??");
-        userRef.child(EmployeeProfile.JOB_TITLE)
+        userRef.child(EmployerProfile.HOURLY_WAGE)
                 .setValue("");
-        userRef.child(EmployeeProfile.MIN_HOURLY_WAGE)
+        userRef.child(EmployerProfile.MIN_HOURS)
                 .setValue("");
-        userRef.child(EmployeeProfile.MIN_HOURS)
-                .setValue("");
-        userRef.child(EmployeeProfile.MAX_HOURS)
+        userRef.child(EmployerProfile.MAX_HOURS)
                 .setValue("");
     }
 
@@ -211,7 +204,7 @@ public class EmployeeProfileEspressoTest {
     @Before
     public void resetState() throws InterruptedException {
         CommonTestFunctions.signInValidAccount();
-        CommonTestFunctions.navigateToEmployeePreferences();
+        CommonTestFunctions.navigateToEmployerPreferences();
         resetTestUserDB();
     }
 
@@ -227,24 +220,16 @@ public class EmployeeProfileEspressoTest {
     // Should check with prof/TA!
     @Before
     public void setupQueries() {
-        setupQueryTestUserJobTitle();
-        setupQueryTestUserMinHourlyWage();
+        setupQueryTestUserHourlyWage();
         setupQueryTestUserMinHours();
         setupQueryTestUserMaxHours();
     }
 
     @Test
-    public void validTitle() {
-        enterValidJobTitle();
-        applyChanges();
-        assertEquals(VALID_JOB_TITLE, actualJobTitle);
-    }
-
-    @Test
     public void validMinHourlyWage() {
-        enterValidMinHourlyWage();
+        enterValidHourlyWage();
         applyChanges();
-        assertEquals(VALID_MIN_HOURLY_WAGE, actualMinHourlyWage);
+        assertEquals(VALID_HOURLY_WAGE, actualHourlyWage);
     }
 
     @Test
@@ -267,8 +252,7 @@ public class EmployeeProfileEspressoTest {
     public void validEmptyFields() {
         applyChanges();
 
-        assertEquals("", actualJobTitle);
-        assertEquals("", actualMinHourlyWage);
+        assertEquals("", actualHourlyWage);
         assertEquals("", actualMinHours);
         assertEquals("", actualMaxHours);
     }
@@ -278,7 +262,7 @@ public class EmployeeProfileEspressoTest {
         enterInvalidMinHourlyWage();
         applyChanges();
 
-        assertEquals("", actualMinHourlyWage);
+        assertEquals("", actualHourlyWage);
     }
 
     @Test

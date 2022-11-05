@@ -49,6 +49,11 @@ public class CommonTestFunctions {
         onView(withId(R.id.profileEmployee)).perform(click());
     }
 
+    public static void navigateToEmployerPreferences() {
+        onView(withId(R.id.role)).perform(click());
+        onView(withId(R.id.profileEmployer)).perform(click());
+    }
+
     private static DatabaseReference getToUserDB() {
         FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance();
         DatabaseReference userRef = firebaseDB.getReference()
@@ -63,12 +68,6 @@ public class CommonTestFunctions {
 
     protected static String getTestUserID() {
         return getTestUserLogin().getUid();
-    }
-
-    public static void clearTestUserDB() {
-        DatabaseReference userRef = getToUserDB();
-        FirebaseUser testUser = getTestUserLogin();
-        userRef.child(testUser.getEmail()).removeValue();
     }
 
 }

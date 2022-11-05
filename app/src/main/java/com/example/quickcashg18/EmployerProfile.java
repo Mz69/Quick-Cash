@@ -1,7 +1,5 @@
 package com.example.quickcashg18;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class EmployerProfile extends ToolbarActivity {
