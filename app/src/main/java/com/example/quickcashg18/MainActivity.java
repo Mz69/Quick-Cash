@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Initialize Firebase state
+        FirebaseConstants.initDatabaseConstants();
+
         // Sign-in the user, if necessary.
         commenceSignIn();
         startActivity(new Intent(this, employee_landing.class));
