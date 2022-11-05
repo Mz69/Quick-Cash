@@ -11,10 +11,14 @@ public class Validation {
      * valid wage in dollars. The isNumeric method will ensure this.
      */
 
-    public static final String NUMERIC = "[0-9](\\.[0-9]{1,2}){0,1}";
+    public static final String NUMERIC = "[0-9]+(\\.[0-9]{1,2}){0,1}";
 
-    public static boolean isNumeric(EditText view) {
-        return view.getText().toString().matches(NUMERIC);
+    public static boolean isNumeric(String str) {
+        return str.matches(NUMERIC);
+    }
+
+    public static boolean isValidDoubleField(String str) {
+        return isNumeric(str) || str.equals("");
     }
 
 }
