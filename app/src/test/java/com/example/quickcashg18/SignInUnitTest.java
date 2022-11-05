@@ -24,9 +24,4 @@ public class SignInUnitTest {
         System.gc();
     }
 
-    @Test
-    public void failSignInUnit() {
-        fail();
-    }
-
 }
