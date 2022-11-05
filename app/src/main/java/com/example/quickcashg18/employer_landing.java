@@ -23,6 +23,8 @@ public class employer_landing extends AppCompatActivity {
         signOutButton.setOnClickListener(this::onClicklogout);
         Button roleSwitch = findViewById(R.id.role);
         roleSwitch.setOnClickListener(this::onClickRole);
+        Button jobPost = findViewById(R.id.post_job);
+        jobPost.setOnClickListener(this::onClickJobPost);
     }
 
     private void commenceSignIn() {
@@ -50,5 +52,9 @@ public class employer_landing extends AppCompatActivity {
     public void onClickRole(View view) {
         Intent roleSwitch= (new Intent(employer_landing.this, employee_landing.class));
         startActivity(roleSwitch);
+    }
+    public void onClickJobPost(View view) {
+        Intent jobPost = (new Intent(employer_landing.this, employer_job_creation.class));
+        startActivity(jobPost);
     }
 }
