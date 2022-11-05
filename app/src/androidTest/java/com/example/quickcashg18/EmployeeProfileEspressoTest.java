@@ -195,7 +195,6 @@ public class EmployeeProfileEspressoTest {
     }
 
     private void resetTestUserDB() {
-        System.out.println("Is this running??");
         userRef.child(EmployeeProfile.JOB_TITLE)
                 .setValue("");
         userRef.child(EmployeeProfile.MIN_HOURLY_WAGE)

@@ -129,7 +129,7 @@ public class EmployerProfileEspressoTest {
         getMaxHoursField().perform(typeText(VALID_MAX_HOURS));
     }
 
-    private void enterInvalidMinHourlyWage() {
+    private void enterInvalidHourlyWage() {
         getHourlyWageField().perform(typeText(INVALID_HOURLY_WAGE));
     }
 
@@ -226,7 +226,7 @@ public class EmployerProfileEspressoTest {
     }
 
     @Test
-    public void validMinHourlyWage() {
+    public void validHourlyWage() {
         enterValidHourlyWage();
         applyChanges();
         assertEquals(VALID_HOURLY_WAGE, actualHourlyWage);
@@ -258,8 +258,8 @@ public class EmployerProfileEspressoTest {
     }
 
     @Test
-    public void invalidMinHourlyWage() {
-        enterInvalidMinHourlyWage();
+    public void invalidHourlyWage() {
+        enterInvalidHourlyWage();
         applyChanges();
 
         assertEquals("", actualHourlyWage);
