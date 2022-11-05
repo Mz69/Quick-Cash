@@ -22,7 +22,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_Post_Job);
+            setContentView(R.layout.activity_post_job);
 
             // button for adding a job
             Button addJob = findViewById(R.id.JobButton);
