@@ -60,9 +60,6 @@
             android:name=".SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".employer_job_creation"
-            android:exported="false" />
-        <activity
             android:name=".employee_landing"
             android:exported="false" />
         <activity
