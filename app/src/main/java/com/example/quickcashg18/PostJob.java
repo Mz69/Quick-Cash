@@ -17,7 +17,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
         private FirebaseDatabase firebaseJobDB;
         private DatabaseReference jobName;
-        Toast errorMsg = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+        Toast errorMsg;  //=Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +101,8 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         }
 
         // methods to save job details in firebase database
-        protected void saveJobtoFirebase(String JobName, String Location, String TimeFrame, String Urgency, String Salary) {
             // setting the job name in listings
+        protected void saveJobtoFirebase(String JobName, String Location, String TimeFrame, String Urgency, String Salary) {
             jobName.child(JobName).push();
             // saving all the other job information
             jobName.child(JobName).child("Location").push().setValue(Location);
