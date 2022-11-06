@@ -87,11 +87,11 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
                     } catch (NumberFormatException e) {
                         errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
                     }
-
                     return false;
                 }
                 errorMsg = Toast.makeText(getApplicationContext(), "Please enter a valid length of time for the job", Toast.LENGTH_LONG);
                 return false;
+
 
             }
             else {
