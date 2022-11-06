@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Sign-in the user, if necessary.
         commenceSignIn();
-        startActivity(new Intent(this, employee_landing.class));
-        setContentView(R.layout.activity_main);
     }
 
     private void commenceSignIn() {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(this, SignInActivity.class));
+        } else {
+            startActivity(new Intent(this, employee_landing.class));
         }
     }
 
