@@ -22,13 +22,12 @@ public class EmployerProfile extends ToolbarActivity {
     private EditText enterMaxHours;
     private Button applyChanges;
 
-    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
 
     // If the employee's preferences are ever required,
     // these variables should be used to reference them
     // in case the fields are ever renamed in the database.
-    public static String PREFERENCES = "EmployerPreferences";
+    public static final String PREFERENCES = "EmployerPreferences";
     public static final String HOURLY_WAGE = "HourlyWage";
     public static final String MIN_HOURS = "MinHours";
     public static final String MAX_HOURS = "MaxHours";
@@ -51,7 +50,7 @@ public class EmployerProfile extends ToolbarActivity {
     }
 
     private void initDBRef() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);

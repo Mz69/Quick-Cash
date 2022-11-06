@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.ui.email.EmailActivity;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -85,6 +86,8 @@ public class SignInInstrumentedTest {
                 .perform(typeText("zzzz"));
         onView(withId(com.firebase.ui.auth.R.id.password))
                 .perform(pressImeActionButton());
+        await().atMost(Duration.ofSeconds(4)).untilAsserted(() ->
+                intended(hasComponent(EmailActivity.class.getName())));
     }
 
     @Test

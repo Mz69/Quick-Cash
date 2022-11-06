@@ -6,18 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,8 +39,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
-import com.example.quickcashg18.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,7 +71,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     // The location selected by the user.
-    private Location SELECTED_LOCATION;
+    private Location selectedLocation;
     /**
      * A tag used by the activity that called MapsActivity to access the
      * location returned by MapsActivity.
@@ -113,15 +108,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void init() {
         setTitle("Please select the desired location");
 
-        SELECTED_LOCATION = new Location("");
+        selectedLocation = new Location("");
 
         yesButton = findViewById(R.id.locationConfirmButtonYes);
         noButton = findViewById(R.id.locationConfirmButtonNo);
     }
 
     private void setSelectedLocation(double lat, double lon) {
-        SELECTED_LOCATION.setLatitude(lat);
-        SELECTED_LOCATION.setLongitude(lon);
+        selectedLocation.setLatitude(lat);
+        selectedLocation.setLongitude(lon);
     }
 
     private void initListeners() {
@@ -134,7 +129,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * returned via setResult to the activity that called MapsActivity for processing.
      */
     public void onClickYes(View view) {
-        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, SELECTED_LOCATION);
+        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, selectedLocation);
         setResult(Activity.RESULT_OK, locationResult);
         finish();
     }

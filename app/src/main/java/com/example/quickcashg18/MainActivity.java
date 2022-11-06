@@ -20,9 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
     private FirebaseDatabase firebaseDB;
 
     @Override
@@ -49,16 +46,13 @@ public class MainActivity extends AppCompatActivity {
             // Get the user's current location and save it to the database.
             // Then, head to the next activity.
             ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
-                    new ActivityResultCallback<Location>() {
-                        @Override
-                        public void onActivityResult(Location result) {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            firebaseDB.getReference(FirebaseConstants.USER)
-                                    .child(user.getUid())
-                                    .child(MapsActivity.CURRENT_LOCATION)
-                                    .setValue(result);
-                            startActivity(new Intent(getApplicationContext(), EmployeeLanding.class));
-                        }
+                    result -> {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        firebaseDB.getReference(FirebaseConstants.USER)
+                                .child(user.getUid())
+                                .child(MapsActivity.CURRENT_LOCATION)
+                                .setValue(result);
+                        startActivity(new Intent(getApplicationContext(), EmployeeLanding.class));
                     });
             getLocation.launch(null);
         }

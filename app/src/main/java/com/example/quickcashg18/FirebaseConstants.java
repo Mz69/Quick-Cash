@@ -10,6 +10,11 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class FirebaseConstants {
 
+    // Created according to guidelines given by SonarQube
+    private FirebaseConstants() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * The URL to the Firebase database.
      */

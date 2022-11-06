@@ -20,31 +20,24 @@ public class EmployeeLanding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_landing);
         Button signOutButton = findViewById(R.id.logout2);
-        signOutButton.setOnClickListener(this::onClicklogout);
+        signOutButton.setOnClickListener(this::onClickLogout);
         Button roleSwitch = findViewById(R.id.role);
         roleSwitch.setOnClickListener(this::onClickRole);
         Button profile = findViewById(R.id.profileEmployee);
         profile.setOnClickListener(this::onClickProfile);
     }
 
-    private void commenceSignIn() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            startActivity(new Intent(EmployeeLanding.this, SignInActivity.class));
-        }
-    }
-    public void onClicklogout(View view) {
+    public void onClickLogout(View view) {
         /** Sign-out implementation adapted from FirebaseUI Auth guide.
          Source: Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
          */
         if (view.getId() == R.id.logout2) {
             AuthUI.getInstance()
                     .signOut(this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // User is signed out. Start the sign-in process again.
-                            startActivity(new Intent(EmployeeLanding.this, SignInActivity.class));
-                            finish();
-                        }
+                    .addOnCompleteListener(task -> {
+                        // User is signed out. Start the sign-in process again.
+                        startActivity(new Intent(EmployeeLanding.this, SignInActivity.class));
+                        finish();
                     });
 
         }

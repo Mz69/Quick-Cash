@@ -27,15 +27,10 @@ public class EmployerLanding extends AppCompatActivity {
         Button profile = findViewById(R.id.profileEmployer);
         profile.setOnClickListener(this::onClickProfile);
 
-        Button PostJob = findViewById(R.id.post_job);
-        PostJob.setOnClickListener(this::onClickPostJob);
+        Button postJob = findViewById(R.id.post_job);
+        postJob.setOnClickListener(this::onClickPostJob);
     }
 
-    private void commenceSignIn() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            startActivity(new Intent(EmployerLanding.this, SignInActivity.class));
-        }
-    }
     public void onClicklogout(View view) {
         /** Sign-out implementation adapted from FirebaseUI Auth guide.
          Source: Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
@@ -43,12 +38,10 @@ public class EmployerLanding extends AppCompatActivity {
         if (view.getId() == R.id.logout2) {
             AuthUI.getInstance()
                     .signOut(this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // User is signed out. Start the sign-in process again.
-                            startActivity(new Intent(EmployerLanding.this, SignInActivity.class));
-                            finish();
-                        }
+                    .addOnCompleteListener(task -> {
+                        // User is signed out. Start the sign-in process again.
+                        startActivity(new Intent(EmployerLanding.this, SignInActivity.class));
+                        finish();
                     });
 
         }

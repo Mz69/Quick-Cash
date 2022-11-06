@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PostJob<FirebaseUser> extends AppCompatActivity {
+public class PostJob extends AppCompatActivity {
 
         private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
         private FirebaseDatabase firebaseJobDB;
         private DatabaseReference jobName;
-        Toast errorMsg;  //=Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+        Toast errorMsg;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
 
         // getters for the job details
         protected String getJobName() {
-            EditText jobName = findViewById(R.id.JobName);
-            return jobName.getText().toString().trim();
+            EditText getJobName = findViewById(R.id.JobName);
+            return getJobName.getText().toString().trim();
         }
 
         protected String getLocation() {
