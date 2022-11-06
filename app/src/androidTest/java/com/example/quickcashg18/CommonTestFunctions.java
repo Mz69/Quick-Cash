@@ -13,24 +13,32 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * This class consists of a set of common espresso
+ * test functions for our app.
+ * For example, we will often need to ensure that
+ * the user is signed in in order for our tests
+ * to even run.
+ */
 public class CommonTestFunctions {
-    /**
-     * This class consists of a set of common espresso
-     * test functions for our app.
-     * For example, we will often need to ensure that
-     * the user is signed in in order for our tests
-     * to even run.
-     */
 
     protected static final String VALID_EMAIL = "DONOTDELETETHISACCOUNT@dal.ca";
     protected static final String VALID_PASSWORD = "password";
 
-    // When the test begins, a user may already be signed in on the emulator.
-    // To localize our tests to a single account, we always initiate tests from login.
+    /**
+     * When a test begins, a developer may already be signed into an account on the
+     * emulator, which may have particular usage requirements.
+     *
+     * To localize particular tests to a single account (specified by VALID_EMAIL and VALID_PASSWORD),
+     * we must first start the login activity.
+     */
     public static ActivityScenarioRule<SignInActivity> signInRule() {
         return new ActivityScenarioRule<>(SignInActivity.class);
     }
 
+    /**
+     * Sign in with the test account specified by VALID_EMAIL and VALID_PASSWORD.
+     */
     public static void signInValidAccount() throws InterruptedException {
         try {
             onView(withId(com.firebase.ui.auth.R.id.email)).perform(typeText(VALID_EMAIL));
@@ -45,10 +53,16 @@ public class CommonTestFunctions {
         }
     }
 
+    /**
+     * Navigate to the employee preferences page.
+     */
     public static void navigateToEmployeePreferences() {
         onView(withId(R.id.profileEmployee)).perform(click());
     }
 
+    /**
+     * Navigate to the employer preferences page.
+     */
     public static void navigateToEmployerPreferences() {
         onView(withId(R.id.role)).perform(click());
         onView(withId(R.id.profileEmployer)).perform(click());
@@ -61,11 +75,17 @@ public class CommonTestFunctions {
         return userRef;
     }
 
+    /**
+     * Return the FirebaseUser instance of the test user.
+     */
     protected static FirebaseUser getTestUserLogin() {
         FirebaseUser testUser = FirebaseAuth.getInstance().getCurrentUser();
         return testUser;
     }
 
+    /**
+     * Return the unique user ID of the test user.
+     */
     protected static String getTestUserID() {
         return getTestUserLogin().getUid();
     }

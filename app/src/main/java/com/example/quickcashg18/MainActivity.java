@@ -26,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Handles the app flow on launch and on signout.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -54,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(this, SignInActivity.class));
         } else {
+            // Get the user's current location and save it to the database.
+            // Then, head to the next activity.
             ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
                     new ActivityResultCallback<Location>() {
-                        // When the MapsActivity passes back the user's current location,
-                        // save it into their database section.
-                        // Then, head to the next activity.
                         @Override
                         public void onActivityResult(Location result) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

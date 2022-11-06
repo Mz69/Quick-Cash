@@ -17,8 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
-This class is adapted from the FirebaseUI tutorial.
-Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
+ * This class is adapted from the FirebaseUI tutorial for login. It handles signing into the
+ * app via Firebase Authentication.
+ * Source: https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme/
  */
 
 public class SignInActivity extends AppCompatActivity {

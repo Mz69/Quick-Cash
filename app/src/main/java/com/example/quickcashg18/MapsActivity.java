@@ -49,6 +49,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MapsActivity opens a Google Maps interface which automatically detects the user's
+ * location and allows them to specify an alternative location. Whichever location the user
+ * selects using the MapsActivity interface, it is returned by MapsActivity to the previous
+ * activity for processing. For example, it is useful to get the user's current location when
+ * they are logging in, and this information may be stored to the user's account section
+ * in the database.
+ *
+ * MapsActivity is an extension of the Google Maps search functionality constructed in a
+ * class tutorial session.
+ */
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final float DEFAULT_ZOOM = 15f;
@@ -64,9 +75,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    // The location selected by the user.
     private Location SELECTED_LOCATION;
+    /**
+     * A tag used by the activity that called MapsActivity to access the
+     * location returned by MapsActivity.
+     */
     public static final String LOCATION_TAG_RESULT = "Location";
 
+    /**
+     * The database key corresponding to the user's current location.
+     */
     public static final String CURRENT_LOCATION = "CurrentLocation";
 
     private Button yesButton;
@@ -110,13 +129,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         noButton.setOnClickListener(this::onClickNo);
     }
 
+    /**
+     * When the user clicks "Yes" to confirm their selected location, it is
+     * returned via setResult to the activity that called MapsActivity for processing.
+     */
     public void onClickYes(View view) {
         Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, SELECTED_LOCATION);
         setResult(Activity.RESULT_OK, locationResult);
         finish();
     }
 
-    public void onClickNo(View view) {
+    private void onClickNo(View view) {
         makeConfirmationInvisible();
     }
 
@@ -212,22 +235,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-            //mMap.getUiSettings();
             // Invoke Search Location service
             searchInitialize();
         }
-
-        // Add a marker in Sydney and move the camera
-        /*LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        Log.d(TAG, "onMapReady: ends");*/
     }
 
-    private void checkUseLocation(Location location) {
-
-    }
-
+    /**
+     * Get the user's current location and store it internally in case it will
+     * be returned to the activity that called MapsActivity.
+     */
     public void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: starts");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -246,6 +262,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                         DEFAULT_ZOOM,"current location");
 
+                                // The user's current location has been determined.
+                                // Check if they will use this as their selected location.
                                 setSelectedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
                                 makeConfirmationVisible();
                             }else
@@ -313,6 +331,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),
                     DEFAULT_ZOOM,
                     address.getAddressLine(0));
+
+            // The user has selected a location on the map.
+            // Check if they wish to use this as their desired location.
             setSelectedLocation(address.getLatitude(), address.getLongitude());
             makeConfirmationVisible();
         }

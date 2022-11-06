@@ -11,6 +11,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * The EmployeeProfile activity is used by employees to
+ * specify their default job preferences for job search.
+ */
 public class EmployeeProfile extends ToolbarActivity {
 
     private EditText enterJobTitle;
@@ -64,18 +68,21 @@ public class EmployeeProfile extends ToolbarActivity {
         applyChanges.setOnClickListener(this::onClickApply);
     }
 
-    public boolean isValidMinHourlyWage() {
+    private boolean isValidMinHourlyWage() {
         return Validation.isValidDoubleField(enterMinHourlyWage.getText().toString());
     }
 
-    public boolean isValidMinHours() {
+    private boolean isValidMinHours() {
         return Validation.isValidDoubleField(enterMinHours.getText().toString());
     }
 
-    public boolean isValidMaxHours() {
+    private boolean isValidMaxHours() {
         return Validation.isValidDoubleField(enterMaxHours.getText().toString());
     }
 
+    /**
+     * Check that all preferences entered by the employee are in the valid formats.
+     */
     public boolean isValidProfile() {
         return isValidMinHourlyWage() && isValidMinHours()
                 && isValidMaxHours();
@@ -108,6 +115,10 @@ public class EmployeeProfile extends ToolbarActivity {
                 .setValue(getEnteredMaxHours());
     }
 
+    /**
+     * When the employee clicks the button to apply the changes to their
+     * preferences, they are saved to their account in the Firebase database.
+     */
     public void onClickApply(View view) {
         if (!isValidProfile()) {
             Toast toast = Toast.makeText(getApplicationContext(), "Please enter valid profile fields",
