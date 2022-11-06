@@ -5,5 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".job_search">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".job_search">
 
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search"
+            android:iconifiedByDefault="false"/>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="702dp"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
