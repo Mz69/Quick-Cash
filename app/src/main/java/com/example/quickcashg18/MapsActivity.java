@@ -19,8 +19,10 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    private static Location SELECTED_LOCATION;
+    private static boolean LOCATION_SELECTED;
+
+    private Button yesButton;
+    private Button noButton;
+
     // Widget
     private EditText mSearchText;
     @Override
@@ -70,13 +78,64 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        init();
+        initListeners();
+
         mSearchText = (EditText) findViewById(R.id.input_search);
         getLocationPermission();
         Log.d(TAG, "onCreate: Ends");
 
     }
 
+    private void init() {
+        setTitle("Please select the desired location");
 
+        SELECTED_LOCATION = new Location("");
+        LOCATION_SELECTED = false;
+
+        yesButton = findViewById(R.id.locationConfirmButtonYes);
+        noButton = findViewById(R.id.locationConfirmButtonNo);
+    }
+
+    public static Location getSelectedLocation() {
+        return SELECTED_LOCATION;
+    }
+
+    public static boolean isLocationSelected() {
+        return LOCATION_SELECTED;
+    }
+
+    private void setSelectedLocation(double lat, double lon) {
+        SELECTED_LOCATION.setLatitude(lat);
+        SELECTED_LOCATION.setLongitude(lon);
+
+    }
+
+    private void locationIsSelected() {
+        LOCATION_SELECTED = true;
+    }
+
+    private void initListeners() {
+        yesButton.setOnClickListener(this::onClickYes);
+        noButton.setOnClickListener(this::onClickNo);
+    }
+
+    public void onClickYes(View view) {
+        locationIsSelected();
+        finish();
+    }
+
+    public void onClickNo(View view) {
+        makeConfirmationInvisible();
+    }
+
+    private void makeConfirmationVisible() {
+        findViewById(R.id.mapConfirmationLayout).setVisibility(View.VISIBLE);
+    }
+
+    private void makeConfirmationInvisible() {
+        findViewById(R.id.mapConfirmationLayout).setVisibility(View.INVISIBLE);
+    }
 
     private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission : starts");
@@ -158,8 +217,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
             //mMap.getUiSettings();
             // Invoke Search Location service
             searchInitialize();
@@ -170,6 +231,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         Log.d(TAG, "onMapReady: ends");*/
+    }
+
+    private void checkUseLocation(Location location) {
+
     }
 
     public void getDeviceLocation(){
@@ -189,6 +254,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 Log.d(TAG, "getDeviceLocation: currentLocation Longitude: " + currentLocation.getLongitude());
                                 moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                         DEFAULT_ZOOM,"current location");
+
+                                setSelectedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                                makeConfirmationVisible();
                             }else
                                 Log.d(TAG, "getDeviceLocation: Current location is null");
                         }else {
@@ -254,6 +322,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),
                     DEFAULT_ZOOM,
                     address.getAddressLine(0));
+            setSelectedLocation(address.getLatitude(), address.getLongitude());
+            makeConfirmationVisible();
         }
         Log.d(TAG, "GeoLocate: ends");
     }

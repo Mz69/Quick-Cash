@@ -1,8 +1,13 @@
 package com.example.quickcashg18;
 
 import android.content.Intent;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(this, SignInActivity.class));
         } else {
+            //startActivity(new Intent(this, employee_landing.class));
+            ActivityResultLauncher<String> getLocation = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        Location location = uri.;
+                    }
+                })
+
+            startActivity(new Intent(this, MapsActivity.class));
             startActivity(new Intent(this, employee_landing.class));
         }
     }
