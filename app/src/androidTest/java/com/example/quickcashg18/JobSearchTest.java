@@ -1,5 +1,11 @@
 package com.example.quickcashg18;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
@@ -31,5 +37,10 @@ public class JobSearchTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.quickcashg18", appContext.getPackageName());
+    }
+    @Test
+    public void successfulSearch(){
+        onView(withId(R.id.searchView)).perform(click());
+        onView(withId(R.id.searchView)).perform(typeText("Walking Dog"));
     }
 }
