@@ -9,8 +9,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -62,8 +64,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
-    private static Location SELECTED_LOCATION;
-    private static boolean LOCATION_SELECTED;
+    private Location SELECTED_LOCATION;
+    public static final String LOCATION_TAG_RESULT = "Location";
+
+    public static final String CURRENT_LOCATION = "CurrentLocation";
 
     private Button yesButton;
     private Button noButton;
@@ -91,28 +95,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setTitle("Please select the desired location");
 
         SELECTED_LOCATION = new Location("");
-        LOCATION_SELECTED = false;
 
         yesButton = findViewById(R.id.locationConfirmButtonYes);
         noButton = findViewById(R.id.locationConfirmButtonNo);
     }
 
-    public static Location getSelectedLocation() {
-        return SELECTED_LOCATION;
-    }
-
-    public static boolean isLocationSelected() {
-        return LOCATION_SELECTED;
-    }
-
     private void setSelectedLocation(double lat, double lon) {
         SELECTED_LOCATION.setLatitude(lat);
         SELECTED_LOCATION.setLongitude(lon);
-
-    }
-
-    private void locationIsSelected() {
-        LOCATION_SELECTED = true;
     }
 
     private void initListeners() {
@@ -121,7 +111,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onClickYes(View view) {
-        locationIsSelected();
+        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, SELECTED_LOCATION);
+        setResult(Activity.RESULT_OK, locationResult);
         finish();
     }
 
