@@ -2,6 +2,7 @@ package com.example.quickcashg18;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
@@ -36,6 +37,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.security.AuthProvider;
+import java.time.Duration;
 
 @RunWith(AndroidJUnit4.class)
 public class SignInInstrumentedTest {
@@ -64,9 +66,9 @@ public class SignInInstrumentedTest {
     public void signInInvalidEmail() throws InterruptedException {
         onView(withId(com.firebase.ui.auth.R.id.email)).perform(typeText("abcd"));
         onView(withId(com.firebase.ui.auth.R.id.button_next)).perform(click());
-        Thread.sleep(1000);
         // Haven't found the ID for the invalid email message
-        intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName()));
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName())));
     }
 
     // A password is invalid if it is less than 8 characters
@@ -76,9 +78,9 @@ public class SignInInstrumentedTest {
         onView(withId(com.firebase.ui.auth.R.id.email))
                 .perform(typeText("DONOTREGISTERTHISEMAIL@dal.ca"))
                 .perform(pressImeActionButton());
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         onView(withId(com.firebase.ui.auth.R.id.name))
-                .perform(typeText("zzz"));
+                        .perform(typeText("zzz"));
         onView(withId(com.firebase.ui.auth.R.id.password))
                 .perform(typeText("zzzz"));
         onView(withId(com.firebase.ui.auth.R.id.password))
@@ -88,15 +90,8 @@ public class SignInInstrumentedTest {
     @Test
     public void signInValidAccount() throws InterruptedException {
         CommonTestFunctions.signInValidAccount();
-        intended(hasComponent(employee_landing.class.getName()));
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                intended(hasComponent(MapsActivity.class.getName())));
     }
-
-    /*@Test
-    public void signOut() throws InterruptedException {
-        signInValidAccountCaller();
-        onView(withId(R.id.logout2)).perform(click());
-        Thread.sleep(500);
-        //intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName()), times(2));
-    }*/
 
 }

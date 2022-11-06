@@ -13,27 +13,23 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class employer_landing extends AppCompatActivity {
+public class EmployeeLanding extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employer_landing);
+        setContentView(R.layout.activity_employee_landing);
         Button signOutButton = findViewById(R.id.logout2);
         signOutButton.setOnClickListener(this::onClicklogout);
         Button roleSwitch = findViewById(R.id.role);
         roleSwitch.setOnClickListener(this::onClickRole);
-
-        Button profile = findViewById(R.id.profileEmployer);
+        Button profile = findViewById(R.id.profileEmployee);
         profile.setOnClickListener(this::onClickProfile);
-
-        Button PostJob = findViewById(R.id.post_job);
-        PostJob.setOnClickListener(this::onClickPostJob);
     }
 
     private void commenceSignIn() {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            startActivity(new Intent(employer_landing.this, SignInActivity.class));
+            startActivity(new Intent(EmployeeLanding.this, SignInActivity.class));
         }
     }
     public void onClicklogout(View view) {
@@ -46,7 +42,7 @@ public class employer_landing extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
                             // User is signed out. Start the sign-in process again.
-                            startActivity(new Intent(employer_landing.this, SignInActivity.class));
+                            startActivity(new Intent(EmployeeLanding.this, SignInActivity.class));
                             finish();
                         }
                     });
@@ -54,18 +50,14 @@ public class employer_landing extends AppCompatActivity {
         }
     }
     public void onClickRole(View view) {
-        Intent roleSwitch= (new Intent(employer_landing.this, employee_landing.class));
-        startActivity(roleSwitch);
+           Intent roleSwitch= (new Intent(EmployeeLanding.this, EmployerLanding.class));
+           startActivity(roleSwitch);
     }
 
     public void onClickProfile(View view) {
-        Intent goProfile = new Intent(employer_landing.this, EmployerProfile.class);
+        Intent goProfile = new Intent(EmployeeLanding.this, EmployeeProfile.class);
         startActivity(goProfile);
     }
 
-    public void onClickPostJob(View view) {
-        Intent postJob= (new Intent(employer_landing.this, PostJob.class));
-        startActivity(postJob);
-    }
-
 }
+

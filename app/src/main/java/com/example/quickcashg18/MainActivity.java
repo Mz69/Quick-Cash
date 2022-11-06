@@ -2,28 +2,17 @@ package com.example.quickcashg18;
 
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
-import android.view.View;
-import android.widget.Button;
-
 import com.example.quickcashg18.databinding.ActivityMainBinding;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -68,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                                     .child(user.getUid())
                                     .child(MapsActivity.CURRENT_LOCATION)
                                     .setValue(result);
-                            startActivity(new Intent(getApplicationContext(), employee_landing.class));
+                            startActivity(new Intent(getApplicationContext(), EmployeeLanding.class));
                         }
                     });
             getLocation.launch(null);

@@ -60,10 +60,10 @@
             android:name=".SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".employee_landing"
+            android:name=".EmployeeLanding"
             android:exported="false" />
         <activity
-            android:name=".employer_landing"
+            android:name=".EmployerLanding"
             android:exported="false" />
         <activity
             android:name=".PostJob"
