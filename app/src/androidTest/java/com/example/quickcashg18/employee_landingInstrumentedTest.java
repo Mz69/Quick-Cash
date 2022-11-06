@@ -72,5 +72,11 @@ public class employee_landingInstrumentedTest {
         Thread.sleep(1000);
         intended(hasComponent(employer_landing.class.getName()));
     }
+    @Test
+    public void switchtoJobsearch() throws InterruptedException {
+        onView(withId(R.id.post_job)).perform(click());
+        Thread.sleep(1000);
+        intended(hasComponent(job_search.class.getName()));
+    }
 
 }
