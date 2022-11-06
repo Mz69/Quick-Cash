@@ -26,7 +26,7 @@ public class Job {
     }
 
     public  void  setDurationInHours(String durationInHours){
-        this.jobDescription =durationInHours;
+        this.durationInHours = durationInHours;
     }
 
     public void setHourlyPay(String hourlyPay) {
