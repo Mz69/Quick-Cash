@@ -25,6 +25,8 @@ public class EmployeeLanding extends AppCompatActivity {
         roleSwitch.setOnClickListener(this::onClickRole);
         Button profile = findViewById(R.id.profileEmployee);
         profile.setOnClickListener(this::onClickProfile);
+        Button findjob_button = findViewById(R.id.post_job);
+        findjob_button.setOnClickListener(this::onClickFindJob);
     }
 
     public void onClickLogout(View view) {
@@ -50,6 +52,9 @@ public class EmployeeLanding extends AppCompatActivity {
     public void onClickProfile(View view) {
         Intent goProfile = new Intent(EmployeeLanding.this, EmployeeProfile.class);
         startActivity(goProfile);
+    }
+    public void onClickFindJob(View view){
+        startActivity(new Intent(employee_landing.this, job_search.class));
     }
 
 }
