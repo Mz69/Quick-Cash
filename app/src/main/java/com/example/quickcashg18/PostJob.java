@@ -17,7 +17,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
         private FirebaseDatabase firebaseJobDB;
         private DatabaseReference jobName;
-        Toast errorMsg = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+        Toast errorMsg;  //=Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {

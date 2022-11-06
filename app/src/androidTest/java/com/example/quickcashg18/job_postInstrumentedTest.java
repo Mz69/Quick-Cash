@@ -74,6 +74,7 @@ public class job_postInstrumentedTest {
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
+        //currently stuck on Urgency
         intended(hasComponent(employer_landing.class.getName()));
 
     }
@@ -88,6 +89,7 @@ public class job_postInstrumentedTest {
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
+
 
 
     }
