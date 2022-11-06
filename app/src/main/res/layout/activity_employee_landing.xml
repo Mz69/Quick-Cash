@@ -5,7 +5,7 @@
     android:id="@+id/employeeEmployerlink"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".employee_landing">
+    tools:context=".EmployeeLanding">
 
     <Button
         android:id="@+id/employerProfile"

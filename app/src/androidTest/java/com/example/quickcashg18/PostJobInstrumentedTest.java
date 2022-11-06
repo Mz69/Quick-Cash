@@ -4,13 +4,11 @@ import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
@@ -21,14 +19,15 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class job_postInstrumentedTest {
+import java.time.Duration;
+
+public class PostJobInstrumentedTest {
 
     @Rule
     public ActivityScenarioRule<PostJob> myRule = new ActivityScenarioRule<>(PostJob.class);
@@ -72,10 +71,10 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText("4 hours "));
         onView(withId(R.id.urgency)).perform(typeText("Not Urgent"));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
         //currently stuck on Urgency
-        intended(hasComponent(employer_landing.class.getName()));
+        intended(hasComponent(EmployerLanding.class.getName()));
 
     }
 
@@ -87,8 +86,8 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText("3 days"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
 
 
 
@@ -102,12 +101,8 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText("2 weeks"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
-
-
-
-
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
     }
     @Test
     public void checkIfSalaryIsEmpty() throws InterruptedException {
@@ -118,12 +113,8 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         //this is here to account for time it take to lower keyboard in slow emulator
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
-
-
-
-
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
     }
 
     @Test
@@ -134,11 +125,8 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
-
-
-
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
     }
     @Test
     public void checkIfSalaryIsANumber() throws InterruptedException {
@@ -148,8 +136,9 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
+
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
 
     }
 
@@ -161,8 +150,8 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.timeFrame)).perform(typeText("5 hours"));
         onView(withId(R.id.urgency)).perform(typeText(""));
         closeSoftKeyboard();
-        Thread.sleep(1000);
-        onView(withId(R.id.JobButton)).perform(click());
+        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
+                onView(withId(R.id.JobButton)).perform(click()));
 
 
 

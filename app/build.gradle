@@ -30,6 +30,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    testOptions {
+        animationsDisabled = true
+    }
     buildToolsVersion '30.0.3'
     namespace 'com.example.quickcashg18'
 }
@@ -59,4 +62,5 @@ dependencies {
     androidTestImplementation project(path:':app')
     //firebase dependencies
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    androidTestImplementation 'org.awaitility:awaitility:4.0.3'
 }

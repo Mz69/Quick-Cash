@@ -125,7 +125,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
                 Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
                 successMsg.show();
                 // switching back to the employer landing screen after the job is posted
-                Intent employerLandingIntent = new Intent(this, employer_landing.class);
+                Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
                 startActivity(employerLandingIntent);
             }
             else if(!isJobValid()) {
