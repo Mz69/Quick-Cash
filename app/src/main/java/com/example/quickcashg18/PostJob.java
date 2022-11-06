@@ -12,6 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Activity for creating and posting a job.
+ */
+/*
+This class was originally created by Riley when working with his old
+group before he got moved to this group. He has adapted it for this project.
+ */
 public class PostJob extends AppCompatActivity {
 
         private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
