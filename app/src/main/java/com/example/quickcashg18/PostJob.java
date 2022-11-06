@@ -73,9 +73,9 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
             // validating that all the fields have been entered
             if (!getJobName().isEmpty() && !getLocation().isEmpty() && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
                 // validating if a proper urgency status was entered
-                if (!getUrgency().equals("Urgent") || !getUrgency().equals("Not Urgent")) {
-                   errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
-                   return false;
+                if (!getUrgency().contains("Urgent") || !getUrgency().contains("Not Urgent")) {
+                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
+                    return false;
                 }
                 // checking if the time frame of the job contains proper unit of length (mins, hours, days or weeks)
                 if (timeFrame.contains("minutes") || timeFrame.contains("hours") || timeFrame.contains("days") || timeFrame.contains("weeks")) {
