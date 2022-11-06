@@ -27,7 +27,7 @@ public class SignInActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             (result) -> {
-                startActivity(new Intent(this, employee_landing.class));
+                startActivity(new Intent(this, MainActivity.class));
             });
 
     @Override
