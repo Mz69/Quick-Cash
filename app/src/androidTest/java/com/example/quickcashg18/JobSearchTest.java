@@ -38,9 +38,4 @@ public class JobSearchTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.quickcashg18", appContext.getPackageName());
     }
-    @Test
-    public void successfulSearch(){
-        onView(withId(R.id.searchView)).perform(click());
-        onView(withId(R.id.searchView)).perform(typeText("Walking Dog"));
-    }
 }
