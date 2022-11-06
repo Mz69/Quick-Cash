@@ -66,19 +66,15 @@ public class job_postInstrumentedTest {
 
     @Test
     public void postCompleteJob() throws InterruptedException {
-        onView(withId(R.id.JobName)).perform(typeText("baby sitting"));
+        onView(withId(R.id.JobName)).perform(typeText("baby-sitting"));
         onView(withId(R.id.location)).perform(typeText("2121 Shirley St."));
-        onView(withId(R.id.salary)).perform(typeText("12.09"));
-        onView(withId(R.id.timeFrame)).perform(typeText("Dec 31 2022 "));
-        onView(withId(R.id.urgency)).perform(typeText("Normal"));
+        onView(withId(R.id.salary)).perform(typeText("12"));
+        onView(withId(R.id.timeFrame)).perform(typeText("4 hours "));
+        onView(withId(R.id.urgency)).perform(typeText("Not Urgent"));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-
-        onView(withText("Job Created Successfully"))
-                .inRoot(withDecorView(Matchers.not(decorView)))
-               .check(matches(isDisplayed()));
-       // intended(hasComponent(employer_landing.class.getName()));
+        intended(hasComponent(employer_landing.class.getName()));
 
     }
 
@@ -86,17 +82,12 @@ public class job_postInstrumentedTest {
     public void checkIfJobNameIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText(""));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("100.00/hr"));
-        onView(withId(R.id.timeFrame)).perform(typeText("Oct31-Nov2"));
+        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.timeFrame)).perform(typeText("3 days"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-       // onView(withText("Not all fields are filled out"))
-      //          .inRoot(withDecorView(Matchers.not(decorView)))
-      //          .check(matches(isDisplayed()));
-
-
 
 
     }
@@ -105,15 +96,12 @@ public class job_postInstrumentedTest {
     public void checkIfLocationIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job3"));
         onView(withId(R.id.location)).perform(typeText(""));
-        onView(withId(R.id.salary)).perform(typeText("100.00/hr"));
-        onView(withId(R.id.timeFrame)).perform(typeText("Oct31-Nov2"));
+        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.timeFrame)).perform(typeText("2 weeks"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-    //    onView(withText("Not all fields are filled out"))
-      //          .inRoot(withDecorView(Matchers.not(decorView)))
-        //        .check(matches(isDisplayed()));
 
 
 
@@ -124,15 +112,12 @@ public class job_postInstrumentedTest {
         onView(withId(R.id.JobName)).perform(typeText("Job4"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
         onView(withId(R.id.salary)).perform(typeText(""));
-        onView(withId(R.id.timeFrame)).perform(typeText("Oct31-Nov2"));
+        onView(withId(R.id.timeFrame)).perform(typeText("2 hours"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         //this is here to account for time it take to lower keyboard in slow emulator
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-        onView(withText("Not all fields are filled out"))
-                .inRoot(withDecorView(Matchers.not(decorView)))
-                .check(matches(isDisplayed()));
 
 
 
@@ -143,33 +128,26 @@ public class job_postInstrumentedTest {
     public void checkIfTimeFrameIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job5"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("100.00/hr"));
+        onView(withId(R.id.salary)).perform(typeText("20"));
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-       // onView(withText("Not all fields are filled out"))
-          //      .inRoot(withDecorView(Matchers.not(decorView)))
-          //      .check(matches(isDisplayed()));
+
 
 
     }
     @Test
     public void checkIfSalaryIsANumber() throws InterruptedException {
-        onView(withId(R.id.JobName)).perform(typeText("Job5"));
-        onView(withId(R.id.location)).perform(typeText("Halifax"));
+        onView(withId(R.id.JobName)).perform(typeText("Job6"));
+        onView(withId(R.id.location)).perform(typeText("Dalhousie Library"));
         onView(withId(R.id.salary)).perform(typeText("abc"));
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-        // onView(withText("Not all fields are filled out"))
-        //      .inRoot(withDecorView(Matchers.not(decorView)))
-        //      .check(matches(isDisplayed()));
-
-
 
     }
 
@@ -177,15 +155,13 @@ public class job_postInstrumentedTest {
     public void checkIfUrgencyIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job6"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("100.00/hr"));
-        onView(withId(R.id.timeFrame)).perform(typeText("Oct31-Nov2"));
+        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.timeFrame)).perform(typeText("5 hours"));
         onView(withId(R.id.urgency)).perform(typeText(""));
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withId(R.id.JobButton)).perform(click());
-        //onView(withText("Not all fields are filled out"))
-        //        .inRoot(withDecorView(Matchers.not(decorView)))
-        //        .check(matches(isDisplayed()));
+
 
 
 

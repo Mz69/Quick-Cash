@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -75,23 +74,23 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
             if (!getJobName().isEmpty() && !getLocation().isEmpty() && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
                 // validating if a proper urgency status was entered
                 if (!getUrgency().equals("Urgent") || !getUrgency().equals("Not Urgent")) {
-                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
-                    return false;
+                   errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
+                   return false;
                 }
                 // checking if the time frame of the job contains proper unit of length (mins, hours, days or weeks)
                 if (timeFrame.contains("minutes") || timeFrame.contains("hours") || timeFrame.contains("days") || timeFrame.contains("weeks")) {
-                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter a valid length of time for the job", Toast.LENGTH_LONG);
+                    // checking to see if an integer was entered for the job salary
+                    try {
+                        int salary;
+                        salary = Integer.parseInt(getSalary());
+                        return true;
+                    } catch (NumberFormatException e) {
+                        errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
+                    }
+
                     return false;
                 }
-
-                // checking to see if an integer was entered for the job salary
-                try {
-                    int salary;
-                    salary = Integer.parseInt(getSalary());
-                    return true;
-                } catch (NumberFormatException e) {
-                    errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
-                }
+                errorMsg = Toast.makeText(getApplicationContext(), "Please enter a valid length of time for the job", Toast.LENGTH_LONG);
                 return false;
 
             }
@@ -102,15 +101,14 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
         }
 
         // methods to save job details in firebase database
-        protected Task<Void> saveJobtoFirebase(String JobName, String Location, String TimeFrame, String Urgency, String Salary) {
             // setting the job name in listings
+        protected void saveJobtoFirebase(String JobName, String Location, String TimeFrame, String Urgency, String Salary) {
             jobName.child(JobName).push();
             // saving all the other job information
             jobName.child(JobName).child("Location").push().setValue(Location);
             jobName.child(JobName).child("TimeFrame").push().setValue(TimeFrame);
             jobName.child(JobName).child("Urgency").push().setValue(Urgency);
             jobName.child(JobName).child("Salary").push().setValue(Salary);
-            return null;
         }
 
         public void onClickAddJob(View view) {
@@ -126,7 +124,7 @@ public class PostJob<FirebaseUser> extends AppCompatActivity {
                 saveJobtoFirebase(jobName,location,timeFrame,urgency,salary);
                 Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
                 successMsg.show();
-                // switching back to the employer landing screen after creating the job is posted
+                // switching back to the employer landing screen after the job is posted
                 Intent employerLandingIntent = new Intent(this, employer_landing.class);
                 startActivity(employerLandingIntent);
             }
