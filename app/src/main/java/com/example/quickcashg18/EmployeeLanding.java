@@ -54,7 +54,7 @@ public class EmployeeLanding extends AppCompatActivity {
         startActivity(goProfile);
     }
     public void onClickFindJob(View view){
-        startActivity(new Intent(employee_landing.this, job_search.class));
+        startActivity(new Intent(EmployeeLanding.this, job_search.class));
     }
 
 }
