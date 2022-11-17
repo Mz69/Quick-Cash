@@ -360,4 +360,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "hideSoftKeyboard: called");
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
+    /**
+     * Given a location, convert it into a human-readable address.
+     */
+    public static void reverseGeocode(Location l) {
+
+    }
 }

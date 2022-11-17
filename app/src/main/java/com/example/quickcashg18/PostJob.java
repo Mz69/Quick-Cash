@@ -1,12 +1,15 @@
 package com.example.quickcashg18;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -21,10 +24,12 @@ group before he got moved to this group. He has adapted it for this project.
  */
 public class PostJob extends AppCompatActivity {
 
-        private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
         private FirebaseDatabase firebaseJobDB;
-        private DatabaseReference jobName;
+        private DatabaseReference jobDBRef;
+        private Location selectedLocation;
         Toast errorMsg;
+        private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
+                this::setLocation);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,8 @@ public class PostJob extends AppCompatActivity {
             // button for adding a job
             Button addJob = findViewById(R.id.JobButton);
             addJob.setOnClickListener(this::onClickAddJob);
-
+            Button selectLocation = findViewById(R.id.jobOpenLocationSelect);
+            selectLocation.setOnClickListener(this::onClickGetLocation);
 
             //initialize the database instance and creating references for the job details
             initializeDatabase();
@@ -44,19 +50,22 @@ public class PostJob extends AppCompatActivity {
 
     protected void initializeDatabase() {
             //initialize the database and the references relating to the job details
-            firebaseJobDB = FirebaseDatabase.getInstance(FIREBASEDB_URL);
-            jobName = firebaseJobDB.getReference("Jobs");
+            firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+            jobDBRef = firebaseJobDB.getReference("Jobs");
         }
 
         // getters for the job details
-        protected String getJobName() {
+        protected String getJobDBRef() {
             EditText getJobName = findViewById(R.id.JobName);
             return getJobName.getText().toString().trim();
         }
 
-        protected String getLocation() {
-            EditText location = findViewById(R.id.location);
-            return location.getText().toString().trim();
+        protected Location getLocation() {
+            return selectedLocation;
+        }
+
+        protected void setLocation(Location l) {
+            selectedLocation = l;
         }
 
         protected String getTimeFrame() {
@@ -78,9 +87,9 @@ public class PostJob extends AppCompatActivity {
         protected boolean isJobValid() {
             String timeFrame = getTimeFrame();
             // validating that all the fields have been entered
-            if (!getJobName().isEmpty() && !getLocation().isEmpty() && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
+            if (!getJobDBRef().isEmpty() && !(getLocation() == null) && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
                 // validating if a proper urgency status was entered
-                if (!getUrgency().contains("Urgent") || !getUrgency().contains("Not Urgent")) {
+                if (!getUrgency().equalsIgnoreCase("Urgent") && !getUrgency().equalsIgnoreCase( "Not Urgent")) {
                     errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
                     return false;
                 }
@@ -109,18 +118,22 @@ public class PostJob extends AppCompatActivity {
 
         // methods to save job details in firebase database
             // setting the job name in listings
-        protected void saveJobtoFirebase(String JobName, String Location, String TimeFrame, String Urgency, String Salary) {
-            jobName.child(JobName).push();
+        protected void saveJobtoFirebase(String JobName, Location Location, String TimeFrame, String Urgency, String Salary) {
+            jobDBRef.child(JobName).push();
             // saving all the other job information
-            jobName.child(JobName).child("Location").push().setValue(Location);
-            jobName.child(JobName).child("TimeFrame").push().setValue(TimeFrame);
-            jobName.child(JobName).child("Urgency").push().setValue(Urgency);
-            jobName.child(JobName).child("Salary").push().setValue(Salary);
+            jobDBRef.child(JobName).child("Location").setValue(Location);
+            jobDBRef.child(JobName).child("TimeFrame").setValue(TimeFrame);
+            jobDBRef.child(JobName).child("Urgency").setValue(Urgency);
+            jobDBRef.child(JobName).child("Salary").setValue(Salary);
+        }
+
+        public void onClickGetLocation(View view) {
+            getLocation.launch(null);
         }
 
         public void onClickAddJob(View view) {
-            String jobName = getJobName();
-            String location = getLocation();
+            String jobName = getJobDBRef();
+            Location location = getLocation();
             String timeFrame = getTimeFrame();
             String urgency = getUrgency();
             String salary = getSalary();

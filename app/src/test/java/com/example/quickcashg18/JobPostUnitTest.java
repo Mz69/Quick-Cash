@@ -29,7 +29,7 @@ public class JobPostUnitTest {
     @BeforeClass
     public static void setup(){
         correctJob=Mockito.mock(PostJob.class);
-        Mockito.when(correctJob.getJobName()).thenReturn("knitting Instuctor");
+        Mockito.when(correctJob.getJobDBRef()).thenReturn("knitting Instuctor");
         Mockito.when(correctJob.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(correctJob.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(correctJob.getSalary()).thenReturn(String.valueOf(30));
@@ -37,77 +37,77 @@ public class JobPostUnitTest {
 
 
         missingJobName=Mockito.mock(PostJob.class);
-        Mockito.when(missingJobName.getJobName()).thenReturn("");
+        Mockito.when(missingJobName.getJobDBRef()).thenReturn("");
         Mockito.when(missingJobName.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(missingJobName.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(missingJobName.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(missingJobName.getUrgency()).thenReturn("Urgent");
 
         missingLocation=Mockito.mock(PostJob.class);
-        Mockito.when(missingLocation.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(missingLocation.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(missingLocation.getLocation()).thenReturn("");
         Mockito.when(missingLocation.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(missingLocation.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(missingLocation.getUrgency()).thenReturn("Urgent");
 
         correctJobMin= Mockito.mock(PostJob.class);
-        Mockito.when(correctJobMin.getJobName()).thenReturn("knitting Instuctor");
+        Mockito.when(correctJobMin.getJobDBRef()).thenReturn("knitting Instuctor");
         Mockito.when(correctJobMin.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(correctJobMin.getTimeFrame()).thenReturn("40 minutes");
         Mockito.when(correctJobMin.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(correctJobMin.getUrgency()).thenReturn("Urgent");
 
         correctJobDays = Mockito.mock(PostJob.class);
-        Mockito.when(correctJobDays.getJobName()).thenReturn("knitting Instuctor");
+        Mockito.when(correctJobDays.getJobDBRef()).thenReturn("knitting Instuctor");
         Mockito.when(correctJobDays.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(correctJobDays.getTimeFrame()).thenReturn("4 days");
         Mockito.when(correctJobDays.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(correctJobDays.getUrgency()).thenReturn("Urgent");
 
         missingTime=Mockito.mock(PostJob.class);
-        Mockito.when(missingTime.getJobName()).thenReturn("knitting Instuctor");
+        Mockito.when(missingTime.getJobDBRef()).thenReturn("knitting Instuctor");
         Mockito.when(missingTime.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(missingTime.getTimeFrame()).thenReturn("");
         Mockito.when(missingTime.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(missingTime.getUrgency()).thenReturn("Urgent");
 
         incorrectTime=Mockito.mock(PostJob.class);
-        Mockito.when(incorrectTime.getJobName()).thenReturn("knitting Instuctor");
+        Mockito.when(incorrectTime.getJobDBRef()).thenReturn("knitting Instuctor");
         Mockito.when(incorrectTime.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(incorrectTime.getTimeFrame()).thenReturn("abc");
         Mockito.when(incorrectTime.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(incorrectTime.getUrgency()).thenReturn("Urgent");
 
         missingSalary=Mockito.mock(PostJob.class);
-        Mockito.when(missingSalary.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(missingSalary.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(missingSalary.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(missingSalary.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(missingSalary.getSalary()).thenReturn("");
         Mockito.when(missingSalary.getUrgency()).thenReturn("Urgent");
 
         incorrectSalary=Mockito.mock(PostJob.class);
-        Mockito.when(incorrectSalary.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(incorrectSalary.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(incorrectSalary.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(incorrectSalary.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(incorrectSalary.getSalary()).thenReturn("abc");
         Mockito.when(incorrectSalary.getUrgency()).thenReturn("Urgent");
 
         missingUrgency=Mockito.mock(PostJob.class);
-        Mockito.when(missingUrgency.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(missingUrgency.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(missingUrgency.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(missingUrgency.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(missingUrgency.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(missingUrgency.getUrgency()).thenReturn("");
 
         incorrectUrgency=Mockito.mock(PostJob.class);
-        Mockito.when(incorrectUrgency.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(incorrectUrgency.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(incorrectUrgency.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(incorrectUrgency.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(incorrectUrgency.getSalary()).thenReturn(String.valueOf(30));
         Mockito.when(incorrectUrgency.getUrgency()).thenReturn("");
 
         correctNotUrgent=Mockito.mock(PostJob.class);
-        Mockito.when(correctNotUrgent.getJobName()).thenReturn("knitting Instructor");
+        Mockito.when(correctNotUrgent.getJobDBRef()).thenReturn("knitting Instructor");
         Mockito.when(correctNotUrgent.getLocation()).thenReturn("2121 Shirley St.");
         Mockito.when(correctNotUrgent.getTimeFrame()).thenReturn("4 hours");
         Mockito.when(correctNotUrgent.getSalary()).thenReturn(String.valueOf(30));
