@@ -21,6 +21,7 @@ public class EmployeeProfile extends ToolbarActivity {
     private EditText enterMinHourlyWage;
     private EditText enterMinHours;
     private EditText enterMaxHours;
+    private EditText enterLocation;
     private Button applyChanges;
 
     private FirebaseDatabase firebaseDB;
@@ -31,6 +32,7 @@ public class EmployeeProfile extends ToolbarActivity {
     // in case the fields are ever renamed in the database.
     public static String PREFERENCES = "EmployeePreferences";
     public static final String JOB_TITLE = "JobTitle";
+    public static final String JOB_LOCATION = "Location";
     public static final String MIN_HOURLY_WAGE = "MinHourlyWage";
     public static final String MIN_HOURS = "MinHours";
     public static final String MAX_HOURS = "MaxHours";
@@ -47,6 +49,7 @@ public class EmployeeProfile extends ToolbarActivity {
 
     private void init() {
         enterJobTitle = findViewById(R.id.enterJobTitleEmployee);
+        enterLocation = findViewById(R.id.enterJobLocation);
         enterMinHourlyWage = findViewById(R.id.enterMinHourlyWageEmployee);
         enterMinHours = findViewById(R.id.enterMinHoursEmployee);
         enterMaxHours = findViewById(R.id.enterMaxHoursEmployee);
@@ -59,6 +62,7 @@ public class EmployeeProfile extends ToolbarActivity {
         String userId = user.getUid();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
         userRef.child(JOB_TITLE).setValue("");
+        userRef.child(JOB_LOCATION).setValue("");
         userRef.child(MIN_HOURLY_WAGE).setValue("");
         userRef.child(MIN_HOURS).setValue("");
         userRef.child(MAX_HOURS).setValue("");
@@ -88,19 +92,21 @@ public class EmployeeProfile extends ToolbarActivity {
                 && isValidMaxHours();
     }
 
-    private String getEnteredJobTitle() {
+    public String getEnteredJobTitle() {
         return enterJobTitle.getText().toString();
     }
 
-    private String getEnteredMinHourlyWage() {
+    public String getEnteredJobLocation() { return enterLocation.getText().toString();}
+
+    public String getEnteredMinHourlyWage() {
         return enterMinHourlyWage.getText().toString();
     }
 
-    private String getEnteredMinHours() {
+    public String getEnteredMinHours() {
         return enterMinHours.getText().toString();
     }
 
-    private String getEnteredMaxHours() {
+    public String getEnteredMaxHours() {
         return enterMaxHours.getText().toString();
     }
 
@@ -113,6 +119,8 @@ public class EmployeeProfile extends ToolbarActivity {
                 .setValue(getEnteredMinHours());
         userRef.child(MAX_HOURS)
                 .setValue(getEnteredMaxHours());
+        userRef.child(JOB_LOCATION)
+                .setValue(getEnteredJobLocation());
     }
 
     /**
