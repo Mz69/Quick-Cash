@@ -39,7 +39,7 @@ public class Job {
 
 
     //getters for each variable
-    public String jobName() {
+    public String getJobName() {
         return jobName;
     }
 

@@ -15,8 +15,13 @@ public class Alert {
         // both save it in firebase and create a new job object which can be referenced
         // the preferences are currently saved in the employee class so call to there for comparing
 
+        // creating an employee landing object to store the notifications for the employee
+        EmployeeLanding employeeNotifs = new EmployeeLanding();
         // checking if the users preferences match with those of the posted job
-        matchesPreference(job);
+        if (matchesPreference(job)) {
+            // sending the user a notification about the job posting
+            employeeNotifs.addNotification("New job posting for you: " + job.getJobName());
+        }
 
     }
 
@@ -28,18 +33,16 @@ public class Alert {
 
         // if the hourly pay is at least the employees minimum preferred pay then proceed
         if (job.getHourlyPay() >= Integer.parseInt(employee.getEnteredMinHourlyWage()) ) {
-            System.out.println("test works");
             // checking if the location of the job matches with the location the employee prefers
             if (job.getLocation().equals(employee.getEnteredJobLocation())) {
-                System.out.println("test still working!");
                 // comparing if the job time frame is within the employees max and min hour preference
                 if (job.getDurationInHours() <= Integer.parseInt(employee.getEnteredMaxHours()) &&
                         job.getDurationInHours() >= Integer.parseInt(employee.getEnteredMinHours())) {
-                    System.out.println("final test passes");
                     return true;
                 }
             }
         }
+        // if any of the job's details aren't within the users preferences then return false
         return false;
     }
 

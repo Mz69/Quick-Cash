@@ -7,13 +7,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeLanding extends AppCompatActivity {
+
+    // initializing an arraylist to store the users notifications
+    private ArrayList<String> notifications = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,9 @@ public class EmployeeLanding extends AppCompatActivity {
         profile.setOnClickListener(this::onClickProfile);
         Button findjob_button = findViewById(R.id.post_job);
         findjob_button.setOnClickListener(this::onClickFindJob);
+        // button to view user notifications
+        Button notificationButton = findViewById(R.id.Notifications);
+        notificationButton.setOnClickListener(this::onClickNotifications);
     }
 
     public void onClickLogout(View view) {
@@ -44,6 +54,12 @@ public class EmployeeLanding extends AppCompatActivity {
 
         }
     }
+
+    public void addNotification(String message) {
+        // adding the sent message to the users list of notifications
+        notifications.add(message);
+    }
+
     public void onClickRole(View view) {
            Intent roleSwitch= (new Intent(EmployeeLanding.this, EmployerLanding.class));
            startActivity(roleSwitch);
@@ -55,6 +71,14 @@ public class EmployeeLanding extends AppCompatActivity {
     }
     public void onClickFindJob(View view){
         startActivity(new Intent(EmployeeLanding.this, job_search.class));
+    }
+
+    public void onClickNotifications(View view){
+        // displaying the users notifications
+        for (int i=0;i<notifications.size();i++) {
+            Toast.makeText(getApplicationContext(),notifications.get(i),Toast.LENGTH_LONG);
+        }
+
     }
 
 }
