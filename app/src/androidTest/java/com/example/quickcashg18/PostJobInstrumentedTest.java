@@ -67,7 +67,7 @@ public class PostJobInstrumentedTest {
     public void postCompleteJob() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("baby-sitting"));
         onView(withId(R.id.location)).perform(typeText("2121 Shirley St."));
-        onView(withId(R.id.salary)).perform(typeText("12"));
+        onView(withId(R.id.totalPay)).perform(typeText("12"));
         onView(withId(R.id.timeFrame)).perform(typeText("4 hours "));
         onView(withId(R.id.urgency)).perform(typeText("Not Urgent"));
         closeSoftKeyboard();
@@ -82,7 +82,7 @@ public class PostJobInstrumentedTest {
     public void checkIfJobNameIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText(""));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.totalPay)).perform(typeText("100"));
         onView(withId(R.id.timeFrame)).perform(typeText("3 days"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
@@ -97,7 +97,7 @@ public class PostJobInstrumentedTest {
     public void checkIfLocationIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job3"));
         onView(withId(R.id.location)).perform(typeText(""));
-        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.totalPay)).perform(typeText("100"));
         onView(withId(R.id.timeFrame)).perform(typeText("2 weeks"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
@@ -108,7 +108,7 @@ public class PostJobInstrumentedTest {
     public void checkIfSalaryIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job4"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText(""));
+        onView(withId(R.id.totalPay)).perform(typeText(""));
         onView(withId(R.id.timeFrame)).perform(typeText("2 hours"));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
@@ -121,7 +121,7 @@ public class PostJobInstrumentedTest {
     public void checkIfTimeFrameIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job5"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("20"));
+        onView(withId(R.id.totalPay)).perform(typeText("20"));
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
@@ -132,7 +132,7 @@ public class PostJobInstrumentedTest {
     public void checkIfSalaryIsANumber() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job6"));
         onView(withId(R.id.location)).perform(typeText("Dalhousie Library"));
-        onView(withId(R.id.salary)).perform(typeText("abc"));
+        onView(withId(R.id.totalPay)).perform(typeText("abc"));
         onView(withId(R.id.timeFrame)).perform(typeText(""));
         onView(withId(R.id.urgency)).perform(typeText("Urgent"));
         closeSoftKeyboard();
@@ -146,7 +146,7 @@ public class PostJobInstrumentedTest {
     public void checkIfUrgencyIsEmpty() throws InterruptedException {
         onView(withId(R.id.JobName)).perform(typeText("Job6"));
         onView(withId(R.id.location)).perform(typeText("Halifax"));
-        onView(withId(R.id.salary)).perform(typeText("100"));
+        onView(withId(R.id.totalPay)).perform(typeText("100"));
         onView(withId(R.id.timeFrame)).perform(typeText("5 hours"));
         onView(withId(R.id.urgency)).perform(typeText(""));
         closeSoftKeyboard();

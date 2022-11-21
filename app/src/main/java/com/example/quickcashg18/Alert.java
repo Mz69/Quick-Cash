@@ -32,12 +32,12 @@ public class Alert {
         EmployeeProfile employee = new EmployeeProfile();
 
         // if the hourly pay is at least the employees minimum preferred pay then proceed
-        if (job.getHourlyPay() >= Integer.parseInt(employee.getEnteredMinHourlyWage()) ) {
+        if (job.getTotalPay() >= Integer.parseInt(employee.getEnteredMinHourlyWage()) ) {
             // checking if the location of the job matches with the location the employee prefers
             if (job.getLocation().equals(employee.getEnteredJobLocation())) {
                 // comparing if the job time frame is within the employees max and min hour preference
-                if (job.getDurationInHours() <= Integer.parseInt(employee.getEnteredMaxHours()) &&
-                        job.getDurationInHours() >= Integer.parseInt(employee.getEnteredMinHours())) {
+                if (job.getDurationMins() <= Integer.parseInt(employee.getEnteredMaxHours()) &&
+                        job.getDurationMins() >= Integer.parseInt(employee.getEnteredMinHours())) {
                     return true;
                 }
             }

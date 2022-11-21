@@ -23,145 +23,147 @@ group before he got moved to this group. He has adapted it for this project.
  */
 public class PostJob extends AppCompatActivity {
 
-        private FirebaseDatabase firebaseJobDB;
-        private DatabaseReference jobDBRef;
-        private Location location;
-        Toast errorMsg;
-        private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
-                this::setLocation);
+    private FirebaseDatabase firebaseJobDB;
+    private DatabaseReference jobDBRef;
+    private Location location;
+    Toast errorMsg;
+    private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
+            this::setLocation);
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_post_job);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_post_job);
 
-            // button for adding a job
-            Button addJob = findViewById(R.id.JobButton);
-            addJob.setOnClickListener(this::onClickAddJob);
-            Button selectLocation = findViewById(R.id.jobOpenLocationSelect);
-            selectLocation.setOnClickListener(this::onClickGetLocation);
+        // button for adding a job
+        Button addJob = findViewById(R.id.JobButton);
+        addJob.setOnClickListener(this::onClickAddJob);
+        Button selectLocation = findViewById(R.id.jobOpenLocationSelect);
+        selectLocation.setOnClickListener(this::onClickGetLocation);
 
-            //initialize the database instance and creating references for the job details
-            initializeDatabase();
-
-        }
-
-
-    protected void initializeDatabase() {
-            //initialize the database and the references relating to the job details
-            firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
-            jobDBRef = firebaseJobDB.getReference("Jobs");
-        }
-
-        // getters for the job details
-        protected String getJobDBRef() {
-            EditText getJobName = findViewById(R.id.JobName);
-            return getJobName.getText().toString().trim();
-        }
-
-        protected Location getLocation() {
-            return location;
-        }
-
-        protected void setLocation(Location l) {
-            location = l;
-        }
-
-        protected String getTimeFrame() {
-            EditText timeFrame = findViewById(R.id.timeFrame);
-            return timeFrame.getText().toString().trim();
-        }
-
-        protected String getUrgency() {
-            EditText urgency = findViewById(R.id.urgency);
-            return urgency.getText().toString().trim();
-        }
-
-        protected String getSalary() {
-            EditText salary = findViewById(R.id.salary);
-            return salary.getText().toString().trim();
-        }
-
-        protected String getDescription() {
-            EditText description = findViewById(R.id.jobDescription);
-            return description.getText().toString().trim();
-        }
-
-        // method checks if all the job details have been entered
-        protected boolean isJobValid() {
-            String timeFrame = getTimeFrame();
-            // validating that all the fields have been entered
-            if (!getJobDBRef().isEmpty() && getLocation() != null && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
-                // validating if a proper urgency status was entered
-                if (!getUrgency().equalsIgnoreCase("Urgent") && !getUrgency().equalsIgnoreCase( "Not Urgent")) {
-                    errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
-                    return false;
-                }
-                // checking if the time frame of the job contains proper unit of length (mins, hours, days or weeks)
-                if (timeFrame.contains("minutes") || timeFrame.contains("hours") || timeFrame.contains("days") || timeFrame.contains("weeks")) {
-                    // checking to see if an integer was entered for the job salary
-                    try {
-                        return true;
-                    } catch (NumberFormatException e) {
-                        errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
-                    }
-                    return false;
-                }
-                errorMsg = Toast.makeText(getApplicationContext(), "Please enter a valid length of time for the job", Toast.LENGTH_LONG);
-                return false;
-
-
-            }
-            else {
-                errorMsg = Toast.makeText(getApplicationContext(), "Not all fields are filled out", Toast.LENGTH_LONG);
-                return false;
-            }
-        }
-
-        // methods to save job details in firebase database
-            // setting the job name in listings
-        protected void saveJobtoFirebase(String JobName, Location Location, String TimeFrame, String Urgency, String Salary, String Description) {
-            jobDBRef.child(JobName).push();
-            // saving all the other job information
-            jobDBRef.child(JobName).child("Location").setValue(Location);
-            jobDBRef.child(JobName).child("TimeFrame").setValue(TimeFrame);
-            jobDBRef.child(JobName).child("Urgency").setValue(Urgency);
-            jobDBRef.child(JobName).child("Salary").setValue(Salary);
-            jobDBRef.child(JobName).child("Description").setValue(Description);
-        }
-
-        public void onClickGetLocation(View view) {
-            getLocation.launch(null);
-        }
-
-        public void onClickAddJob(View view) {
-            String jobName = getJobDBRef();
-            Location location = getLocation();
-            String timeFrame = getTimeFrame();
-            String urgency = getUrgency();
-            String salaryStr = getSalary();
-            int salary = Integer.parseInt(getSalary());
-            String description = getDescription();
-
-            // check to see if any of the job information wasn't provided
-            if (isJobValid()) {
-                // Saving the job details to the database
-                saveJobtoFirebase(jobName,location,timeFrame, String.valueOf(salary), urgency, description);
-                Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
-                successMsg.show();
-                // creating a job object to pass to the alert class for comparing job details
-                Job job = new Job(jobName,location, Integer.parseInt(timeFrame), salary, urgency);
-                Alert jobAlert = new Alert();
-                jobAlert.notifyEmployee(job);
-                // switching back to the employer landing screen after the job is posted
-                Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
-                startActivity(employerLandingIntent);
-            }
-            else if(!isJobValid()) {
-                // displaying an error message job information is not fully entered
-                errorMsg.show();
-            }
-
-        }
+        //initialize the database instance and creating references for the job details
+        initializeDatabase();
 
     }
+
+    protected void initializeDatabase() {
+        //initialize the database and the references relating to the job details
+        firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        jobDBRef = firebaseJobDB.getReference("Jobs");
+    }
+
+    // getters for the job details
+    protected String getJobName() {
+        EditText getJobName = findViewById(R.id.JobName);
+        return getJobName.getText().toString().trim();
+    }
+
+    protected Location getLocation() {
+        return location;
+    }
+
+    protected void setLocation(Location l) {
+            location = l;
+    }
+
+    protected String getDurationHours() {
+        String durationHours = findViewById(R.id.durationHours).toString().trim();
+        return durationHours;
+    }
+
+    protected String getDurationMins() {
+        String durationMins = findViewById(R.id.durationHours).toString().trim();
+        return durationMins;
+    }
+
+    protected String getUrgency() {
+        EditText urgency = findViewById(R.id.urgency);
+        return urgency.getText().toString().trim();
+    }
+
+    protected String getTotalPay() {
+        EditText totalPay = findViewById(R.id.totalPay);
+        return totalPay.getText().toString().trim();
+    }
+
+    protected String getDescription() {
+        EditText description = findViewById(R.id.jobDescription);
+        return description.getText().toString().trim();
+    }
+
+    public boolean isValidJobName() {
+        return !getJobName().isEmpty();
+    }
+
+    public boolean isValidTotalPay() {
+        return getTotalPay().matches("[0-9]+(\\.[0-9]{1,2}){0,1}");
+    }
+
+    public boolean isValidDurationHours() {
+        return getDurationHours().matches("[0-9]{0,}");
+    }
+
+    public boolean isValidDurationMins() {
+        return getDurationMins().matches("[0-9]{0,}");
+    }
+
+    public boolean isValidUrgency() {
+        return getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent");
+    }
+
+    public boolean isValidLocation() {
+        return getLocation() != null;
+    }
+
+    // method checks if all the job details have been entered
+    protected boolean isJobValid() {
+        // validating that all the fields have been entered correctly
+        return isValidJobName() && isValidTotalPay() && isValidDurationHours() && isValidDurationMins() && isValidUrgency() && isValidLocation();
+    }
+
+    // methods to save job details in firebase database
+    // setting the job name in listings
+    protected void saveJobtoFirebase(Job job) {
+        String jobName = job.getJobName();
+        jobDBRef.child(jobName).push();
+        // saving all the other job information
+        jobDBRef.child(jobName).child("Location").setValue(job.getLocation());
+        jobDBRef.child(jobName).child("Duration").setValue(job.getDuration());
+        jobDBRef.child(jobName).child("Urgency").setValue(job.getUrgency());
+        jobDBRef.child(jobName).child("Total Pay").setValue(job.getTotalPay());
+        jobDBRef.child(jobName).child("Description").setValue(job.getDescription());
+    }
+
+    public void onClickGetLocation(View view) {
+        getLocation.launch(null);
+    }
+
+    public void onClickAddJob(View view) {
+        if (!isJobValid()) {
+            errorMsg = Toast.makeText(this, "Error: Incorrect job fields entered!", Toast.LENGTH_LONG);
+            return;
+        }
+
+        String jobName = getJobName();
+        Location location = getLocation();
+        int durationHours = Integer.parseInt(getDurationHours());
+        int durationMins = Integer.parseInt(getDurationMins());
+        String urgency = getUrgency();
+        double totalPay = Double.parseDouble(getTotalPay());
+        String description = getDescription();
+        Job job = new Job(jobName, location, durationHours, durationMins, totalPay, urgency, description);
+
+        // Saving the job details to the database
+        saveJobtoFirebase(job);
+        Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
+        successMsg.show();
+
+        Alert jobAlert = new Alert();
+        jobAlert.notifyEmployee(job);
+        // switching back to the employer landing screen after the job is posted
+        Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
+        startActivity(employerLandingIntent);
+
+    }
+
+}

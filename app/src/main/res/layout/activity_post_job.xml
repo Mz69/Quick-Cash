@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".PostJob">
 
@@ -22,43 +22,60 @@
 
         <EditText
             android:id="@+id/JobName"
-            android:layout_width="212dp"
+            android:layout_width="215dp"
             android:layout_height="60dp"
             android:width="200dp"
-            android:hint="Job Name:"
+            android:hint="Job Name"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
         <EditText
-            android:id="@+id/salary"
+            android:id="@+id/totalPay"
             android:layout_width="214dp"
             android:layout_height="61dp"
             android:width="200dp"
-            android:hint="Job salary:"
+            android:hint="Job Total Pay ($)"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
-        <EditText
-            android:id="@+id/timeFrame"
+        <LinearLayout
             android:layout_width="215dp"
             android:layout_height="61dp"
-            android:width="200dp"
-            android:hint="Job Length:"
-            android:inputType="text"
-            android:textSize="16dp"></EditText>
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/durationHours"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:width="200dp"
+                android:hint="Hours"
+                android:inputType="text"
+                android:textSize="16dp"></EditText>
+
+            <EditText
+                android:id="@+id/durationMins"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:width="200dp"
+                android:hint="Minutes"
+                android:inputType="text"
+                android:textSize="16dp"></EditText>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/urgency"
             android:layout_width="215dp"
             android:layout_height="59dp"
             android:width="200dp"
-            android:hint="Job urgency:"
+            android:hint="Job Urgency"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
         <EditText
             android:id="@+id/jobDescription"
-            android:layout_width="match_parent"
+            android:layout_width="215dp"
             android:layout_height="59dp"
             android:width="200dp"
             android:hint="Description"
