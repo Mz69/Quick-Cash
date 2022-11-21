@@ -25,8 +25,6 @@ o
 Vapp/src/androidTest/java/com/example/quickcashg18/EmployerProfileInstrumentedTest.java,6/1/61ef74e2410557a5e5180ca82b42a696e7aa5caf
 n
 >app/src/test/java/com/example/quickcashg18/ValidationTest.java,7/a/7acb35fa8cf4797d12d41c5d65ac9a314164157d
-c
-3app/src/main/java/com/example/quickcashg18/Job.java,5/b/5bc4f80c1d25a0a8a06b38b5b736fad787f71e8e
 q
 Aapp/src/main/java/com/example/quickcashg18/FirebaseConstants.java,5/8/582b09ca5b0fb1e5632911f5fb7264544f3ec8fe
 j

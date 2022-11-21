@@ -139,13 +139,14 @@ public class PostJob extends AppCompatActivity {
             Location location = getLocation();
             String timeFrame = getTimeFrame();
             String urgency = getUrgency();
-            String salary = getSalary();
+            String salaryStr = getSalary();
+            int salary = Integer.parseInt(getSalary());
             String description = getDescription();
 
             // check to see if any of the job information wasn't provided
             if (isJobValid()) {
                 // Saving the job details to the database
-                saveJobtoFirebase(jobName,location,timeFrame, String.valueOf(salary), urgency);
+                saveJobtoFirebase(jobName,location,timeFrame, String.valueOf(salary), urgency, description);
                 Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
                 successMsg.show();
                 // creating a job object to pass to the alert class for comparing job details

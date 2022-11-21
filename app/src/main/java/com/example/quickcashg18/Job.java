@@ -1,14 +1,16 @@
 package com.example.quickcashg18;
 
+import android.location.Location;
+
 public class Job {
     private String jobName;
-    private String location;
+    private Location location;
     private int durationInHours;
     private int hourlyPay;
     private String urgency;
 
     //Constructor
-    public Job(String jobName,String location, int durationInHours,int hourlyPay,String urgency) {
+    public Job(String jobName,Location location, int durationInHours,int hourlyPay,String urgency) {
         this.jobName = jobName ;
         this.location= location;
         this.durationInHours=durationInHours;
@@ -21,7 +23,7 @@ public class Job {
         this.jobName = jobName ;
     }
 
-    public void setLocation(String location){
+    public void setLocation(Location location){
         this.location=location;
     }
 
@@ -43,7 +45,7 @@ public class Job {
         return jobName;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
