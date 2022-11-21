@@ -56,13 +56,14 @@
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
-        <TextView
-            android:id="@+id/jobLocationText"
-            android:layout_width="215dp"
+        <EditText
+            android:id="@+id/jobDescription"
+            android:layout_width="match_parent"
             android:layout_height="59dp"
-            android:gravity="center_vertical"
-            android:text="Please Select a Location"
-            android:textSize="16dp" />
+            android:width="200dp"
+            android:hint="Description"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
 
         <Button
             android:id="@+id/jobOpenLocationSelect"

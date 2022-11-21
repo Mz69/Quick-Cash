@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,7 +25,7 @@ public class PostJob extends AppCompatActivity {
 
         private FirebaseDatabase firebaseJobDB;
         private DatabaseReference jobDBRef;
-        private Location selectedLocation;
+        private Location location;
         Toast errorMsg;
         private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
                 this::setLocation);
@@ -61,11 +60,11 @@ public class PostJob extends AppCompatActivity {
         }
 
         protected Location getLocation() {
-            return selectedLocation;
+            return location;
         }
 
         protected void setLocation(Location l) {
-            selectedLocation = l;
+            location = l;
         }
 
         protected String getTimeFrame() {
@@ -83,11 +82,16 @@ public class PostJob extends AppCompatActivity {
             return salary.getText().toString().trim();
         }
 
+        protected String getDescription() {
+            EditText description = findViewById(R.id.jobDescription);
+            return description.getText().toString().trim();
+        }
+
         // method checks if all the job details have been entered
         protected boolean isJobValid() {
             String timeFrame = getTimeFrame();
             // validating that all the fields have been entered
-            if (!getJobDBRef().isEmpty() && !(getLocation() == null) && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
+            if (!getJobDBRef().isEmpty() && getLocation() != null && !timeFrame.isEmpty() && !getUrgency().isEmpty() &&  !getSalary().isEmpty()) {
                 // validating if a proper urgency status was entered
                 if (!getUrgency().equalsIgnoreCase("Urgent") && !getUrgency().equalsIgnoreCase( "Not Urgent")) {
                     errorMsg = Toast.makeText(getApplicationContext(), "Please enter Urgent or Not Urgent for job's urgency field", Toast.LENGTH_LONG);
@@ -97,8 +101,6 @@ public class PostJob extends AppCompatActivity {
                 if (timeFrame.contains("minutes") || timeFrame.contains("hours") || timeFrame.contains("days") || timeFrame.contains("weeks")) {
                     // checking to see if an integer was entered for the job salary
                     try {
-                        int salary;
-                        salary = Integer.parseInt(getSalary());
                         return true;
                     } catch (NumberFormatException e) {
                         errorMsg = Toast.makeText(getApplicationContext(), "Enter a valid salary number", Toast.LENGTH_LONG);
@@ -118,13 +120,14 @@ public class PostJob extends AppCompatActivity {
 
         // methods to save job details in firebase database
             // setting the job name in listings
-        protected void saveJobtoFirebase(String JobName, Location Location, String TimeFrame, String Urgency, String Salary) {
+        protected void saveJobtoFirebase(String JobName, Location Location, String TimeFrame, String Urgency, String Salary, String Description) {
             jobDBRef.child(JobName).push();
             // saving all the other job information
             jobDBRef.child(JobName).child("Location").setValue(Location);
             jobDBRef.child(JobName).child("TimeFrame").setValue(TimeFrame);
             jobDBRef.child(JobName).child("Urgency").setValue(Urgency);
             jobDBRef.child(JobName).child("Salary").setValue(Salary);
+            jobDBRef.child(JobName).child("Description").setValue(Description);
         }
 
         public void onClickGetLocation(View view) {
@@ -137,11 +140,12 @@ public class PostJob extends AppCompatActivity {
             String timeFrame = getTimeFrame();
             String urgency = getUrgency();
             String salary = getSalary();
+            String description = getDescription();
 
             // check to see if any of the job information wasn't provided
             if (isJobValid()) {
                 // Saving the job details to the database
-                saveJobtoFirebase(jobName,location,timeFrame,urgency,salary);
+                saveJobtoFirebase(jobName,location,timeFrame,urgency,salary, description);
                 Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
                 successMsg.show();
                 // switching back to the employer landing screen after the job is posted
