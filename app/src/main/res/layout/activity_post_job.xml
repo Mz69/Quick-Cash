@@ -30,15 +30,6 @@
             android:textSize="16dp"></EditText>
 
         <EditText
-            android:id="@+id/location"
-            android:layout_width="214dp"
-            android:layout_height="55dp"
-            android:width="200dp"
-            android:hint="Job location:"
-            android:inputType="text"
-            android:textSize="16dp"></EditText>
-
-        <EditText
             android:id="@+id/salary"
             android:layout_width="214dp"
             android:layout_height="61dp"
@@ -65,11 +56,28 @@
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
+        <EditText
+            android:id="@+id/jobDescription"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:width="200dp"
+            android:hint="Description"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
+
+        <Button
+            android:id="@+id/jobOpenLocationSelect"
+            android:layout_width="175dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:text="Select Location"
+            tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/JobButton"
-            android:layout_width="121dp"
-            android:layout_height="59dp"
-            android:layout_marginLeft="35dp"
+            android:layout_width="175dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
             android:text="Add Job"
             tools:ignore="MissingConstraints" />
 
