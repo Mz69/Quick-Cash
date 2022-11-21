@@ -145,9 +145,13 @@ public class PostJob extends AppCompatActivity {
             // check to see if any of the job information wasn't provided
             if (isJobValid()) {
                 // Saving the job details to the database
-                saveJobtoFirebase(jobName,location,timeFrame,urgency,salary, description);
+                saveJobtoFirebase(jobName,location,timeFrame, String.valueOf(salary), urgency);
                 Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
                 successMsg.show();
+                // creating a job object to pass to the alert class for comparing job details
+                Job job = new Job(jobName,location, Integer.parseInt(timeFrame), salary, urgency);
+                Alert jobAlert = new Alert();
+                jobAlert.notifyEmployee(job);
                 // switching back to the employer landing screen after the job is posted
                 Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
                 startActivity(employerLandingIntent);

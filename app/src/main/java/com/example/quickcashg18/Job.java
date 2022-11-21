@@ -1,35 +1,35 @@
 package com.example.quickcashg18;
 
 public class Job {
-    private String personName;
-    private String jobDescription;
-    private String durationInHours;
-    private String hourlyPay;
+    private String jobName;
+    private String location;
+    private int durationInHours;
+    private int hourlyPay;
     private String urgency;
 
     //Constructor
-    public Job(String personName,String jobDescription,String durationInHours,String hourlyPay,String urgency) {
-        this.personName = personName ;
-        this.jobDescription=jobDescription;
+    public Job(String jobName,String location, int durationInHours,int hourlyPay,String urgency) {
+        this.jobName = jobName ;
+        this.location= location;
         this.durationInHours=durationInHours;
         this.hourlyPay=hourlyPay;
         this.urgency=urgency;
     }
 
     //Setters for each variable
-    public void setPersonName(String personName) {
-        this.personName = personName ;
+    public void setJobName(String jobName) {
+        this.jobName = jobName ;
     }
 
-    public void setJobDescription(String jobDescription){
-        this.jobDescription=jobDescription;
+    public void setLocation(String location){
+        this.location=location;
     }
 
-    public  void  setDurationInHours(String durationInHours){
+    public  void  setDurationInHours(int durationInHours){
         this.durationInHours = durationInHours;
     }
 
-    public void setHourlyPay(String hourlyPay) {
+    public void setHourlyPay(int hourlyPay) {
         this.hourlyPay = hourlyPay;
     }
 
@@ -39,19 +39,19 @@ public class Job {
 
 
     //getters for each variable
-    public String getPersonName() {
-        return personName;
+    public String getJobName() {
+        return jobName;
     }
 
-    public String getJobDescription() {
-        return jobDescription;
+    public String getLocation() {
+        return location;
     }
 
-    public String getDurationInHours() {
+    public int getDurationInHours() {
         return durationInHours;
     }
 
-    public String getHourlyPay() {
+    public int getHourlyPay() {
         return hourlyPay;
     }
 
