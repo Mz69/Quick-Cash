@@ -65,6 +65,12 @@
             android:name=".PostJob"
             android:exported="false" />
         <activity
+            android:name=".payment_portal"
+            android:exported="false"/>
+        <activity
+            android:name=".PastJobs"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
