@@ -49,7 +49,7 @@ public class PostJob extends AppCompatActivity {
     protected void initializeDatabase() {
         //initialize the database and the references relating to the job details
         firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
-        jobDBRef = firebaseJobDB.getReference("Jobs");
+        jobDBRef = firebaseJobDB.getReference("Jobs").child("Incomplete");
     }
 
     // getters for the job details
@@ -67,28 +67,28 @@ public class PostJob extends AppCompatActivity {
     }
 
     protected String getDurationHours() {
-        String durationHours = findViewById(R.id.durationHours).toString().trim();
-        return durationHours;
+        EditText durationHours = findViewById(R.id.durationHours);
+        return durationHours.getText().toString();
     }
 
     protected String getDurationMins() {
-        String durationMins = findViewById(R.id.durationHours).toString().trim();
-        return durationMins;
+        EditText durationMins = findViewById(R.id.durationMins);
+        return durationMins.getText().toString();
     }
 
     protected String getUrgency() {
         EditText urgency = findViewById(R.id.urgency);
-        return urgency.getText().toString().trim();
+        return urgency.getText().toString();
     }
 
     protected String getTotalPay() {
         EditText totalPay = findViewById(R.id.totalPay);
-        return totalPay.getText().toString().trim();
+        return totalPay.getText().toString();
     }
 
     protected String getDescription() {
         EditText description = findViewById(R.id.jobDescription);
-        return description.getText().toString().trim();
+        return description.getText().toString();
     }
 
     public boolean isValidJobName() {
@@ -96,29 +96,39 @@ public class PostJob extends AppCompatActivity {
     }
 
     public boolean isValidTotalPay() {
-        return getTotalPay().matches("[0-9]+(\\.[0-9]{1,2}){0,1}");
+        return getTotalPay().matches("([1-9]\\d*(\\.\\d{1,2})?)|(\\d*(\\.\\d{1,2}))");
     }
 
     public boolean isValidDurationHours() {
-        return getDurationHours().matches("[0-9]{0,}");
+        return getDurationHours().matches("[1-9]\\d*");
     }
 
     public boolean isValidDurationMins() {
-        return getDurationMins().matches("[0-9]{0,}");
+        return getDurationMins().matches("[1-9]\\d*");
+    }
+
+    public boolean isValidDuration() {
+        return isValidDurationHours() || isValidDurationMins();
     }
 
     public boolean isValidUrgency() {
+        if (!(getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent"))) {
+            System.out.println("Failed urgency");
+        }
         return getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent");
     }
 
     public boolean isValidLocation() {
+        if (getLocation == null) {
+            System.out.println("Failed location");
+        }
         return getLocation() != null;
     }
 
     // method checks if all the job details have been entered
     protected boolean isJobValid() {
         // validating that all the fields have been entered correctly
-        return isValidJobName() && isValidTotalPay() && isValidDurationHours() && isValidDurationMins() && isValidUrgency() && isValidLocation();
+        return isValidJobName() && isValidTotalPay() && isValidDuration() && isValidUrgency() && isValidLocation();
     }
 
     // methods to save job details in firebase database
@@ -128,7 +138,7 @@ public class PostJob extends AppCompatActivity {
         jobDBRef.child(jobName).push();
         // saving all the other job information
         jobDBRef.child(jobName).child("Location").setValue(job.getLocation());
-        jobDBRef.child(jobName).child("Duration").setValue(job.getDuration());
+        jobDBRef.child(jobName).child("Duration in Mins").setValue(job.getDuration());
         jobDBRef.child(jobName).child("Urgency").setValue(job.getUrgency());
         jobDBRef.child(jobName).child("Total Pay").setValue(job.getTotalPay());
         jobDBRef.child(jobName).child("Description").setValue(job.getDescription());
@@ -141,16 +151,26 @@ public class PostJob extends AppCompatActivity {
     public void onClickAddJob(View view) {
         if (!isJobValid()) {
             errorMsg = Toast.makeText(this, "Error: Incorrect job fields entered!", Toast.LENGTH_LONG);
+            errorMsg.show();
             return;
         }
 
         String jobName = getJobName();
         Location location = getLocation();
-        int durationHours = Integer.parseInt(getDurationHours());
-        int durationMins = Integer.parseInt(getDurationMins());
+
+        int durationHours = 0;
+        int durationMins = 0;
+        if (isValidDurationHours()) {
+            durationHours = Integer.parseInt(getDurationHours());
+        }
+        if (isValidDurationMins()) {
+            durationMins = Integer.parseInt(getDurationMins());
+        }
+
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         String description = getDescription();
+
         Job job = new Job(jobName, location, durationHours, durationMins, totalPay, urgency, description);
 
         // Saving the job details to the database

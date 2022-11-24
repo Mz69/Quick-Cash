@@ -36,8 +36,8 @@ public class Alert {
             // checking if the location of the job matches with the location the employee prefers
             if (job.getLocation().equals(employee.getEnteredJobLocation())) {
                 // comparing if the job time frame is within the employees max and min hour preference
-                if (job.getDurationMins() <= Integer.parseInt(employee.getEnteredMaxHours()) &&
-                        job.getDurationMins() >= Integer.parseInt(employee.getEnteredMinHours())) {
+                if (job.getDuration() <= Integer.parseInt(employee.getEnteredMaxHours()) &&
+                        job.getDuration() >= Integer.parseInt(employee.getEnteredMinHours())) {
                     return true;
                 }
             }
