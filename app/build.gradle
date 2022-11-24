@@ -36,6 +36,9 @@ android {
     buildToolsVersion '30.0.3'
     namespace 'com.example.quickcashg18'
 }
+ext {
+    gsonVer = "2.1.0"
+}
 
 dependencies {
 
@@ -63,4 +66,8 @@ dependencies {
     //firebase dependencies
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     androidTestImplementation 'org.awaitility:awaitility:4.0.3'
+    //paypal sandbox dependencies
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
+    implementation "com.squareup.retrofit2:converter-gson:${gsonVer}"
+
 }
