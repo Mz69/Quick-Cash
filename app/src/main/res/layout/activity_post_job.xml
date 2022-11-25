@@ -7,8 +7,8 @@
     tools:context=".PostJob">
 
     <LinearLayout
-        android:layout_width="276dp"
-        android:layout_height="455dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
         tools:ignore="MissingConstraints"
@@ -20,8 +20,16 @@
             android:layout_height="wrap_content"
             android:text="Enter Job Details to add job"></TextView>
 
+        <Button
+            android:id="@+id/importEmployerPreferences"
+            android:layout_width="215dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="0dp"
+            android:text="Import Preferences"
+            tools:ignore="MissingConstraints" />
+
         <EditText
-            android:id="@+id/JobName"
+            android:id="@+id/jobTitle"
             android:layout_width="215dp"
             android:layout_height="60dp"
             android:width="200dp"

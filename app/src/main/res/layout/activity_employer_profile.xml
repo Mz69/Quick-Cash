@@ -66,6 +66,16 @@
         android:layout_marginTop="24dp"
         android:hint="Enter Description"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterUrgencyEmployer" />
+
+    <EditText
+        android:id="@+id/enterUrgencyEmployer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Urgency"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterHoursEmployer" />
 
     <Button

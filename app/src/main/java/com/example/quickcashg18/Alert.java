@@ -2,6 +2,7 @@ package com.example.quickcashg18;
 
 public class Alert {
 
+    /*
     public void notifyEmployer() {
         // send the alerts to the users profile then save them as strings in an array, the user can then click a button
         // which will allow them to view the contents of that array with all the notifications included
@@ -20,10 +21,11 @@ public class Alert {
         // checking if the users preferences match with those of the posted job
         if (matchesPreference(job)) {
             // sending the user a notification about the job posting
-            employeeNotifs.addNotification("New job posting for you: " + job.getJobName());
+            employeeNotifs.addNotification("New job posting for you: " + job.getJobTitle());
         }
 
     }
+
 
     // method checks if the user should receive a notification or not depending on their set preferences
     // compared to the details of the new job posting
@@ -50,6 +52,6 @@ public class Alert {
     public boolean acceptedJob() {
         return false;
     }
-
+*/
 
 }

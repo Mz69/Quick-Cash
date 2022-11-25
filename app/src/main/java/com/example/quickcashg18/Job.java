@@ -2,27 +2,32 @@ package com.example.quickcashg18;
 
 import android.location.Location;
 
+import com.firebase.ui.auth.data.model.User;
+
 public class Job {
-    private String jobName;
+    private String jobTitle;
     private Location location;
     private double duration;
     private double totalPay;
     private String urgency;
     private String description;
+    private String posterID;
 
     //Constructor
-    public Job(String jobName, Location location, double duration, double totalPay, String urgency, String description) {
-        this.jobName = jobName ;
+    public Job(String jobTitle, Location location, double duration, double totalPay,
+               String urgency, String description, String posterID) {
+        this.jobTitle = jobTitle ;
         this.location= location;
         this.duration = duration;
         this.totalPay = totalPay;
         this.urgency = urgency;
         this.description = description;
+        this.posterID = posterID;
     }
 
     //Setters for each variable
-    public void setJobName(String jobName) {
-        this.jobName = jobName ;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle ;
     }
 
     public void setLocation(Location location){
@@ -45,9 +50,11 @@ public class Job {
         this.description = description;
     }
 
+    public void setPosterID(String posterID) { this.posterID = posterID; }
+
     //getters for each variable
-    public String getJobName() {
-        return jobName;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
     public Location getLocation() {
@@ -69,5 +76,7 @@ public class Job {
     public String getUrgency() {
         return urgency;
     }
+
+    public String getPosterID() { return posterID; }
 }
 

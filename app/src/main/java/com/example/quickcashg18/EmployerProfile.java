@@ -23,6 +23,7 @@ public class EmployerProfile extends ToolbarActivity {
     private EditText enterJobTitle;
     private EditText enterTotalPay;
     private EditText enterHours;
+    private EditText enterUrgency;
     private EditText enterJobDescription;
     private Button selectPreferredLocation;
     private Button applyChanges;
@@ -35,11 +36,12 @@ public class EmployerProfile extends ToolbarActivity {
     // these variables should be used to reference them
     // in case the fields are ever renamed in the database.
     public static final String PREFERENCES = "EmployerPreferences";
-    public static final String JOB_NAME = "JobName";
+    public static final String JOB_TITLE = "JobTitle";
     public static final String TOTAL_PAY = "TotalPay";
-    public static final String HOURS = "Hours";
-    public static final String JOB_LOCATION = "Location";
-    public static final String JOB_DESCRIPTION = "JobDescription";
+    public static final String DURATION = "Duration In Hours";
+    public static final String LOCATION = "Location";
+    public static final String URGENCY = "Urgency";
+    public static final String DESCRIPTION = "Description";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class EmployerProfile extends ToolbarActivity {
         enterJobTitle = findViewById(R.id.enterJobTitleEmployer);
         enterTotalPay = findViewById(R.id.enterHourlyWageEmployer);
         enterHours = findViewById(R.id.enterHoursEmployer);
+        enterUrgency = findViewById(R.id.enterUrgencyEmployer);
         enterJobDescription = findViewById(R.id.enterJobDescriptionEmployer);
         selectPreferredLocation = findViewById(R.id.selectPreferredLocationEmployer);
         applyChanges = findViewById(R.id.applyEmployerProfileChanges);
@@ -81,11 +84,17 @@ public class EmployerProfile extends ToolbarActivity {
         return Validation.isValidDoubleField(enterHours.getText().toString());
     }
 
+    public boolean isValidUrgency() {
+        String urgency = getEnteredUrgency();
+        return urgency.equalsIgnoreCase("Urgent") ||
+                urgency.equalsIgnoreCase("Not Urgent");
+    }
+
     /**
      * Check that all preferences entered by the employer are in the valid formats.
      */
     public boolean isValidProfile() {
-        return isValidTotalPay() && isValidHours();
+        return isValidTotalPay() && isValidHours() && isValidUrgency();
     }
 
     private String getEnteredJobTitle() {
@@ -100,6 +109,8 @@ public class EmployerProfile extends ToolbarActivity {
         return enterHours.getText().toString().trim();
     }
 
+    private String getEnteredUrgency() { return enterUrgency.getText().toString(); }
+
     private String getEnteredJobDescription() {
         return enterJobDescription.getText().toString().trim();
     }
@@ -113,15 +124,17 @@ public class EmployerProfile extends ToolbarActivity {
     }
 
     private void saveProfile() {
-        userRef.child(JOB_NAME)
+        userRef.child(JOB_TITLE)
                 .setValue(getEnteredJobTitle());
         userRef.child(TOTAL_PAY)
                 .setValue(getEnteredHourlyWage());
-        userRef.child(HOURS)
+        userRef.child(DURATION)
                 .setValue(getEnteredHours());
-        userRef.child(JOB_LOCATION)
+        userRef.child(LOCATION)
                 .setValue(getEnteredJobLocation());
-        userRef.child(JOB_DESCRIPTION)
+        userRef.child(URGENCY)
+                .setValue(getEnteredUrgency());
+        userRef.child(DESCRIPTION)
                 .setValue(getEnteredJobDescription());
     }
 
