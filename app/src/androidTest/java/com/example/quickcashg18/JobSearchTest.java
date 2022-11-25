@@ -1,10 +1,6 @@
 package com.example.quickcashg18;
 
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +18,7 @@ import org.junit.Test;
 public class JobSearchTest {
 
     @Rule
-    public ActivityScenarioRule<job_search> myRule = new ActivityScenarioRule<>(job_search.class);
+    public ActivityScenarioRule<JobSearch> myRule = new ActivityScenarioRule<>(JobSearch.class);
 
     @BeforeClass
     public static void setup() { Intents.init(); }

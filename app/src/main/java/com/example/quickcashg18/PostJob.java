@@ -38,12 +38,8 @@ public class PostJob extends AppCompatActivity {
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setLocation);
 
-    public static final String LOCATION = "Location";
-    public static final String DURATION = "Duration in Hours";
-    public static final String URGENCY = "Urgency";
-    public static final String TOTAL_PAY = "Total Pay";
-    public static final String DESCRIPTION = "Description";
-    public static final String POSTER_ID = "Poster ID";
+    public static final String JOB_LIST = "Jobs";
+    public static final String INCOMPLETE_JOBS = "Incomplete";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,7 @@ public class PostJob extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseJobDB.getReference(FirebaseConstants.USER)
                 .child(user.getUid());
-        jobDBRef = firebaseJobDB.getReference("Jobs").child("Incomplete");
+        jobDBRef = firebaseJobDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
     }
 
     // getters for the job details
@@ -167,15 +163,7 @@ public class PostJob extends AppCompatActivity {
     // methods to save job details in firebase database
     // setting the job name in listings
     protected void saveJobtoFirebase(Job job) {
-        String jobTitle = job.getJobTitle();
-        jobDBRef.child(jobTitle).push();
-        // saving all the other job information
-        jobDBRef.child(jobTitle).child(LOCATION).setValue(job.getLocation());
-        jobDBRef.child(jobTitle).child(DURATION).setValue(job.getDuration());
-        jobDBRef.child(jobTitle).child(URGENCY).setValue(job.getUrgency());
-        jobDBRef.child(jobTitle).child(TOTAL_PAY).setValue(job.getTotalPay());
-        jobDBRef.child(jobTitle).child(DESCRIPTION).setValue(job.getDescription());
-        jobDBRef.child(jobTitle).child(POSTER_ID).setValue(job.getPosterID());
+        jobDBRef.child(job.getJobID()).setValue(job);
     }
 
     public void onClickImportPreferences(View view) {
