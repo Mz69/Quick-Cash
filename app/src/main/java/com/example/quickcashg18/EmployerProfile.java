@@ -27,7 +27,7 @@ public class EmployerProfile extends ToolbarActivity {
     private EditText enterJobDescription;
     private Button selectPreferredLocation;
     private Button applyChanges;
-    private Location location;
+    private MyLocation location;
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setLocation);
     private DatabaseReference userRef;
@@ -115,11 +115,11 @@ public class EmployerProfile extends ToolbarActivity {
         return enterJobDescription.getText().toString().trim();
     }
 
-    private Location getEnteredJobLocation() {
+    private MyLocation getEnteredJobLocation() {
         return location;
     }
 
-    private void setLocation(Location l) {
+    private void setLocation(MyLocation l) {
         this.location = l;
     }
 

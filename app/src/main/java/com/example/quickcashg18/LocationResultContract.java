@@ -9,7 +9,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class LocationResultContract extends ActivityResultContract<Void, Location> {
+public class LocationResultContract extends ActivityResultContract<Void, MyLocation> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Void unused) {
@@ -17,10 +17,10 @@ public class LocationResultContract extends ActivityResultContract<Void, Locatio
     }
 
     @Override
-    public Location parseResult(int resultCode, @Nullable Intent result) {
+    public MyLocation parseResult(int resultCode, @Nullable Intent result) {
         if (resultCode != Activity.RESULT_OK || result == null) {
             return null;
         }
-        return result.getParcelableExtra(MapsActivity.LOCATION_TAG_RESULT);
+        return new MyLocation((Location)result.getParcelableExtra(MapsActivity.LOCATION_TAG_RESULT));
     }
 }

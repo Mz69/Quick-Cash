@@ -6,14 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".PostJob">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="8dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
         android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/include"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="106dp">
+        tools:layout_editor_absoluteX="90dp">
 
         <TextView
             android:layout_width="wrap_content"

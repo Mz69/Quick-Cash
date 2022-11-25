@@ -28,12 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 This class was originally created by Riley when working with his old
 group before he got moved to this group. He has adapted it for this project.
  */
-public class PostJob extends AppCompatActivity {
+public class PostJob extends ToolbarActivity {
 
     private FirebaseDatabase firebaseJobDB;
     private DatabaseReference userRef;
     private DatabaseReference jobDBRef;
-    private Location location;
+    private MyLocation location;
     Toast errorMsg;
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setLocation);
@@ -73,11 +73,11 @@ public class PostJob extends AppCompatActivity {
         return jobTitle.getText().toString().trim();
     }
 
-    protected Location getLocation() {
+    protected MyLocation getLocation() {
         return location;
     }
 
-    protected void setLocation(Location l) {
+    protected void setLocation(MyLocation l) {
             location = l;
     }
 
@@ -198,7 +198,7 @@ public class PostJob extends AppCompatActivity {
         }
 
         String jobTitle = getJobTitle();
-        Location location = getLocation();
+        MyLocation location = getLocation();
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         double duration = Double.parseDouble(getDuration());

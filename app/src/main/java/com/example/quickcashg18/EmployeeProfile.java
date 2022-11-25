@@ -29,7 +29,7 @@ public class EmployeeProfile extends ToolbarActivity {
     private Button selectedPreferredLocation;
     private Button applyChanges;
 
-    private Location location;
+    private MyLocation location;
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setLocation);
 
@@ -70,7 +70,7 @@ public class EmployeeProfile extends ToolbarActivity {
         applyChanges = findViewById(R.id.applyEmployeeProfileChanges);
     }
 
-    private void setLocation(Location l) {
+    private void setLocation(MyLocation l) {
         this.location = l;
     }
 
@@ -114,7 +114,7 @@ public class EmployeeProfile extends ToolbarActivity {
         return enterJobTitle.getText().toString();
     }
 
-    public Location getEnteredJobLocation() { return location; }
+    public MyLocation getEnteredJobLocation() { return location; }
 
     public String getEnteredMinTotalPay() {
         return enterMinTotalPay.getText().toString();

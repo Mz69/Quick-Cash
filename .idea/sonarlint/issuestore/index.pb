@@ -1,8 +1,6 @@
 
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-n
->app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
 @
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 ~
@@ -13,8 +11,6 @@ Japp/src/androidTest/java/com/example/quickcashg18/CommonTestFunctions.java,1/3
 Vapp/src/androidTest/java/com/example/quickcashg18/EmployerLandingInstrumentedTest.java,4/5/456fe1ac6bc5e6db7698f9c5f148831e78157b01
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-o
-?app/src/main/java/com/example/quickcashg18/EmployeeLanding.java,8/5/85a3708487aeaf66cc801264a1e8136243198d23
 †
 Vapp/src/androidTest/java/com/example/quickcashg18/EmployeeProfileInstrumentedTest.java,a/1/a11fbb8295ca843ff5ef71392f198655c4af5037
 †

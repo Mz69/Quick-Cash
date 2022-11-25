@@ -5,18 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".JobSearch">
+
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/include3"
         tools:context=".JobSearch">
 
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search"
-            android:iconifiedByDefault="false"/>
+            android:iconifiedByDefault="false"
+            android:queryHint="Search" />
 
         <ListView
             android:id="@+id/list_view"
