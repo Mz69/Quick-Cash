@@ -10,7 +10,7 @@ import android.widget.EditText;
  */
 public class Validation {
 
-    public static final String NUMERIC = "[0-9]+(\\.[0-9]{1,2}){0,1}";
+    public static final String NUMERIC = "\\d+(\\.\\d{1,2})?";
 
     /**
      * Check if the entered string is a number with up to two decimal places.

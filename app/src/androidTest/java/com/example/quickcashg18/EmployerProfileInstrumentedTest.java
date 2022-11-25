@@ -92,7 +92,7 @@ public class EmployerProfileInstrumentedTest {
     }
 
     private ViewInteraction getMaxHoursField() {
-        return onView(withId(R.id.enterMaxHoursEmployer));
+        return onView(withId(R.id.enterHoursEmployer));
     }
 
     private ViewInteraction getApplyChangesButton() {
@@ -132,7 +132,7 @@ public class EmployerProfileInstrumentedTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualHourlyWage = snapshot.child(EmployerProfile.HOURLY_WAGE).getValue(String.class);
+                actualHourlyWage = snapshot.child(EmployerProfile.TOTAL_PAY).getValue(String.class);
             }
 
             @Override
@@ -173,7 +173,7 @@ public class EmployerProfileInstrumentedTest {
     }
 
     private void resetTestUserDB() {
-        userRef.child(EmployerProfile.HOURLY_WAGE)
+        userRef.child(EmployerProfile.TOTAL_PAY)
                 .setValue("");
         userRef.child(EmployerProfile.MIN_HOURS)
                 .setValue("");
