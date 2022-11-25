@@ -66,15 +66,11 @@ public class PostJob extends AppCompatActivity {
             location = l;
     }
 
-    protected String getDurationHours() {
-        EditText durationHours = findViewById(R.id.durationHours);
-        return durationHours.getText().toString();
+    protected String getDuration() {
+        EditText duration = findViewById(R.id.duration);
+        return duration.getText().toString();
     }
 
-    protected String getDurationMins() {
-        EditText durationMins = findViewById(R.id.durationMins);
-        return durationMins.getText().toString();
-    }
 
     protected String getUrgency() {
         EditText urgency = findViewById(R.id.urgency);
@@ -96,19 +92,11 @@ public class PostJob extends AppCompatActivity {
     }
 
     public boolean isValidTotalPay() {
-        return getTotalPay().matches("([1-9]\\d*(\\.\\d{1,2})?)|(\\d*(\\.\\d{1,2}))");
-    }
-
-    public boolean isValidDurationHours() {
-        return getDurationHours().matches("[1-9]\\d*");
-    }
-
-    public boolean isValidDurationMins() {
-        return getDurationMins().matches("[1-9]\\d*");
+        return Validation.isNumeric(getTotalPay());
     }
 
     public boolean isValidDuration() {
-        return isValidDurationHours() || isValidDurationMins();
+        return Validation.isNumeric(getDuration());
     }
 
     public boolean isValidUrgency() {
@@ -138,7 +126,7 @@ public class PostJob extends AppCompatActivity {
         jobDBRef.child(jobName).push();
         // saving all the other job information
         jobDBRef.child(jobName).child("Location").setValue(job.getLocation());
-        jobDBRef.child(jobName).child("Duration in Mins").setValue(job.getDuration());
+        jobDBRef.child(jobName).child("Duration in Hours").setValue(job.getDuration());
         jobDBRef.child(jobName).child("Urgency").setValue(job.getUrgency());
         jobDBRef.child(jobName).child("Total Pay").setValue(job.getTotalPay());
         jobDBRef.child(jobName).child("Description").setValue(job.getDescription());
@@ -157,21 +145,12 @@ public class PostJob extends AppCompatActivity {
 
         String jobName = getJobName();
         Location location = getLocation();
-
-        int durationHours = 0;
-        int durationMins = 0;
-        if (isValidDurationHours()) {
-            durationHours = Integer.parseInt(getDurationHours());
-        }
-        if (isValidDurationMins()) {
-            durationMins = Integer.parseInt(getDurationMins());
-        }
-
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
+        double duration = Double.parseDouble(getDuration());
         String description = getDescription();
 
-        Job job = new Job(jobName, location, durationHours, durationMins, totalPay, urgency, description);
+        Job job = new Job(jobName, location, duration, totalPay, urgency, description);
 
         // Saving the job details to the database
         saveJobtoFirebase(job);
@@ -183,7 +162,6 @@ public class PostJob extends AppCompatActivity {
         // switching back to the employer landing screen after the job is posted
         Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
         startActivity(employerLandingIntent);
-
     }
 
 }

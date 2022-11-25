@@ -25,24 +25,14 @@
         app:layout_constraintTop_toBottomOf="@+id/employeeProfileTitle" />
 
     <EditText
-        android:id="@+id/enterJobLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Job Location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterJobTitleEmployee" />
-
-    <EditText
-        android:id="@+id/enterMinHourlyWageEmployee"
+        android:id="@+id/enterMinTotalPayEmployee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:hint="Enter Min. Hourly Wage"
+        android:hint="Enter Min. Total Pay"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterJobLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/enterJobTitleEmployee" />
 
     <EditText
         android:id="@+id/enterMinHoursEmployee"
@@ -52,7 +42,7 @@
         android:layout_marginTop="24dp"
         android:hint="Enter Min. Hours"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHourlyWageEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/enterMinTotalPayEmployee" />
 
     <EditText
         android:id="@+id/enterMaxHoursEmployee"
@@ -64,6 +54,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterMinHoursEmployee" />
 
+    <EditText
+        android:id="@+id/enterMaxDistanceEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Max. Distance (KM)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployee" />
+
     <Button
         android:id="@+id/applyEmployeeProfileChanges"
         android:layout_width="wrap_content"
@@ -72,7 +72,17 @@
         android:layout_marginTop="24dp"
         android:text="Apply Changes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/selectPreferredLocationEmployee" />
+
+    <Button
+        android:id="@+id/selectPreferredLocationEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Select Preferred Location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterMaxDistanceEmployee" />
 
     <TextView
         android:id="@+id/employeeProfileTitle"
@@ -87,15 +97,5 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include2" />
-
-    <EditText
-        android:id="@+id/enterJobTitleEmployee3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Job Title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employeeProfileTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

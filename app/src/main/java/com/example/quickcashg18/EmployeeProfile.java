@@ -1,10 +1,13 @@
 package com.example.quickcashg18;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,14 +18,20 @@ import com.google.firebase.database.FirebaseDatabase;
  * The EmployeeProfile activity is used by employees to
  * specify their default job preferences for job search.
  */
+
 public class EmployeeProfile extends ToolbarActivity {
 
     private EditText enterJobTitle;
-    private EditText enterMinHourlyWage;
+    private EditText enterMinTotalPay;
     private EditText enterMinHours;
     private EditText enterMaxHours;
-    private EditText enterLocation;
+    private EditText enterMaxDistance;
+    private Button selectedPreferredLocation;
     private Button applyChanges;
+
+    private Location location;
+    private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
+            this::setLocation);
 
     private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
@@ -32,8 +41,9 @@ public class EmployeeProfile extends ToolbarActivity {
     // in case the fields are ever renamed in the database.
     public static String PREFERENCES = "EmployeePreferences";
     public static final String JOB_TITLE = "JobTitle";
+    public static final String MAX_DISTANCE = "Max Distance in KM";
     public static final String JOB_LOCATION = "Location";
-    public static final String MIN_HOURLY_WAGE = "MinHourlyWage";
+    public static final String MIN_TOTAL_PAY = "MinTotalPay";
     public static final String MIN_HOURS = "MinHours";
     public static final String MAX_HOURS = "MaxHours";
 
@@ -42,18 +52,26 @@ public class EmployeeProfile extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_profile);
 
-        init();
         initDBRef();
+        initPageElements();
         initListeners();
     }
 
-    private void init() {
+    private void initPageElements() {
         enterJobTitle = findViewById(R.id.enterJobTitleEmployee);
-        enterLocation = findViewById(R.id.enterJobLocation);
-        enterMinHourlyWage = findViewById(R.id.enterMinHourlyWageEmployee);
+        enterMaxDistance = findViewById(R.id.enterMaxDistanceEmployee);
+        selectedPreferredLocation = findViewById(R.id.selectPreferredLocationEmployee);
+        location = null;
+        enterMinTotalPay = findViewById(R.id.enterMinTotalPayEmployee);
         enterMinHours = findViewById(R.id.enterMinHoursEmployee);
         enterMaxHours = findViewById(R.id.enterMaxHoursEmployee);
+        enterMaxDistance = findViewById(R.id.enterMaxDistanceEmployee);
+        selectedPreferredLocation = findViewById(R.id.selectPreferredLocationEmployee);
         applyChanges = findViewById(R.id.applyEmployeeProfileChanges);
+    }
+
+    private void setLocation(Location l) {
+        this.location = l;
     }
 
     private void initDBRef() {
@@ -61,45 +79,45 @@ public class EmployeeProfile extends ToolbarActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
-        userRef.child(JOB_TITLE).setValue("");
-        userRef.child(JOB_LOCATION).setValue("");
-        userRef.child(MIN_HOURLY_WAGE).setValue("");
-        userRef.child(MIN_HOURS).setValue("");
-        userRef.child(MAX_HOURS).setValue("");
     }
 
     private void initListeners() {
         applyChanges.setOnClickListener(this::onClickApply);
+        selectedPreferredLocation.setOnClickListener(this::onClickGetLocation);
     }
 
-    private boolean isValidMinHourlyWage() {
-        return Validation.isValidDoubleField(enterMinHourlyWage.getText().toString());
+    private boolean isValidTotalPay() {
+        return Validation.isValidDoubleField(getEnteredMinTotalPay());
     }
 
     private boolean isValidMinHours() {
-        return Validation.isValidDoubleField(enterMinHours.getText().toString());
+        return Validation.isValidDoubleField(getEnteredMinHours());
     }
 
     private boolean isValidMaxHours() {
-        return Validation.isValidDoubleField(enterMaxHours.getText().toString());
+        return Validation.isValidDoubleField(getEnteredMaxHours());
+    }
+
+    private boolean isValidMaxDistance() {
+        return Validation.isValidDoubleField(getEnteredMaxDistance());
     }
 
     /**
      * Check that all preferences entered by the employee are in the valid formats.
      */
     public boolean isValidProfile() {
-        return isValidMinHourlyWage() && isValidMinHours()
-                && isValidMaxHours();
+        return isValidTotalPay() && isValidMinHours()
+                && isValidMaxHours() && isValidMaxDistance();
     }
 
     public String getEnteredJobTitle() {
         return enterJobTitle.getText().toString();
     }
 
-    public String getEnteredJobLocation() { return enterLocation.getText().toString();}
+    public Location getEnteredJobLocation() { return location; }
 
-    public String getEnteredMinHourlyWage() {
-        return enterMinHourlyWage.getText().toString();
+    public String getEnteredMinTotalPay() {
+        return enterMinTotalPay.getText().toString();
     }
 
     public String getEnteredMinHours() {
@@ -110,18 +128,24 @@ public class EmployeeProfile extends ToolbarActivity {
         return enterMaxHours.getText().toString();
     }
 
+    public String getEnteredMaxDistance() { return enterMaxDistance.getText().toString(); }
+
     private void saveProfile() {
         userRef.child(JOB_TITLE)
                 .setValue(getEnteredJobTitle());
-        userRef.child(MIN_HOURLY_WAGE)
-                .setValue(getEnteredMinHourlyWage());
+        userRef.child(MIN_TOTAL_PAY)
+                .setValue(getEnteredMinTotalPay());
         userRef.child(MIN_HOURS)
                 .setValue(getEnteredMinHours());
         userRef.child(MAX_HOURS)
                 .setValue(getEnteredMaxHours());
         userRef.child(JOB_LOCATION)
                 .setValue(getEnteredJobLocation());
+        userRef.child(MAX_DISTANCE)
+                .setValue(getEnteredMaxDistance());
     }
+
+    public void onClickGetLocation(View view) { getLocation.launch(null); }
 
     /**
      * When the employee clicks the button to apply the changes to their

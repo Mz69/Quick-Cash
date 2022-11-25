@@ -17,17 +17,9 @@ o
 ?app/src/main/java/com/example/quickcashg18/EmployeeLanding.java,8/5/85a3708487aeaf66cc801264a1e8136243198d23
 †
 Vapp/src/androidTest/java/com/example/quickcashg18/EmployeeProfileInstrumentedTest.java,a/1/a11fbb8295ca843ff5ef71392f198655c4af5037
-o
-?app/src/main/java/com/example/quickcashg18/EmployerProfile.java,5/7/579b26a59194c965850b0f7b902b25b35f5e4230
-o
-?app/src/main/java/com/example/quickcashg18/EmployerLanding.java,1/4/14897af14e6a1032d742e30d1e6c71a82a52cfbc
 †
 Vapp/src/androidTest/java/com/example/quickcashg18/EmployerProfileInstrumentedTest.java,6/1/61ef74e2410557a5e5180ca82b42a696e7aa5caf
 n
 >app/src/test/java/com/example/quickcashg18/ValidationTest.java,7/a/7acb35fa8cf4797d12d41c5d65ac9a314164157d
-q
-Aapp/src/main/java/com/example/quickcashg18/FirebaseConstants.java,5/8/582b09ca5b0fb1e5632911f5fb7264544f3ec8fe
-j
-:app/src/main/java/com/example/quickcashg18/Validation.java,f/5/f5bd9ca034bc9c43cae8fce643332fd4d01e9303
 o
 ?app/src/test/java/com/example/quickcashg18/JobPostUnitTest.java,0/7/07c9f056891c7928e125192afb0ecfa2951cb835

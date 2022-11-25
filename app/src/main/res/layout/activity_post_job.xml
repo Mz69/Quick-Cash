@@ -38,31 +38,14 @@
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
-        <LinearLayout
-            android:layout_width="215dp"
+        <EditText
+            android:id="@+id/duration"
+            android:layout_width="214dp"
             android:layout_height="61dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/durationHours"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:width="200dp"
-                android:hint="Hours"
-                android:inputType="text"
-                android:textSize="16dp"></EditText>
-
-            <EditText
-                android:id="@+id/durationMins"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:width="200dp"
-                android:hint="Minutes"
-                android:inputType="text"
-                android:textSize="16dp"></EditText>
-        </LinearLayout>
+            android:width="200dp"
+            android:hint="Duration in Hours"
+            android:inputType="text"
+            android:textSize="16dp"></EditText>
 
         <EditText
             android:id="@+id/urgency"

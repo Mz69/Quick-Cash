@@ -36,27 +36,37 @@
         android:layout_marginTop="24dp"
         android:hint="Enter Hourly Wage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/enterJobTitleEmployer" />
 
     <EditText
-        android:id="@+id/enterMinHoursEmployer"
+        android:id="@+id/enterJobTitleEmployer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:hint="Enter Min. Hours"
+        android:hint="Enter Job Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <EditText
+        android:id="@+id/enterHoursEmployer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Hours"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterHourlyWageEmployer" />
 
     <EditText
-        android:id="@+id/enterMaxHoursEmployer"
+        android:id="@+id/enterJobDescriptionEmployer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:hint="Enter Max. Hours"
+        android:hint="Enter Description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHoursEmployer" />
+        app:layout_constraintTop_toBottomOf="@+id/enterHoursEmployer" />
 
     <Button
         android:id="@+id/applyEmployerProfileChanges"
@@ -66,6 +76,16 @@
         android:layout_marginTop="24dp"
         android:text="Apply Changes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployer" />
+        app:layout_constraintTop_toBottomOf="@+id/selectPreferredLocationEmployer" />
+
+    <Button
+        android:id="@+id/selectPreferredLocationEmployer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Select Preferred Location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterJobDescriptionEmployer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

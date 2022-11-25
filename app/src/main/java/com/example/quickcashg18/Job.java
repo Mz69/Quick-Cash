@@ -5,25 +5,16 @@ import android.location.Location;
 public class Job {
     private String jobName;
     private Location location;
-    private int duration;
+    private double duration;
     private double totalPay;
     private String urgency;
     private String description;
 
     //Constructor
-    public Job(String jobName, Location location, int duration, double totalPay, String urgency, String description) {
+    public Job(String jobName, Location location, double duration, double totalPay, String urgency, String description) {
         this.jobName = jobName ;
         this.location= location;
         this.duration = duration;
-        this.totalPay = totalPay;
-        this.urgency = urgency;
-        this.description = description;
-    }
-
-    public Job(String jobName, Location location, int durationHours, int durationMins, double totalPay, String urgency, String description) {
-        this.jobName = jobName;
-        this.location = location;
-        this.duration = getDurationFromHoursAndMinutes(durationHours, durationMins);
         this.totalPay = totalPay;
         this.urgency = urgency;
         this.description = description;
@@ -38,7 +29,7 @@ public class Job {
         this.location=location;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
 
@@ -63,28 +54,7 @@ public class Job {
         return location;
     }
 
-    /**
-     * Gets the number of hours in a duration of minutes,
-     * with extra minutes cut off.
-     * Example: 195 minutes returns 3 hours.
-     */
-    public int getDurationHours() {
-        return duration / 60;
-    }
-
-    /**
-     * Gets the number of minutes from the total duration after
-     * removing the number of hours
-     */
-    public int getDurationRemainderMins() {
-        return duration % 60;
-    }
-
-    public static int getDurationFromHoursAndMinutes(int hours, int minutes) {
-        return hours * 60 + minutes;
-    }
-
-    public int getDuration() {
+    public double getDuration() {
         return duration;
     }
 
