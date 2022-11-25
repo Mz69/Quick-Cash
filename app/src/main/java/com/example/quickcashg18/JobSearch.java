@@ -38,14 +38,6 @@ public class JobSearch extends ToolbarActivity {
         searchView = findViewById(R.id.searchView);
         listView = findViewById(R.id.list_view);
 
-        /*availableJobs.add("Walking dog");
-        availableJobs.add("Job Hunter");
-        availableJobs.add("Window Washing");
-        availableJobs.add("Baby sitting");
-        availableJobs.add("Car cleaner");
-        availableJobs.add("Movers");
-        availableJobs.add("Furniture assembler");*/
-
         adapter = new ArrayAdapter<Job>(this, android.R.layout.simple_list_item_1,availableJobs);
         listView.setAdapter(adapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

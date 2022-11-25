@@ -1,6 +1,5 @@
 package com.example.quickcashg18;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +54,7 @@ public class EmployerProfile extends ToolbarActivity {
 
     private void init() {
         enterJobTitle = findViewById(R.id.enterJobTitleEmployer);
-        enterTotalPay = findViewById(R.id.enterHourlyWageEmployer);
+        enterTotalPay = findViewById(R.id.enterTotalPayEmployer);
         enterHours = findViewById(R.id.enterHoursEmployer);
         enterUrgency = findViewById(R.id.enterUrgencyEmployer);
         enterJobDescription = findViewById(R.id.enterJobDescriptionEmployer);
@@ -101,7 +100,7 @@ public class EmployerProfile extends ToolbarActivity {
         return enterJobTitle.getText().toString().trim();
     }
 
-    private String getEnteredHourlyWage() {
+    private String getEnteredTotalPay() {
         return enterTotalPay.getText().toString().trim();
     }
 
@@ -127,7 +126,7 @@ public class EmployerProfile extends ToolbarActivity {
         userRef.child(JOB_TITLE)
                 .setValue(getEnteredJobTitle());
         userRef.child(TOTAL_PAY)
-                .setValue(getEnteredHourlyWage());
+                .setValue(getEnteredTotalPay());
         userRef.child(DURATION)
                 .setValue(getEnteredHours());
         userRef.child(LOCATION)

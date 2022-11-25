@@ -176,6 +176,7 @@ public class PostJob extends ToolbarActivity {
                 setTotalPay(snapshot.child(EmployerProfile.TOTAL_PAY).getValue(String.class));
                 setDuration(snapshot.child(EmployerProfile.DURATION).getValue(String.class));
                 setUrgency(snapshot.child(EmployerProfile.URGENCY).getValue(String.class));
+                setLocation(snapshot.child(EmployerProfile.LOCATION).getValue(MyLocation.class));
                 setDescription(snapshot.child(EmployerProfile.DESCRIPTION).getValue(String.class));
             }
 

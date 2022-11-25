@@ -84,7 +84,7 @@ public class EmployerProfileInstrumentedTest {
     public static void tearDown() { System.gc(); }
 
     private ViewInteraction getHourlyWageField() {
-        return onView(withId(R.id.enterHourlyWageEmployer));
+        return onView(withId(R.id.enterTotalPayEmployer));
     }
 
     private ViewInteraction getMinHoursField() {
