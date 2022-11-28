@@ -1,6 +1,7 @@
 package com.example.quickcashg18;
 
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,21 +92,32 @@ public class JobAdapter extends ArrayAdapter<Job> {
              * preference field (not just employee preference) sets the preference
              * to FirebaseConstants.NO_PREFERENCE!
              * Do that in JobSearch.
+             *
+             * Job Title
+             * Duration (Hrs)
+             * Pay ($)
+             * Distance (km)
+             * Latitude
+             * Longitude
              */
             String prefs = constraint.toString();
             Scanner prefGet = new Scanner(prefs);
             String title = prefGet.nextLine();
+            String duration = prefGet.nextLine();
             String totalPay = prefGet.nextLine();
-            String minHours = prefGet.nextLine();
-            String maxHours = prefGet.nextLine();
-            String urgency = prefGet.nextLine();
-            // add location in here!
+            String distance = prefGet.nextLine();
+            String latitude = prefGet.nextLine();
+            String longitude = prefGet.nextLine();
+            MyLocation l = new MyLocation("");
+            //l.setLatitude(latitude);
             prefGet.close();
+            //EmployeePreferredJob prefJob = new EmployeePreferredJob(title, duration, totalPay, distance, )
+
             ArrayList<Job> filteredJobs = new ArrayList<>();
             for (Job j : jobs) {
-                if (matchesPreferences(j, title, totalPay, minHours, maxHours, urgency, null)) {
-                    filteredJobs.add(j);
-                }
+                //if (matchesPreferences(j, title, totalPay, minHours, maxHours, urgency, null)) {
+                  //  filteredJobs.add(j);
+               // }
             }
 
             results.values = filteredJobs;

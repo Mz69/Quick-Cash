@@ -58,13 +58,37 @@
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/distanceJobSearch"
+                android:id="@+id/urgencyJobSearch"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Urgency"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/distanceJobSearch"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Distance (km)"
                 android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/selectLocationJobSearch"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:text="Select Location" />
+
         </LinearLayout>
 
         <ListView

@@ -162,11 +162,13 @@ public class PostJob extends ToolbarActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 EmployerPreferredJob prefJob = snapshot.getValue(EmployerPreferredJob.class);
-                setJobTitle(prefJob.getJobTitle());
-                setTotalPay("" + prefJob.getTotalPay());
-                setDuration("" + prefJob.getDuration());
-                setUrgency(prefJob.getUrgency());
-                setLocation(prefJob.getLocation());
+                if (prefJob != null) {
+                    setJobTitle(prefJob.getJobTitle());
+                    setTotalPay("" + prefJob.getTotalPay());
+                    setDuration("" + prefJob.getDuration());
+                    setUrgency(prefJob.getUrgency());
+                    setLocation(prefJob.getLocation());
+                }
             }
 
             @Override

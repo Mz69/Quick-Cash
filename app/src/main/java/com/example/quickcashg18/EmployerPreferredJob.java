@@ -13,4 +13,5 @@ public class EmployerPreferredJob extends Job {
                                 String urgency, MyLocation location) {
         super(jobTitle, duration, totalPay, urgency, location);
     }
+
 }

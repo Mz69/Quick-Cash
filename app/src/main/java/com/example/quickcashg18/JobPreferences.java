@@ -9,5 +9,7 @@ public abstract class JobPreferences extends Job {
         super(jobTitle, duration, totalPay, urgency, location);
     }
 
+    public JobPreferences() { super(); }
+
     public abstract boolean acceptableJob(Job job);
 }

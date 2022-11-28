@@ -3,6 +3,8 @@ package com.example.quickcashg18;
 public class EmployeePreferredJob extends JobPreferences {
     private double maxDistance;
 
+    public EmployeePreferredJob() { super(); }
+
     public EmployeePreferredJob(String jobTitle, double duration, double totalPay,
                                 String urgency, MyLocation location, double maxDistance) {
         super(jobTitle, duration, totalPay, urgency, location);
@@ -17,6 +19,8 @@ public class EmployeePreferredJob extends JobPreferences {
             this.maxDistance = Double.parseDouble(maxDistance);
         }
     }
+
+    public double getMaxDistance() { return maxDistance; }
 
     @Override
     public boolean acceptableJob(Job job) {
@@ -46,5 +50,10 @@ public class EmployeePreferredJob extends JobPreferences {
 
     private boolean acceptableDistance(Job job) {
         return true;
+    }
+
+    public String toString() {
+        return getJobTitle() + "\n" + getDuration() + "\n" +  getTotalPay() +
+                "\n" + getUrgency() + "\n" + getMaxDistance();
     }
 }
