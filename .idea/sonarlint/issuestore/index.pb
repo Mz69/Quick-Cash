@@ -28,8 +28,6 @@ j
 e
 5app/src/main/java/com/example/quickcashg18/Alert.java,d/7/d73767d6716f99c22b680c77066a3386e50d8724
 o
-?app/src/main/java/com/example/quickcashg18/EmployeeLanding.java,8/5/85a3708487aeaf66cc801264a1e8136243198d23
-o
 ?app/src/main/java/com/example/quickcashg18/EmployerLanding.java,1/4/14897af14e6a1032d742e30d1e6c71a82a52cfbc
 v
 Fapp/src/main/java/com/example/quickcashg18/LocationResultContract.java,2/3/2313e81b76cf9f2700bf0a258c2a2b5c422d0c6b
@@ -37,11 +35,9 @@ n
 >app/src/main/java/com/example/quickcashg18/payment_portal.java,7/5/7504d9476ee7146419ad749c612c83d6ddd20a0e
 n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
-h
-8app/src/main/java/com/example/quickcashg18/PastJobs.java,b/c/bc1b6bcb98b97a927e54cdf44b445ce5b160a969
 l
-<app/src/main/java/com/example/quickcashg18/MapsActivity.java,d/b/db54c6f1b34f4e8e4b84a426ec8c093868341502
-q
-Aapp/src/main/java/com/example/quickcashg18/FirebaseConstants.java,5/8/582b09ca5b0fb1e5632911f5fb7264544f3ec8fe
-k
-;app/src/main/java/com/example/quickcashg18/JobAdapter3.java,f/9/f96dcefb8c56b033a8b1d209c8c76e82eaa99fd2
+<app/src/main/java/com/example/quickcashg18/MainActivity.java,a/8/a8091c44325ae96365efac58f993a126101456fa
+t
+Dapp/src/main/java/com/example/quickcashg18/EmployerPreferredJob.java,4/5/4541489b6a079ffc235e746574d53f96dfa417d7
+g
+7app/src/main/java/com/example/quickcashg18/PostJob.java,9/f/9fd3484401d5f9236460ab6187e67193a8d6411c

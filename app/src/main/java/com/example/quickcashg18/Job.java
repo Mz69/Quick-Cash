@@ -1,12 +1,13 @@
 package com.example.quickcashg18;
 
-public class Job {
+import java.io.Serializable;
+
+public class Job implements Serializable {
     private String jobTitle;
     private double totalPay;
     private double duration;
     private MyLocation location;
     private String urgency;
-    public static final double MAX = 999999999;
 
     public Job() {}
 
@@ -23,11 +24,11 @@ public class Job {
     public Job(String jobTitle, String duration, String totalPay,
                String urgency, MyLocation location) {
         this.jobTitle = jobTitle;
-        this.duration = MAX;
+        this.duration = Double.MAX_VALUE;
         if (Validation.isNumeric(duration)) {
             this.duration = Double.parseDouble(duration);
         }
-        this.totalPay = MAX;
+        this.totalPay = Double.MAX_VALUE;
         if (Validation.isNumeric(totalPay)) {
             this.totalPay = Double.parseDouble(totalPay);
         }

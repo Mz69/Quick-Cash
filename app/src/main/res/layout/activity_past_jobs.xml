@@ -20,4 +20,5 @@
         android:text="past job"
         tools:layout_editor_absoluteX="30dp"
         tools:layout_editor_absoluteY="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

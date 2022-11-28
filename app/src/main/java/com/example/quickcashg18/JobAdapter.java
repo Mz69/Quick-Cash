@@ -9,7 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Filter;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,6 +77,7 @@ public class JobAdapter extends ArrayAdapter<Job> {
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
+            System.out.println("Made it?");
             ArrayList<Job> jobs = new ArrayList<Job>();
             int numJobs = getCount();
             for (int i = 0; i < numJobs; i++) {
@@ -84,40 +90,46 @@ public class JobAdapter extends ArrayAdapter<Job> {
                 return results;
             }
 
-            /**
-             * Introduce a string tokenizer to parse through the constraint
-             * and check if the current job matches the preferences.
-             *
-             * Going to need to make it so that entering nothing in a job search
-             * preference field (not just employee preference) sets the preference
-             * to FirebaseConstants.NO_PREFERENCE!
-             * Do that in JobSearch.
-             *
-             * Job Title
-             * Duration (Hrs)
-             * Pay ($)
-             * Distance (km)
-             * Latitude
-             * Longitude
-             */
-            String prefs = constraint.toString();
-            Scanner prefGet = new Scanner(prefs);
-            String title = prefGet.nextLine();
-            String duration = prefGet.nextLine();
-            String totalPay = prefGet.nextLine();
-            String distance = prefGet.nextLine();
-            String latitude = prefGet.nextLine();
-            String longitude = prefGet.nextLine();
-            MyLocation l = new MyLocation("");
-            //l.setLatitude(latitude);
-            prefGet.close();
-            //EmployeePreferredJob prefJob = new EmployeePreferredJob(title, duration, totalPay, distance, )
+            System.out.println("Under here?");
+            EmployeePreferredJob prefJob = null;
+            try {
+                String prefBytes = constraint.toString();
+                byte[] data = Base64.getDecoder().decode(prefBytes);
+                ByteArrayInputStream inBytes = new ByteArrayInputStream(data);
+                ObjectInputStream in = new ObjectInputStream(inBytes);
+                prefJob = (EmployeePreferredJob) in.readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
 
+            /*Scanner prefGet = new Scanner(prefConstraints);
+            String jobTitle = prefGet.nextLine();
+            double duration = prefGet.nextDouble();
+            double totalPay = prefGet.nextDouble();
+            double distance = prefGet.nextDouble();
+            double latitude = prefGet.nextDouble();
+            double longitude = prefGet.nextDouble();
+            prefGet.nextLine();
+            prefGet.close();
+            String urgency = prefGet.nextLine();
+            MyLocation location = new MyLocation("");
+            location.setLatitude(latitude);
+            location.setLongitude(longitude);
+            EmployeePreferredJob prefJob = new EmployeePreferredJob(jobTitle, duration, totalPay,
+                    urgency, location, distance);*/
+
+            if (prefJob == null) {
+                return results;
+            }
             ArrayList<Job> filteredJobs = new ArrayList<>();
             for (Job j : jobs) {
-                //if (matchesPreferences(j, title, totalPay, minHours, maxHours, urgency, null)) {
-                  //  filteredJobs.add(j);
-               // }
+                if (prefJob.acceptableJob(j)) {
+                    filteredJobs.add(j);
+                }
             }
 
             results.values = filteredJobs;
@@ -125,40 +137,13 @@ public class JobAdapter extends ArrayAdapter<Job> {
             return results;
         }
 
-        protected boolean matchesPreferences(Job job, String title, String totalPay, String minHours,
-                String maxHours, String urgency, MyLocation location) {
-
-            boolean titleMatch = true;
-            boolean totalPayMatch = true;
-            boolean minHoursMatch = true;
-            boolean maxHoursMatch = true;
-            boolean urgencyMatch = true;
-            boolean locationMatch = true;
-
-            if (!title.equals(FirebaseConstants.NO_PREFERENCE)) {
-                titleMatch = job.getJobTitle().startsWith(title.toLowerCase());
-            }
-            if (!totalPay.equals(FirebaseConstants.NO_PREFERENCE)) {
-                totalPayMatch = job.getTotalPay() >= Double.parseDouble(totalPay);
-            }
-            if (!minHours.equals(FirebaseConstants.NO_PREFERENCE)) {
-                minHoursMatch = job.getDuration() >= Double.parseDouble(minHours);
-            }
-            if (!maxHours.equals(FirebaseConstants.NO_PREFERENCE)) {
-                maxHoursMatch = job.getDuration() <= Double.parseDouble(maxHours);
-            }
-            if (!urgency.equals(FirebaseConstants.NO_PREFERENCE)) {
-                urgencyMatch = job.getUrgency().equals(urgency);
-            }
-
-            return titleMatch && totalPayMatch && minHoursMatch && maxHoursMatch &&
-                    urgencyMatch && locationMatch;
-        }
-
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (constraint == null || results == null || results.values == null) {
+                return;
+            }
             clear();
-            addAll((List<Job>) results.values);
+            addAll((List<Job>)results.values);
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {

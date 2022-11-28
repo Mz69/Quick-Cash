@@ -1,7 +1,0 @@
-
-w
-java:S1450"\Remove the "firebaseJobDB" field and declare it as a local variable in the relevant methods.(É Ê¨ıÿÿÿÿ
-q
-java:S1450"VRemove the "jobName" field and declare it as a local variable in the relevant methods.(ëÍÁÄøÿÿÿÿ
-F
-java:S1068"+Remove this unused "jobName" private field.(ëÍÁÄøÿÿÿÿ

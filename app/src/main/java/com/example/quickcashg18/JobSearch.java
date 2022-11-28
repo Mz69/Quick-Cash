@@ -20,7 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class JobSearch extends ToolbarActivity {
 
@@ -86,25 +92,46 @@ public class JobSearch extends ToolbarActivity {
     }
 
     private void initJobList() {
-        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,availableJobs);
         adapter = new JobAdapter(this, availableJobs);
         listView.setAdapter(adapter);
         enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String jobTitle) {
+                String duration = getEnteredDuration();
+                String totalPay = getEnteredTotalPay();
+                String urgency = getEnteredUrgency();
+                MyLocation location = getEnteredLocation();
+                String distance = getEnteredDistance();
+                EmployeePreferredJob pref = new EmployeePreferredJob(jobTitle, duration, totalPay,
+                        urgency, location, distance);
+
+                try {
+                    ByteArrayOutputStream outBytes = new ByteArrayOutputStream();
+                    ObjectOutputStream out = new ObjectOutputStream(outBytes);
+                    out.writeObject(pref);
+                    String byteString = new String(Base64.getEncoder().encode(outBytes.toByteArray()));
+                    System.out.println("byteString is " + byteString);
+                    adapter.getFilter().filter(byteString);
+                    String test = "";
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                /*System.out.println("s is " + s);
                 if (hasJob(s)) {
-                    adapter.getFilter().filter(s);
+                    //adapter.getFilter().filter(s);
                     return true;
                 } else {
                     // Search query not found in List View
                     Toast.makeText(JobSearch.this, "Not found", Toast.LENGTH_LONG).show();
-                }
+                }*/
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
                 refreshJobList();
-                adapter.getFilter().filter(s);
+                //adapter.getFilter().filter(s);
                 return false;
             }
         });

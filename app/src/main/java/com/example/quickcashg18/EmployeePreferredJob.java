@@ -1,6 +1,8 @@
 package com.example.quickcashg18;
 
-public class EmployeePreferredJob extends JobPreferences {
+import java.io.Serializable;
+
+public class EmployeePreferredJob extends JobPreferences implements Serializable {
     private double maxDistance;
 
     public EmployeePreferredJob() { super(); }
@@ -14,7 +16,7 @@ public class EmployeePreferredJob extends JobPreferences {
     public EmployeePreferredJob(String jobTitle, String duration, String totalPay,
                                 String urgency, MyLocation location, String maxDistance) {
         super(jobTitle, duration, totalPay, urgency, location);
-        this.maxDistance = MAX;
+        this.maxDistance = Double.MAX_VALUE;
         if (Validation.isNumeric(maxDistance)) {
             this.maxDistance = Double.parseDouble(maxDistance);
         }

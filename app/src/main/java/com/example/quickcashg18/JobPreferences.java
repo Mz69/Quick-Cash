@@ -1,6 +1,8 @@
 package com.example.quickcashg18;
 
-public abstract class JobPreferences extends Job {
+import java.io.Serializable;
+
+public abstract class JobPreferences extends Job implements Serializable {
     public JobPreferences(String jobTitle, double duration, double totalPay, String urgency, MyLocation location) {
         super(jobTitle, duration, totalPay, urgency, location);
     }

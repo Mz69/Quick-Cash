@@ -16,6 +16,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -129,7 +130,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * returned via setResult to the activity that called MapsActivity for processing.
      */
     public void onClickYes(View view) {
-        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, selectedLocation);
+        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, (Parcelable) selectedLocation);
         setResult(Activity.RESULT_OK, locationResult);
         finish();
     }
