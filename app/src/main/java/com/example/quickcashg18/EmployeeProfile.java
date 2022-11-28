@@ -131,6 +131,13 @@ public class EmployeeProfile extends ToolbarActivity {
     public String getEnteredMaxDistance() { return enterMaxDistance.getText().toString(); }
 
     private void saveProfile() {
+        DatabaseReference title = userRef.child(JOB_TITLE);
+        DatabaseReference minTotalPay = userRef.child(MIN_TOTAL_PAY);
+        DatabaseReference minHours = userRef.child(MIN_HOURS);
+        DatabaseReference maxHours = userRef.child(MAX_HOURS);
+        DatabaseReference prefLocation = userRef.child(JOB_LOCATION);
+        DatabaseReference maxDistance = userRef.child(MAX_DISTANCE);
+
         userRef.child(JOB_TITLE)
                 .setValue(getEnteredJobTitle());
         userRef.child(MIN_TOTAL_PAY)
@@ -143,6 +150,25 @@ public class EmployeeProfile extends ToolbarActivity {
                 .setValue(getEnteredJobLocation());
         userRef.child(MAX_DISTANCE)
                 .setValue(getEnteredMaxDistance());
+
+        if (getEnteredJobTitle().isEmpty()) {
+            title.setValue(FirebaseConstants.NO_PREFERENCE);
+        }
+        if (getEnteredMinTotalPay().isEmpty()) {
+            minTotalPay.setValue(FirebaseConstants.NO_PREFERENCE);
+        }
+        if (getEnteredMinHours().isEmpty()) {
+            minHours.setValue(FirebaseConstants.NO_PREFERENCE);
+        }
+        if (getEnteredMaxHours().isEmpty()) {
+            maxHours.setValue(FirebaseConstants.NO_PREFERENCE);
+        }
+        if (getEnteredJobLocation() == null) {
+            prefLocation.setValue(null);
+        }
+        if (getEnteredMaxDistance().isEmpty()) {
+            maxDistance.setValue(FirebaseConstants.NO_PREFERENCE);
+        }
     }
 
     public void onClickGetLocation(View view) { getLocation.launch(null); }

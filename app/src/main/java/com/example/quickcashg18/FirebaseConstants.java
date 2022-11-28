@@ -26,6 +26,12 @@ public class FirebaseConstants {
     public static final String USER = "User";
 
     /**
+     * When a user has no preference.
+     */
+    public static final String NO_PREFERENCE = "NoPreference";
+
+
+    /**
      * Ensures the database contains a number of useful keys.
      */
     public static void initDatabaseConstants() {

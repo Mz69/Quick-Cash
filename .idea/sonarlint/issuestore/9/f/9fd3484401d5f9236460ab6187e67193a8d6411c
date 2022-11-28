@@ -1,0 +1,12 @@
+
+w
+java:S1450!"\Remove the "firebaseJobDB" field and declare it as a local variable in the relevant methods.(É Ê¨ıÿÿÿÿ
+O	java:S106‘"9Replace this use of System.out or System.err by a logger.(£ÏÃ
+T	java:S106˜"9Replace this use of System.out or System.err by a logger.(÷ˆ¦ôşÿÿÿÿ
+S
+java:S1854Ø"<Remove this useless assignment to local variable "jobAlert".(‘Ù¢Ó
+X
+java:S1117Ê"<Rename "location" which hides the field declared at line 36.(÷¸Ö¬ıÿÿÿÿ
+D
+java:S1481Ø"-Remove this unused "jobAlert" local variable.(‘Ù¢Ó
+W	java:S125Ù"<This block of commented-out lines of code should be removed.(ÚËÀ¶ÿÿÿÿÿ

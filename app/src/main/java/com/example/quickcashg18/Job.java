@@ -74,6 +74,8 @@ public class Job {
         return duration;
     }
 
+    public String getDurationString() { return duration + " hours"; }
+
     public String getDescription() {
         return description;
     }
@@ -81,6 +83,8 @@ public class Job {
     public double getTotalPay() {
         return totalPay;
     }
+
+    public String getTotalPayString() { return "$" + totalPay; }
 
     public String getUrgency() {
         return urgency;

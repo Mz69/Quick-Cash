@@ -1,11 +1,12 @@
 package com.example.quickcashg18;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -22,8 +23,10 @@ public class JobSearch extends ToolbarActivity {
 
     SearchView searchView;
     ListView listView;
+    Button importPref;
+
     ArrayList<Job> availableJobs;
-    ArrayAdapter<Job> adapter;
+    JobAdapter adapter;
     FirebaseDatabase firebaseDB;
     DatabaseReference jobsRef;
 
@@ -32,19 +35,46 @@ public class JobSearch extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_search);
 
+        initViews();
+        initListeners();
         initDatabase();
-        refreshJobListAccordingToParameters();
+        refreshJobList();
+        initJobList();
 
+        /*
+        AdapterView.OnItemClickListener jobSelect = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }*/
+    }
+
+    private void initViews() {
         searchView = findViewById(R.id.searchView);
         listView = findViewById(R.id.list_view);
+        importPref = findViewById(R.id.importPreferencesJobSearch);
+    }
 
-        adapter = new ArrayAdapter<Job>(this, android.R.layout.simple_list_item_1,availableJobs);
+    private void initListeners() {
+        importPref.setOnClickListener(this::onClickImportPreferences);
+    }
+
+    private void initDatabase() {
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
+    }
+
+    private void initJobList() {
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,availableJobs);
+        adapter = new JobAdapter(this, availableJobs);
         listView.setAdapter(adapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if (hasJob(s)) {
                     adapter.getFilter().filter(s);
+                    return true;
                 } else {
                     // Search query not found in List View
                     Toast.makeText(JobSearch.this, "Not found", Toast.LENGTH_LONG).show();
@@ -53,20 +83,14 @@ public class JobSearch extends ToolbarActivity {
             }
             @Override
             public boolean onQueryTextChange(String s) {
-
+                refreshJobList();
                 adapter.getFilter().filter(s);
-
                 return false;
             }
         });
     }
 
-    private void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
-        jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
-    }
-
-    private void refreshJobListAccordingToParameters() {
+    private void refreshJobList() {
         availableJobs = new ArrayList();
         jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,5 +114,9 @@ public class JobSearch extends ToolbarActivity {
             }
         }
         return false;
+    }
+
+    public void onClickImportPreferences(View view) {
+
     }
 }
