@@ -49,8 +49,8 @@ public class JobAdapter extends ArrayAdapter<Job> {
         Job job = getItem(position);
 
         title.setText(job.getJobTitle());
-        totalPay.setText(job.getTotalPayString());
-        duration.setText(job.getDurationString());
+        totalPay.setText("" + job.getTotalPay());
+        duration.setText("" + job.getDuration());
         urgency.setText(job.getUrgency());
         distance.setText("500 km"); // Need to update when sorting by distance works!
 

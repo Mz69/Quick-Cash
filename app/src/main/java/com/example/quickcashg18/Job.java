@@ -1,37 +1,43 @@
 package com.example.quickcashg18;
 
-import android.location.Location;
-
 public class Job {
     private String jobTitle;
-    private MyLocation location;
-    private double duration;
     private double totalPay;
+    private double duration;
+    private MyLocation location;
     private String urgency;
-    private String description;
-    private String posterID;
-    private String jobID;
-    private static final String JOB_ID_CONNECT = " BY_USER ";
+    public static final double MAX = 999999999;
 
     public Job() {}
 
     //Constructor
-    public Job(String jobTitle, MyLocation location, double duration, double totalPay,
-               String urgency, String description, String posterID) {
-        this.jobTitle = jobTitle ;
-        this.location= location;
+    public Job(String jobTitle, double duration, double totalPay,
+               String urgency, MyLocation location) {
+        this.jobTitle = jobTitle;
+        this.location = location;
         this.duration = duration;
         this.totalPay = totalPay;
         this.urgency = urgency;
-        this.description = description;
-        this.posterID = posterID;
-        this.jobID = this.jobTitle + JOB_ID_CONNECT + this.posterID;
+    }
+
+    public Job(String jobTitle, String duration, String totalPay,
+               String urgency, MyLocation location) {
+        this.jobTitle = jobTitle;
+        this.duration = MAX;
+        if (Validation.isNumeric(duration)) {
+            this.duration = Double.parseDouble(duration);
+        }
+        this.totalPay = MAX;
+        if (Validation.isNumeric(totalPay)) {
+            this.totalPay = Double.parseDouble(totalPay);
+        }
+        this.urgency = urgency;
+        this.location = location;
     }
 
     //Setters for each variable
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
-        updateJobID();
     }
 
     public void setLocation(MyLocation location){
@@ -42,7 +48,7 @@ public class Job {
         this.duration = duration;
     }
 
-    public void setTotalPay(int totalPay) {
+    public void setTotalPay(double totalPay) {
         this.totalPay = totalPay;
     }
 
@@ -50,49 +56,22 @@ public class Job {
         this.urgency = urgency;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPosterID(String posterID) {
-        this.posterID = posterID;
-        updateJobID();
-    }
-
-    public void updateJobID() { this.jobID = getJobTitle() + JOB_ID_CONNECT + getPosterID(); }
-
     //getters for each variable
     public String getJobTitle() {
         return jobTitle;
     }
 
-    public Location getLocation() {
+    public MyLocation getLocation() {
         return location;
     }
 
-    public double getDuration() {
-        return duration;
-    }
+    public double getDuration() { return duration; }
 
-    public String getDurationString() { return duration + " hours"; }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getTotalPay() {
-        return totalPay;
-    }
-
-    public String getTotalPayString() { return "$" + totalPay; }
+    public double getTotalPay() { return totalPay; }
 
     public String getUrgency() {
         return urgency;
     }
-
-    public String getPosterID() { return posterID; }
-
-    public String getJobID() { return jobID; }
 
     public String toString() { return jobTitle; }
 }

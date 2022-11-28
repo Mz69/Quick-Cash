@@ -97,11 +97,6 @@ public class PostJob extends ToolbarActivity {
         return totalPay.getText().toString();
     }
 
-    protected String getDescription() {
-        EditText description = findViewById(R.id.jobDescription);
-        return description.getText().toString();
-    }
-
     protected void setJobTitle(String jobTitle) {
         EditText titleField = findViewById(R.id.jobTitle);
         titleField.setText(jobTitle.trim());
@@ -120,12 +115,6 @@ public class PostJob extends ToolbarActivity {
     protected void setUrgency(String urgency) {
         EditText urgencyField = findViewById(R.id.urgency);
         urgencyField.setText(urgency.trim());
-    }
-
-
-    protected void setDescription(String description) {
-        EditText descriptionField = findViewById(R.id.jobDescription);
-        descriptionField.setText(description.trim());
     }
 
     public boolean isValidJobTitle() {
@@ -162,7 +151,7 @@ public class PostJob extends ToolbarActivity {
 
     // methods to save job details in firebase database
     // setting the job name in listings
-    protected void saveJobtoFirebase(Job job) {
+    protected void saveJobtoFirebase(PostedJob job) {
         jobDBRef.child(job.getJobID()).setValue(job);
     }
 
@@ -177,7 +166,6 @@ public class PostJob extends ToolbarActivity {
                 setDuration(snapshot.child(EmployerProfile.DURATION).getValue(String.class));
                 setUrgency(snapshot.child(EmployerProfile.URGENCY).getValue(String.class));
                 setLocation(snapshot.child(EmployerProfile.LOCATION).getValue(MyLocation.class));
-                setDescription(snapshot.child(EmployerProfile.DESCRIPTION).getValue(String.class));
             }
 
             @Override
@@ -203,10 +191,9 @@ public class PostJob extends ToolbarActivity {
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         double duration = Double.parseDouble(getDuration());
-        String description = getDescription();
         String posterID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Job job = new Job(jobTitle, location, duration, totalPay, urgency, description, posterID);
+        PostedJob job = new PostedJob(jobTitle, duration, totalPay, urgency, location, posterID);
 
         // Saving the job details to the database
         saveJobtoFirebase(job);

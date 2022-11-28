@@ -35,8 +35,6 @@ v
 Fapp/src/main/java/com/example/quickcashg18/LocationResultContract.java,2/3/2313e81b76cf9f2700bf0a258c2a2b5c422d0c6b
 n
 >app/src/main/java/com/example/quickcashg18/payment_portal.java,7/5/7504d9476ee7146419ad749c612c83d6ddd20a0e
-g
-7app/src/main/java/com/example/quickcashg18/PostJob.java,9/f/9fd3484401d5f9236460ab6187e67193a8d6411c
 n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
 h
