@@ -161,11 +161,12 @@ public class PostJob extends ToolbarActivity {
         preferences.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                setJobTitle(snapshot.child(EmployerProfile.JOB_TITLE).getValue(String.class));
-                setTotalPay(snapshot.child(EmployerProfile.TOTAL_PAY).getValue(String.class));
-                setDuration(snapshot.child(EmployerProfile.DURATION).getValue(String.class));
-                setUrgency(snapshot.child(EmployerProfile.URGENCY).getValue(String.class));
-                setLocation(snapshot.child(EmployerProfile.LOCATION).getValue(MyLocation.class));
+                EmployerPreferredJob prefJob = snapshot.getValue(EmployerPreferredJob.class);
+                setJobTitle(prefJob.getJobTitle());
+                setTotalPay("" + prefJob.getTotalPay());
+                setDuration("" + prefJob.getDuration());
+                setUrgency(prefJob.getUrgency());
+                setLocation(prefJob.getLocation());
             }
 
             @Override

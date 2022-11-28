@@ -21,9 +21,8 @@ public class EmployerProfile extends ToolbarActivity {
 
     private EditText enterJobTitle;
     private EditText enterTotalPay;
-    private EditText enterHours;
+    private EditText enterDuration;
     private EditText enterUrgency;
-    private EditText enterJobDescription;
     private Button selectPreferredLocation;
     private Button applyChanges;
     private MyLocation location;
@@ -35,12 +34,6 @@ public class EmployerProfile extends ToolbarActivity {
     // these variables should be used to reference them
     // in case the fields are ever renamed in the database.
     public static final String PREFERENCES = "EmployerPreferences";
-    public static final String JOB_TITLE = "JobTitle";
-    public static final String TOTAL_PAY = "TotalPay";
-    public static final String DURATION = "Duration In Hours";
-    public static final String LOCATION = "Location";
-    public static final String URGENCY = "Urgency";
-    public static final String DESCRIPTION = "Description";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +48,8 @@ public class EmployerProfile extends ToolbarActivity {
     private void init() {
         enterJobTitle = findViewById(R.id.enterJobTitleEmployer);
         enterTotalPay = findViewById(R.id.enterTotalPayEmployer);
-        enterHours = findViewById(R.id.enterHoursEmployer);
+        enterDuration = findViewById(R.id.enterHoursEmployer);
         enterUrgency = findViewById(R.id.enterUrgencyEmployer);
-        enterJobDescription = findViewById(R.id.enterJobDescriptionEmployer);
         selectPreferredLocation = findViewById(R.id.selectPreferredLocationEmployer);
         applyChanges = findViewById(R.id.applyEmployerProfileChanges);
         location = null;
@@ -79,8 +71,8 @@ public class EmployerProfile extends ToolbarActivity {
         return Validation.isValidDoubleField(enterTotalPay.getText().toString());
     }
 
-    private boolean isValidHours() {
-        return Validation.isValidDoubleField(enterHours.getText().toString());
+    private boolean isValidDuration() {
+        return Validation.isValidDoubleField(enterDuration.getText().toString());
     }
 
     public boolean isValidUrgency() {
@@ -93,7 +85,7 @@ public class EmployerProfile extends ToolbarActivity {
      * Check that all preferences entered by the employer are in the valid formats.
      */
     public boolean isValidProfile() {
-        return isValidTotalPay() && isValidHours() && isValidUrgency();
+        return isValidTotalPay() && isValidDuration() && isValidUrgency();
     }
 
     private String getEnteredJobTitle() {
@@ -104,15 +96,11 @@ public class EmployerProfile extends ToolbarActivity {
         return enterTotalPay.getText().toString().trim();
     }
 
-    private String getEnteredHours() {
-        return enterHours.getText().toString().trim();
+    private String getEnteredDuration() {
+        return enterDuration.getText().toString().trim();
     }
 
     private String getEnteredUrgency() { return enterUrgency.getText().toString(); }
-
-    private String getEnteredJobDescription() {
-        return enterJobDescription.getText().toString().trim();
-    }
 
     private MyLocation getEnteredJobLocation() {
         return location;
@@ -123,18 +111,9 @@ public class EmployerProfile extends ToolbarActivity {
     }
 
     private void saveProfile() {
-        userRef.child(JOB_TITLE)
-                .setValue(getEnteredJobTitle());
-        userRef.child(TOTAL_PAY)
-                .setValue(getEnteredTotalPay());
-        userRef.child(DURATION)
-                .setValue(getEnteredHours());
-        userRef.child(LOCATION)
-                .setValue(getEnteredJobLocation());
-        userRef.child(URGENCY)
-                .setValue(getEnteredUrgency());
-        userRef.child(DESCRIPTION)
-                .setValue(getEnteredJobDescription());
+        EmployerPreferredJob job = new EmployerPreferredJob(getEnteredJobTitle(), getEnteredDuration(),
+                getEnteredTotalPay(), getEnteredUrgency(), getEnteredJobLocation());
+        userRef.setValue(job);
     }
 
     public void onClickGetLocation(View view) {

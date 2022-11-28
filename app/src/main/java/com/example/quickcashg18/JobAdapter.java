@@ -141,7 +141,6 @@ public class JobAdapter extends ArrayAdapter<Job> {
 
             return titleMatch && totalPayMatch && minHoursMatch && maxHoursMatch &&
                     urgencyMatch && locationMatch;
-
         }
 
         @Override
