@@ -4,20 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PastJobs" >
-
     <Button
         android:id="@+id/paymentPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Payment"
-        tools:layout_editor_absoluteX="259dp"
-        tools:layout_editor_absoluteY="64dp" />
+        tools:layout_editor_absoluteX="290dp"
+        tools:layout_editor_absoluteY="136dp" />
+    <TextView
+        android:id="@+id/JobTitleTV"
+        android:layout_constraintEnd_toEndOf="parent"
+        android:layout_constraintStart_toStartOf="parent"
+        android:layout_constraintTop_toBottomOf="@id/paymentPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="34dp" />
+    <TextView
+        android:id="@+id/TotalPayTV"
+        android:layout_constraintEnd_toEndOf="parent"
+        android:layout_constraintStart_toStartOf="parent"
+        android:layout_constraintTop_toBottomOf="@id/paymentPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="34dp" />
 
     <TextView
-        android:id="@+id/payment"
-        android:layout_width="350dp"
-        android:layout_height="103dp"
-        android:text="past job"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:id="@+id/durationTV"
+        android:layout_constraintEnd_toEndOf="parent"
+        android:layout_constraintStart_toStartOf="parent"
+        android:layout_constraintTop_toBottomOf="@id/JobTitleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="95dp" />
+
+    <TextView
+        android:id="@+id/StatusTV"
+        android:layout_constraintEnd_toEndOf="parent"
+        android:layout_constraintStart_toStartOf="parent"
+        android:layout_constraintTop_toBottomOf="@id/durationTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="-9dp"
+        tools:layout_editor_absoluteY="71dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
