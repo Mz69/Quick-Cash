@@ -81,27 +81,6 @@
             android:text="URGENCY" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/slotDistanceSection"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/slotDistanceTag"
-            android:layout_width="127dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Distance from You: " />
-
-        <TextView
-            android:id="@+id/slotDistanceDescriptor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="DISTANCE" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/applyToJob"
         android:layout_width="100dp"

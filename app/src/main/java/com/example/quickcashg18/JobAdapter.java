@@ -137,7 +137,6 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
         TextView totalPay = slot.findViewById(R.id.slotTotalPayDescriptor);
         TextView duration = slot.findViewById(R.id.slotDurationDescriptor);
         TextView urgency = slot.findViewById(R.id.slotUrgencyDescriptor);
-        TextView distance = slot.findViewById(R.id.slotDistanceDescriptor);
 
         Job job = getItem(position);
 
@@ -145,7 +144,6 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
         totalPay.setText("" + job.getTotalPay());
         duration.setText("" + job.getDuration());
         urgency.setText(job.getUrgency());
-        distance.setText(""); // Need to update when sorting by distance works!
 
         return slot;
     }
