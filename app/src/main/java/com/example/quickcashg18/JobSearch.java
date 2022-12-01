@@ -6,12 +6,10 @@ import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,15 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 
 public class JobSearch extends ToolbarActivity {
 
     private ArrayList<Job> availableJobs;
-    private ArrayAdapter adapter;
+    private JobAdapter adapter;
     private FirebaseDatabase firebaseDB;
     private DatabaseReference jobsRef;
     private DatabaseReference userRef;
@@ -59,14 +55,6 @@ public class JobSearch extends ToolbarActivity {
         initListeners();
         refreshJobList();
         initJobList();
-
-        /*
-        AdapterView.OnItemClickListener jobSelect = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        }*/
     }
 
     private void initViews() {
@@ -92,12 +80,17 @@ public class JobSearch extends ToolbarActivity {
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
     }
 
+    /**
+     * Initializes the job list as shown in the job search, along
+     * with the adapter used to perform filtering.
+     */
     private void initJobList() {
-        adapter = new JobAdapter(this, availableJobs);
+        adapter = new JobAdapter(this, R.layout.listed_job, R.id.slotJobTitleDescriptor, availableJobs);
         listView.setAdapter(adapter);
         enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String jobTitle) {
+                // Obtain the preferences
                 String duration = getEnteredDuration();
                 String totalPay = getEnteredTotalPay();
                 String urgency = getEnteredUrgency();
@@ -106,29 +99,21 @@ public class JobSearch extends ToolbarActivity {
                 EmployeePreferredJob pref = new EmployeePreferredJob(jobTitle, duration, totalPay,
                         urgency, location, distance);
 
+                // Serialize the job preferences to be passed to the filter
                 try {
                     ByteArrayOutputStream outBytes = new ByteArrayOutputStream();
                     ObjectOutputStream out = new ObjectOutputStream(outBytes);
                     out.writeObject(pref);
                     String byteString = new String(Base64.getEncoder().encode(outBytes.toByteArray()));
-                    System.out.println("byteString is " + byteString);
                     adapter.getFilter().filter(byteString);
-                    String test = "";
-                    return true;
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
-                /*System.out.println("s is " + s);
-                if (hasJob(s)) {
-                    //adapter.getFilter().filter(s);
-                    return true;
-                } else {
-                    // Search query not found in List View
-                    Toast.makeText(JobSearch.this, "Not found", Toast.LENGTH_LONG).show();
-                }*/
+
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String jobTitle) {
                 refreshJobList();
@@ -137,6 +122,11 @@ public class JobSearch extends ToolbarActivity {
         });
     }
 
+    /**
+     * Updates the job list with any new jobs from the database.
+     * Useful for live updates of the incomplete jobs in case some
+     * other user completes a job while the given user is searching.
+     */
     private void refreshJobList() {
         availableJobs = new ArrayList();
         jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -152,15 +142,6 @@ public class JobSearch extends ToolbarActivity {
                 Log.e("JobSearch", error.getMessage());
             }
         });
-    }
-
-    private boolean hasJob(String desiredJobTitle) {
-        for (Job job : availableJobs) {
-            if (job.getJobTitle().equalsIgnoreCase(desiredJobTitle)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void onClickImportPreferences(View view) {
@@ -188,27 +169,6 @@ public class JobSearch extends ToolbarActivity {
 
     public void onClickSelectLocation(View view) {
         getLocation.launch(null);
-    }
-
-    public boolean isValidDuration() {
-        return Validation.isValidDoubleField(getEnteredDuration());
-    }
-
-    public boolean isValidTotalPay() {
-        return Validation.isValidDoubleField(getEnteredTotalPay());
-    }
-
-    public boolean isValidUrgency() {
-        String urgency = getEnteredUrgency();
-        return urgency.equals("Urgent") || urgency.equals("Not Urgent");
-    }
-
-    public boolean isValidDistance() {
-        return Validation.isValidDoubleField(getEnteredDistance());
-    }
-
-    public boolean isValidLocation() {
-        return getEnteredLocation() != null;
     }
 
     public String getEnteredDuration() {

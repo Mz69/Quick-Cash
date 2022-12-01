@@ -1,49 +1,124 @@
 package com.example.quickcashg18;
 
 import android.content.Context;
-import android.location.Location;
+import android.content.res.Resources;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.BaseAdapter;
 import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.TextView;
+import android.widget.ThemedSpinnerAdapter;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * This class is ArrayAdapter customized for filtering jobs
- * according to the user's preferences.
+ * This class is a slight modification of the ArrayAdapter class,
+ * sourced from
+ * https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/widget/ArrayAdapter.java.
+ * It is used in the job search so that users can filter the jobs by preferences (e.g. total pay).
  *
- * We were originally using ArrayAdapter anyway, but jobs were
- * only filtered by their title, and not by any other preferences.
- * The idea behind customizing ArrayAdapter for our purposes is from this old
- * StackOverflow post at
- * https://stackoverflow.com/questions/6492214/custom-filtering-arrayadapter-in-listview.
- * Most notably, the user Ben's answer was crucial.
+ * Modifying ArrayAdapter instead of overriding ArrayAdapter seemed necessary. We tried
+ * to override it and provide the filter ourselves that way, but there were variables in
+ * ArrayAdapter that were private and without getters/setters, which we needed in order to make it work.
+ *
+ * Useless methods from ArrayAdapter, along with its all of its comments, have been removed, so that
+ * our own comments are easily distinguished.
  */
-public class JobAdapter extends ArrayAdapter<Job> {
-    private final static int jobResource = R.layout.listed_job;
-    private Filter filter;
+public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinnerAdapter {
 
-    public JobAdapter(Context context, List<Job> jobList) {
-        super(context, jobResource, jobList);
+    private final Object mLock = new Object();
+    private final LayoutInflater mInflater;
+    private final Context mContext;
+
+    private int mDropDownResource;
+
+    private List<Job> mObjects;
+
+    private boolean mObjectsFromResources;
+
+    private int mFieldId = 0;
+
+    private boolean mNotifyOnChange = true;
+
+    private ArrayList<Job> mOriginalValues;
+    private JobFilter mFilter;
+
+    private LayoutInflater mDropDownInflater;
+
+    public JobAdapter(@NonNull Context context, @LayoutRes int resource,
+                      @IdRes int textViewResourceId, @NonNull List<Job> objects) {
+        this(context, resource, textViewResourceId, objects, false);
+    }
+
+    private JobAdapter(@NonNull Context context, @LayoutRes int resource,
+                       @IdRes int textViewResourceId, @NonNull List<Job> objects, boolean objsFromResources) {
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+        mDropDownResource = resource;
+        mObjects = objects;
+        mObjectsFromResources = objsFromResources;
+        mFieldId = textViewResourceId;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        mNotifyOnChange = true;
+    }
+
+    public @NonNull Context getContext() {
+        return mContext;
+    }
+    @Override
+    public int getCount() {
+        return mObjects.size();
+    }
+    @Override
+    public Job getItem(int position) {
+        return mObjects.get(position);
+    }
+
+    public int getmDropDownResource() { return mDropDownResource; }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    /**
+     * Given a job, constructs the layout seen in listed_job.xml.
+     * Note that this assumes that mDropDownResource is listed_job.xml,
+     * but we have not deleted mDropDownResource. This is because we may
+     * want to use this class in the future for something else
+     * (e.g. JOB HISTORY), and it is easy to simply extend this class
+     * and override getView as desired. For this reason, we have also made
+     * a getter method for mDropDownResource (note its use in the inflater here).
+     */
+    @Override
+    public @NonNull View getView(int position, View convertView,
+                                 @NonNull ViewGroup parent) {
         View slot = convertView;
 
         if (slot == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            slot = inflater.inflate(jobResource, parent, false);
+            slot = inflater.inflate(mDropDownResource, parent, false);
         }
 
         TextView title = slot.findViewById(R.id.slotJobTitleDescriptor);
@@ -63,75 +138,153 @@ public class JobAdapter extends ArrayAdapter<Job> {
         return slot;
     }
 
-    @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new JobFilter();
+    private @NonNull View createViewFromResource(@NonNull LayoutInflater inflater, int position,
+                                                 View convertView, @NonNull ViewGroup parent, int resource) {
+        final View view;
+        final TextView text;
+        if (convertView == null) {
+            view = inflater.inflate(resource, parent, false);
+        } else {
+            view = convertView;
         }
-        return filter;
-    }
-
-    private class JobFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            ArrayList<Job> jobs = new ArrayList<>();
-            int numJobs = getCount();
-            for (int i = 0; i < numJobs; i++) {
-                jobs.add(getItem(i));
-            }
-
-            if (constraint == null || constraint.length() == 0) {
-                results.values = jobs;
-                results.count = numJobs;
-                return results;
-            }
-
-            EmployeePreferredJob prefJob = null;
-            try {
-                String prefBytes = constraint.toString();
-                byte[] data = Base64.getDecoder().decode(prefBytes);
-                ByteArrayInputStream inBytes = new ByteArrayInputStream(data);
-                ObjectInputStream in = new ObjectInputStream(inBytes);
-                prefJob = (EmployeePreferredJob) in.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(2);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                System.exit(3);
-            }
-
-            if (prefJob == null) {
-                return results;
-            }
-            ArrayList<Job> filteredJobs = new ArrayList<>();
-            for (Job j : jobs) {
-                if (prefJob.acceptableJob(j)) {
-                    filteredJobs.add(j);
+        try {
+            if (mFieldId == 0) {
+                text = (TextView) view;
+            } else {
+                text = view.findViewById(mFieldId);
+                if (text == null) {
+                    throw new RuntimeException("Failed to find view with ID "
+                            + mContext.getResources().getResourceName(mFieldId)
+                            + " in item layout");
                 }
             }
+        } catch (ClassCastException e) {
+            Log.e("JobAdapter", "You must supply a resource ID for a TextView");
+            throw new IllegalStateException(
+                    "JobAdapter requires the resource ID to be a TextView", e);
+        }
+        final Job item = getItem(position);
+        if (item instanceof CharSequence) {
+            text.setText((CharSequence) item);
+        } else {
+            text.setText(item.toString());
+        }
+        return view;
+    }
 
-            results.values = filteredJobs;
-            results.count = filteredJobs.size();
+    @Override
+    public void setDropDownViewTheme(Resources.Theme theme) {
+        if (theme == null) {
+            mDropDownInflater = null;
+        } else if (theme == mInflater.getContext().getTheme()) {
+            mDropDownInflater = mInflater;
+        } else {
+            final Context context = new ContextThemeWrapper(mContext, theme);
+            mDropDownInflater = LayoutInflater.from(context);
+        }
+    }
+    @Override
+    public Resources.Theme getDropDownViewTheme() {
+        return mDropDownInflater == null ? null : mDropDownInflater.getContext().getTheme();
+    }
+    @Override
+    public View getDropDownView(int position, View convertView,
+                                @NonNull ViewGroup parent) {
+        final LayoutInflater inflater = mDropDownInflater == null ? mInflater : mDropDownInflater;
+        return createViewFromResource(inflater, position, convertView, parent, mDropDownResource);
+    }
+    @Override
+    public @NonNull Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new JobFilter();
+        }
+        return mFilter;
+    }
+
+    @Override
+    public CharSequence[] getAutofillOptions() {
+        final CharSequence[] explicitOptions = super.getAutofillOptions();
+        if (explicitOptions != null) {
+            return explicitOptions;
+        }
+        if (!mObjectsFromResources || mObjects == null || mObjects.isEmpty()) {
+            return null;
+        }
+        final int size = mObjects.size();
+        final CharSequence[] options = new CharSequence[size];
+        mObjects.toArray(options);
+        return options;
+    }
+
+    /**
+     * JobFilter filters jobs using the acceptableJob(Job job) method
+     * in EmployeePreferredJob.
+     */
+    private class JobFilter extends Filter {
+        /**
+         * Since the given filter methods take in CharSequences to perform their
+         * filtering, we assume that the CharSequence represents a String-encoded byte array
+         * representing a serialized EmployeePreferredJob object.
+         */
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            final FilterResults results = new FilterResults();
+            if (mOriginalValues == null) {
+                synchronized (mLock) {
+                    mOriginalValues = new ArrayList<>(mObjects);
+                }
+            }
+            if (prefix == null || prefix.length() == 0) {
+                final ArrayList<Job> list;
+                synchronized (mLock) {
+                    list = new ArrayList<>(mOriginalValues);
+                }
+                results.values = list;
+                results.count = list.size();
+            } else {
+                // De-serialize the preferred job
+                EmployeePreferredJob prefJob = null;
+                try {
+                    String prefBytes = prefix.toString();
+                    byte[] data = Base64.getDecoder().decode(prefBytes);
+                    ByteArrayInputStream inBytes = new ByteArrayInputStream(data);
+                    ObjectInputStream in = new ObjectInputStream(inBytes);
+                    prefJob = (EmployeePreferredJob) in.readObject();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(2);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                    System.exit(3);
+                }
+
+                if (prefJob == null) {
+                    return results;
+                }
+
+                final ArrayList<Job> values;
+                synchronized (mLock) {
+                    values = new ArrayList<>(mOriginalValues);
+                }
+
+                // Filter by the given preferences
+                final int count = values.size();
+                final ArrayList<Job> newValues = new ArrayList<>();
+                for (int i = 0; i < count; i++) {
+                    final Job value = values.get(i);
+                    if (prefJob.acceptableJob(value)) {
+                        newValues.add(value);
+                    }
+                }
+                results.values = newValues;
+                results.count = newValues.size();
+            }
             return results;
         }
 
-        /**
-         * Pretty sure this method is destroying
-         * the entire original list of jobs!
-         * Hence, none are displayed after filtering once
-         * and then filtering again.
-         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            if (constraint == null || results == null || results.values == null) {
-                return;
-            }
-            clear();
-            addAll((List<Job>)results.values);
+            mObjects = (List<Job>) results.values;
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {

@@ -1,5 +1,8 @@
 package com.example.quickcashg18;
 
+/**
+ * Stores an Employer's preferences for job postings.
+ */
 public class EmployerPreferredJob extends Job {
 
     public EmployerPreferredJob() { super(); }

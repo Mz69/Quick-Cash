@@ -37,8 +37,6 @@ n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
 l
 <app/src/main/java/com/example/quickcashg18/MainActivity.java,a/8/a8091c44325ae96365efac58f993a126101456fa
-t
-Dapp/src/main/java/com/example/quickcashg18/EmployerPreferredJob.java,4/5/4541489b6a079ffc235e746574d53f96dfa417d7
 g
 7app/src/main/java/com/example/quickcashg18/PostJob.java,9/f/9fd3484401d5f9236460ab6187e67193a8d6411c
 q
