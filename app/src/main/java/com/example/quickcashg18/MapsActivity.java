@@ -16,6 +16,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -71,7 +72,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     // The location selected by the user.
-    private MyLocation selectedLocation;
+    private Location selectedLocation;
     /**
      * A tag used by the activity that called MapsActivity to access the
      * location returned by MapsActivity.
@@ -108,7 +109,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void init() {
         setTitle("Please select the desired location");
 
-        selectedLocation = new MyLocation("");
+        selectedLocation = new Location("");
 
         yesButton = findViewById(R.id.locationConfirmButtonYes);
         noButton = findViewById(R.id.locationConfirmButtonNo);
@@ -129,7 +130,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * returned via setResult to the activity that called MapsActivity for processing.
      */
     public void onClickYes(View view) {
-        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, selectedLocation);
+        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, (Parcelable) selectedLocation);
         setResult(Activity.RESULT_OK, locationResult);
         finish();
     }

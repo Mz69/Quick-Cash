@@ -101,7 +101,7 @@ public class EmployeeProfileInstrumentedTest {
     }
 
     private void enterValidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(VALID_MAX_HOURS));
+        onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(VALID_MAX_HOURS));
     }
 
     private void enterInvalidMinHourlyWage() {
@@ -113,7 +113,7 @@ public class EmployeeProfileInstrumentedTest {
     }
 
     private void enterInvalidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(INVALID_MAX_HOURS));
+        onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(INVALID_MAX_HOURS));
     }
 
     private void applyChanges() {
@@ -170,7 +170,7 @@ public class EmployeeProfileInstrumentedTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMaxHours = snapshot.child(EmployeeProfile.MAX_HOURS).getValue(String.class);
+                actualMaxHours = snapshot.child(EmployeeProfile.MAX_DURATION).getValue(String.class);
             }
 
             @Override
@@ -187,7 +187,7 @@ public class EmployeeProfileInstrumentedTest {
                 .setValue("");
         userRef.child(EmployeeProfile.MIN_HOURS)
                 .setValue("");
-        userRef.child(EmployeeProfile.MAX_HOURS)
+        userRef.child(EmployeeProfile.MAX_DURATION)
                 .setValue("");
     }
 

@@ -1,31 +1,55 @@
 package com.example.quickcashg18;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 
+/**
+ * Handles all job searching by employees.
+ * At present, the user must type in the job search field in order
+ * for all of their filters to be applied.
+ */
 public class JobSearch extends ToolbarActivity {
 
-    SearchView searchView;
-    ListView listView;
-    ArrayList<Job> availableJobs;
-    ArrayAdapter<Job> adapter;
-    FirebaseDatabase firebaseDB;
-    DatabaseReference jobsRef;
+    private ArrayList<Job> availableJobs;
+    private JobAdapter adapter;
+    private FirebaseDatabase firebaseDB;
+    private DatabaseReference jobsRef;
+    private DatabaseReference userRef;
+    private DatabaseReference userPrefRef;
+
+    private SearchView enterJobTitle;
+    private ListView listView;
+    private Button importPref;
+    private EditText enterDuration;
+    private EditText enterTotalPay;
+    private EditText enterUrgency;
+    private EditText enterDistance;
+    private Button selectLocation;
+    private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
+            this::setEnteredLocation);
+    private MyLocation selectedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,40 +57,99 @@ public class JobSearch extends ToolbarActivity {
         setContentView(R.layout.activity_job_search);
 
         initDatabase();
-        refreshJobListAccordingToParameters();
+        initViews();
+        initLocation();
+        initListeners();
+        refreshJobList();
+        initJobList();
+    }
 
-        searchView = findViewById(R.id.searchView);
+    private void initViews() {
+        enterJobTitle = findViewById(R.id.searchView);
         listView = findViewById(R.id.list_view);
+        importPref = findViewById(R.id.importPreferencesJobSearch);
+        enterDuration = findViewById(R.id.durationJobSearch);
+        enterTotalPay = findViewById(R.id.totalPayJobSearch);
+        enterUrgency = findViewById(R.id.urgencyJobSearch);
+        enterDistance = findViewById(R.id.distanceJobSearch);
+        selectLocation = findViewById(R.id.selectLocationJobSearch);
+    }
 
-        adapter = new ArrayAdapter<Job>(this, android.R.layout.simple_list_item_1,availableJobs);
-        listView.setAdapter(adapter);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                if (hasJob(s)) {
-                    adapter.getFilter().filter(s);
-                } else {
-                    // Search query not found in List View
-                    Toast.makeText(JobSearch.this, "Not found", Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                adapter.getFilter().filter(s);
-
-                return false;
-            }
-        });
+    private void initListeners() {
+        importPref.setOnClickListener(this::onClickImportPreferences);
+        selectLocation.setOnClickListener(this::onClickSelectLocation);
     }
 
     private void initDatabase() {
         firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
+        userPrefRef = userRef.child(EmployeeProfile.PREFERENCES);
     }
 
-    private void refreshJobListAccordingToParameters() {
+    private void initLocation() {
+        userRef.child(MapsActivity.CURRENT_LOCATION).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                selectedLocation = snapshot.getValue(MyLocation.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("JobSearch", error.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Initializes the job list as shown in the job search, along
+     * with the adapter used to perform filtering.
+     */
+    private void initJobList() {
+        adapter = new JobAdapter(this, R.layout.listed_job, R.id.slotJobTitleDescriptor, availableJobs);
+        listView.setAdapter(adapter);
+        enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String jobTitle) {
+                // Obtain the preferences
+                String duration = getEnteredDuration();
+                String totalPay = getEnteredTotalPay();
+                String urgency = getEnteredUrgency();
+                MyLocation location = getEnteredLocation();
+                String distance = getEnteredDistance();
+                EmployeePreferredJob pref = new EmployeePreferredJob(jobTitle, duration, totalPay,
+                        urgency, location, distance);
+
+                // Serialize the job preferences to be passed to the filter
+                try {
+                    ByteArrayOutputStream outBytes = new ByteArrayOutputStream();
+                    ObjectOutputStream out = new ObjectOutputStream(outBytes);
+                    out.writeObject(pref);
+                    String byteString = new String(Base64.getEncoder().encode(outBytes.toByteArray()));
+                    adapter.getFilter().filter(byteString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String jobTitle) {
+                refreshJobList();
+                return onQueryTextSubmit(jobTitle);
+            }
+        });
+    }
+
+    /**
+     * Updates the job list with any new jobs from the database.
+     * Useful for live updates of the incomplete jobs in case some
+     * other user completes a job while the given user is searching.
+     */
+    private void refreshJobList() {
         availableJobs = new ArrayList();
         jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,12 +166,73 @@ public class JobSearch extends ToolbarActivity {
         });
     }
 
-    private boolean hasJob(String desiredJobTitle) {
-        for (Job job : availableJobs) {
-            if (job.getJobTitle().equalsIgnoreCase(desiredJobTitle)) {
-                return true;
+    public void onClickImportPreferences(View view) {
+        userPrefRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EmployeePreferredJob pref = snapshot.getValue(EmployeePreferredJob.class);
+                if (pref != null) {
+                    setEnteredJobTitle(pref.getJobTitle());
+                    setEnteredDuration("" + pref.getDuration());
+                    setEnteredTotalPay("" + pref.getTotalPay());
+                    setEnteredUrgency(pref.getUrgency());
+                    setEnteredDistance("" + pref.getMaxDistance());
+                    setEnteredLocation(pref.getMyLocation());
+                }
             }
-        }
-        return false;
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("JobSearch", error.getMessage());
+            }
+        });
+    }
+
+    public void onClickSelectLocation(View view) {
+        getLocation.launch(null);
+    }
+
+    public String getEnteredDuration() {
+        return enterDuration.getText().toString().trim();
+    }
+
+    public String getEnteredTotalPay() {
+        return enterTotalPay.getText().toString().trim();
+    }
+
+    public String getEnteredUrgency() {
+        return enterUrgency.getText().toString().trim();
+    }
+
+    public String getEnteredDistance() {
+        return enterDistance.getText().toString().trim();
+    }
+
+    public MyLocation getEnteredLocation() {
+        return selectedLocation;
+    }
+
+    public void setEnteredJobTitle(String jobTitle) {
+        enterJobTitle.setQuery(jobTitle.trim(), true);
+    }
+
+    public void setEnteredDuration(String duration) {
+        enterDuration.setText(duration.trim());
+    }
+
+    public void setEnteredTotalPay(String totalPay) {
+        enterTotalPay.setText(totalPay.trim());
+    }
+
+    public void setEnteredUrgency(String urgency) {
+        enterUrgency.setText(urgency.trim());
+    }
+
+    public void setEnteredDistance(String distance) {
+        enterDistance.setText(distance.trim());
+    }
+
+    public void setEnteredLocation(MyLocation l) {
+        selectedLocation = l;
     }
 }

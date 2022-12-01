@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/slotTitleSection"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/slotJobTitleDescriptor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Job Title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/slotTotalPaySection"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/slotTotalPayTag"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Total Pay:" />
+
+        <TextView
+            android:id="@+id/slotTotalPayDescriptor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PAY" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/slotDurationSection"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/slotDurationTag"
+            android:layout_width="63dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Duration:" />
+
+        <TextView
+            android:id="@+id/slotDurationDescriptor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DURATION" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/slotUrgencySection"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/slotUrgencyTag"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Urgency:" />
+
+        <TextView
+            android:id="@+id/slotUrgencyDescriptor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="URGENCY" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/applyToJob"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Apply" />
+</LinearLayout>
