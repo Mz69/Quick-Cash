@@ -25,6 +25,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 
+/**
+ * Handles all job searching by employees.
+ * At present, the user must type in the job search field in order
+ * for all of their filters to be applied.
+ */
 public class JobSearch extends ToolbarActivity {
 
     private ArrayList<Job> availableJobs;

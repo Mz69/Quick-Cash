@@ -16,6 +16,9 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
         this.maxDistance = maxDistance;
     }
 
+    // Invalid string arguments default to another value!
+    // For example, an invalid maximum distance defaults to the maximum
+    // allowed distance.
     public EmployeePreferredJob(String jobTitle, String duration, String totalPay,
                                 String urgency, MyLocation location, String maxDistance) {
         super(jobTitle, duration, totalPay, urgency, location);
@@ -30,7 +33,8 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
     @Override
     public boolean acceptableJob(Job job) {
         return acceptableJobTitle(job) && acceptableTotalPay(job) &&
-                acceptableDuration(job) && acceptableDistance(job);
+                acceptableDuration(job) && acceptableUrgency(job) &&
+                acceptableDistance(job);
     }
 
     private boolean acceptableJobTitle(Job job) {
@@ -57,11 +61,21 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
         return getDuration() >= job.getDuration();
     }
 
+    /**
+     * A job's urgency must be at least as urgent the
+     * Employee's urgency.
+     */
     private boolean acceptableUrgency(Job job) {
-        String prefUrgency = getUrgency();
-        return prefUrgency.equals("") || getUrgency().equals(job.getUrgency());
+        // The "Urgent" here is a magic value.
+        // If you're doing some refactoring, refactor this across the code!
+        // Maybe create a file with "Urgent" and "Not Urgent" constants.
+        if (getUrgency().equals("Urgent")) {
+            return job.getUrgency().equals("Urgent");
+        }
+        return true;
     }
 
+    // Filtering by distance must be added. Every other filter works.
     private boolean acceptableDistance(Job job) {
         return true;
     }
