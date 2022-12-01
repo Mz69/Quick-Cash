@@ -44,7 +44,7 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
             return true;
         }
 
-        String splitJobTitle[] = job.getJobTitle().toLowerCase().split(" ");
+        String[] splitJobTitle = job.getJobTitle().toLowerCase().split(" ");
         for (String s : splitJobTitle) {
             if (s.startsWith(prefTitle)) {
                 return true;
@@ -75,9 +75,8 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
         return true;
     }
 
-    // Filtering by distance must be added. Every other filter works.
     private boolean acceptableDistance(Job job) {
-        return true;
+        return getDistanceFrom(job) <= getMaxDistance();
     }
 
     public String toString() {

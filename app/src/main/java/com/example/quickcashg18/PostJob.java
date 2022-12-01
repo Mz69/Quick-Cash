@@ -1,7 +1,6 @@
 package com.example.quickcashg18;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -167,7 +165,7 @@ public class PostJob extends ToolbarActivity {
                     setTotalPay("" + prefJob.getTotalPay());
                     setDuration("" + prefJob.getDuration());
                     setUrgency(prefJob.getUrgency());
-                    setLocation(prefJob.getLocation());
+                    setLocation(prefJob.getMyLocation());
                 }
             }
 

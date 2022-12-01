@@ -37,6 +37,7 @@ public class JobSearch extends ToolbarActivity {
     private FirebaseDatabase firebaseDB;
     private DatabaseReference jobsRef;
     private DatabaseReference userRef;
+    private DatabaseReference userPrefRef;
 
     private SearchView enterJobTitle;
     private ListView listView;
@@ -48,15 +49,16 @@ public class JobSearch extends ToolbarActivity {
     private Button selectLocation;
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setEnteredLocation);
-    private MyLocation location;
+    private MyLocation selectedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_search);
 
-        initViews();
         initDatabase();
+        initViews();
+        initLocation();
         initListeners();
         refreshJobList();
         initJobList();
@@ -83,6 +85,21 @@ public class JobSearch extends ToolbarActivity {
         jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
+        userPrefRef = userRef.child(EmployeeProfile.PREFERENCES);
+    }
+
+    private void initLocation() {
+        userRef.child(MapsActivity.CURRENT_LOCATION).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                selectedLocation = snapshot.getValue(MyLocation.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("JobSearch", error.getMessage());
+            }
+        });
     }
 
     /**
@@ -109,6 +126,7 @@ public class JobSearch extends ToolbarActivity {
                     ByteArrayOutputStream outBytes = new ByteArrayOutputStream();
                     ObjectOutputStream out = new ObjectOutputStream(outBytes);
                     out.writeObject(pref);
+                    System.out.println("From JobSearch: " + pref.getMyLocation());
                     String byteString = new String(Base64.getEncoder().encode(outBytes.toByteArray()));
                     adapter.getFilter().filter(byteString);
                 } catch (IOException e) {
@@ -150,8 +168,7 @@ public class JobSearch extends ToolbarActivity {
     }
 
     public void onClickImportPreferences(View view) {
-        DatabaseReference preferences = userRef.child(EmployeeProfile.PREFERENCES);
-        preferences.addListenerForSingleValueEvent(new ValueEventListener() {
+        userPrefRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 EmployeePreferredJob pref = snapshot.getValue(EmployeePreferredJob.class);
@@ -161,7 +178,7 @@ public class JobSearch extends ToolbarActivity {
                     setEnteredTotalPay("" + pref.getTotalPay());
                     setEnteredUrgency(pref.getUrgency());
                     setEnteredDistance("" + pref.getMaxDistance());
-                    setEnteredLocation(pref.getLocation());
+                    setEnteredLocation(pref.getMyLocation());
                 }
             }
 
@@ -193,7 +210,7 @@ public class JobSearch extends ToolbarActivity {
     }
 
     public MyLocation getEnteredLocation() {
-        return location;
+        return selectedLocation;
     }
 
     public void setEnteredJobTitle(String jobTitle) {
@@ -217,6 +234,6 @@ public class JobSearch extends ToolbarActivity {
     }
 
     public void setEnteredLocation(MyLocation l) {
-        location = l;
+        selectedLocation = l;
     }
 }

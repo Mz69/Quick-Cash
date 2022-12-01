@@ -21,11 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 /*
  * Copyright (C) 2006 The Android Open Source Project
@@ -105,6 +101,7 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
     public int getCount() {
         return mObjects.size();
     }
+
     @Override
     public Job getItem(int position) {
         return mObjects.get(position);
@@ -148,7 +145,7 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
         totalPay.setText("" + job.getTotalPay());
         duration.setText("" + job.getDuration());
         urgency.setText(job.getUrgency());
-        distance.setText("500 km"); // Need to update when sorting by distance works!
+        distance.setText(""); // Need to update when sorting by distance works!
 
         return slot;
     }
@@ -265,6 +262,7 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
                     ByteArrayInputStream inBytes = new ByteArrayInputStream(data);
                     ObjectInputStream in = new ObjectInputStream(inBytes);
                     prefJob = (EmployeePreferredJob) in.readObject();
+                    System.out.println("prefJob has location " + prefJob.getMyLocation());
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(2);

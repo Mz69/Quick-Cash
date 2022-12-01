@@ -42,7 +42,7 @@ public class Job implements Serializable {
     }
 
     public void setLocation(MyLocation location){
-        this.location=location;
+        this.location = location;
     }
 
     public void setDuration(double duration) {
@@ -62,7 +62,7 @@ public class Job implements Serializable {
         return jobTitle;
     }
 
-    public MyLocation getLocation() {
+    public MyLocation getMyLocation() {
         return location;
     }
 
@@ -72,6 +72,10 @@ public class Job implements Serializable {
 
     public String getUrgency() {
         return urgency;
+    }
+
+    public double getDistanceFrom(Job job) {
+        return getMyLocation().getDistance(job.getMyLocation());
     }
 
     public String toString() { return jobTitle; }
