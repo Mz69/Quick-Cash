@@ -77,8 +77,7 @@ public class JobAdapter extends ArrayAdapter<Job> {
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
-            System.out.println("Made it?");
-            ArrayList<Job> jobs = new ArrayList<Job>();
+            ArrayList<Job> jobs = new ArrayList<>();
             int numJobs = getCount();
             for (int i = 0; i < numJobs; i++) {
                 jobs.add(getItem(i));
@@ -90,7 +89,6 @@ public class JobAdapter extends ArrayAdapter<Job> {
                 return results;
             }
 
-            System.out.println("Under here?");
             EmployeePreferredJob prefJob = null;
             try {
                 String prefBytes = constraint.toString();
@@ -100,27 +98,11 @@ public class JobAdapter extends ArrayAdapter<Job> {
                 prefJob = (EmployeePreferredJob) in.readObject();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.exit(1);
+                System.exit(2);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-                System.exit(1);
+                System.exit(3);
             }
-
-            /*Scanner prefGet = new Scanner(prefConstraints);
-            String jobTitle = prefGet.nextLine();
-            double duration = prefGet.nextDouble();
-            double totalPay = prefGet.nextDouble();
-            double distance = prefGet.nextDouble();
-            double latitude = prefGet.nextDouble();
-            double longitude = prefGet.nextDouble();
-            prefGet.nextLine();
-            prefGet.close();
-            String urgency = prefGet.nextLine();
-            MyLocation location = new MyLocation("");
-            location.setLatitude(latitude);
-            location.setLongitude(longitude);
-            EmployeePreferredJob prefJob = new EmployeePreferredJob(jobTitle, duration, totalPay,
-                    urgency, location, distance);*/
 
             if (prefJob == null) {
                 return results;
@@ -137,6 +119,12 @@ public class JobAdapter extends ArrayAdapter<Job> {
             return results;
         }
 
+        /**
+         * Pretty sure this method is destroying
+         * the entire original list of jobs!
+         * Hence, none are displayed after filtering once
+         * and then filtering again.
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             if (constraint == null || results == null || results.values == null) {

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,7 +32,7 @@ import java.util.Base64;
 public class JobSearch extends ToolbarActivity {
 
     private ArrayList<Job> availableJobs;
-    private JobAdapter adapter;
+    private ArrayAdapter adapter;
     private FirebaseDatabase firebaseDB;
     private DatabaseReference jobsRef;
     private DatabaseReference userRef;
@@ -129,10 +130,9 @@ public class JobSearch extends ToolbarActivity {
                 return false;
             }
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String jobTitle) {
                 refreshJobList();
-                //adapter.getFilter().filter(s);
-                return false;
+                return onQueryTextSubmit(jobTitle);
             }
         });
     }
