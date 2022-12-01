@@ -262,7 +262,6 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
                     ByteArrayInputStream inBytes = new ByteArrayInputStream(data);
                     ObjectInputStream in = new ObjectInputStream(inBytes);
                     prefJob = (EmployeePreferredJob) in.readObject();
-                    System.out.println("prefJob has location " + prefJob.getMyLocation());
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(2);

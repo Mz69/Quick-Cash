@@ -126,7 +126,6 @@ public class JobSearch extends ToolbarActivity {
                     ByteArrayOutputStream outBytes = new ByteArrayOutputStream();
                     ObjectOutputStream out = new ObjectOutputStream(outBytes);
                     out.writeObject(pref);
-                    System.out.println("From JobSearch: " + pref.getMyLocation());
                     String byteString = new String(Base64.getEncoder().encode(outBytes.toByteArray()));
                     adapter.getFilter().filter(byteString);
                 } catch (IOException e) {

@@ -41,7 +41,7 @@ public class Job implements Serializable {
         this.jobTitle = jobTitle;
     }
 
-    public void setLocation(MyLocation location){
+    public void setMyLocation(MyLocation location){
         this.location = location;
     }
 

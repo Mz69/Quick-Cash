@@ -31,10 +31,10 @@ public class PostJob extends ToolbarActivity {
     private FirebaseDatabase firebaseJobDB;
     private DatabaseReference userRef;
     private DatabaseReference jobDBRef;
-    private MyLocation location;
+    private MyLocation selectedLocation;
     Toast errorMsg;
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
-            this::setLocation);
+            this::setSelectedLocation);
 
     public static final String JOB_LIST = "Jobs";
     public static final String INCOMPLETE_JOBS = "Incomplete";
@@ -71,12 +71,12 @@ public class PostJob extends ToolbarActivity {
         return jobTitle.getText().toString().trim();
     }
 
-    protected MyLocation getLocation() {
-        return location;
+    protected MyLocation getSelectedLocation() {
+        return selectedLocation;
     }
 
-    protected void setLocation(MyLocation l) {
-            location = l;
+    protected void setSelectedLocation(MyLocation l) {
+            selectedLocation = l;
     }
 
     protected String getDuration() {
@@ -138,7 +138,7 @@ public class PostJob extends ToolbarActivity {
         if (getLocation == null) {
             System.out.println("Failed location");
         }
-        return getLocation() != null;
+        return getSelectedLocation() != null;
     }
 
     // method checks if all the job details have been entered
@@ -165,7 +165,7 @@ public class PostJob extends ToolbarActivity {
                     setTotalPay("" + prefJob.getTotalPay());
                     setDuration("" + prefJob.getDuration());
                     setUrgency(prefJob.getUrgency());
-                    setLocation(prefJob.getMyLocation());
+                    setSelectedLocation(prefJob.getMyLocation());
                 }
             }
 
@@ -188,14 +188,15 @@ public class PostJob extends ToolbarActivity {
         }
 
         String jobTitle = getJobTitle();
-        MyLocation location = getLocation();
+        MyLocation location = getSelectedLocation();
+        System.out.println("Location from PostJob is " + getSelectedLocation());
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         double duration = Double.parseDouble(getDuration());
         String posterID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         PostedJob job = new PostedJob(jobTitle, duration, totalPay, urgency, location, posterID);
-
+        System.out.println("Using getMyLocation: " + job.getMyLocation());
         // Saving the job details to the database
         saveJobtoFirebase(job);
         Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
