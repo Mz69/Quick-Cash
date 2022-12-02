@@ -3,13 +3,17 @@ package com.example.quickcashg18;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +28,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * Handles all job searching by employees.
@@ -107,7 +112,7 @@ public class JobSearch extends ToolbarActivity {
      * with the adapter used to perform filtering.
      */
     private void initJobList() {
-        adapter = new JobAdapter(this, R.layout.listed_job, R.id.slotJobTitleDescriptor, availableJobs);
+        adapter = new JobSearchAdapter(this, R.layout.listed_job, R.id.slotJobTitleDescriptor, availableJobs);
         listView.setAdapter(adapter);
         enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -165,6 +170,7 @@ public class JobSearch extends ToolbarActivity {
             }
         });
     }
+
 
     public void onClickImportPreferences(View view) {
         userPrefRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -235,4 +241,89 @@ public class JobSearch extends ToolbarActivity {
     public void setEnteredLocation(MyLocation l) {
         selectedLocation = l;
     }
+
+    private class JobSearchAdapter extends JobAdapter {
+
+        public JobSearchAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<Job> objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            View slot = convertView;
+
+            if (slot == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                slot = inflater.inflate(getmDropDownResource(), parent, false);
+            }
+
+            TextView title = slot.findViewById(R.id.slotJobTitleDescriptor);
+            TextView totalPay = slot.findViewById(R.id.slotTotalPayDescriptor);
+            TextView duration = slot.findViewById(R.id.slotDurationDescriptor);
+            TextView urgency = slot.findViewById(R.id.slotUrgencyDescriptor);
+            Button apply = slot.findViewById(R.id.applyToJob);
+
+            Job job = getItem(position);
+
+            title.setText(job.getJobTitle());
+            totalPay.setText("" + job.getTotalPay());
+            duration.setText("" + job.getDuration());
+            urgency.setText(job.getUrgency());
+            apply.setOnClickListener(getOnClickApplyToJob(slot));
+
+            return slot;
+        }
+
+        /**
+         * Allow users to apply to jobs. Note that we put this logic
+         * within JobSearchAdapter and not the parent public class
+         * JobAdapter to ensure we wouldn't have to give random instances
+         * of JobAdapter unnecessary access to the database and user instances!
+         */
+        /*
+        Complete Jobs
+            jobID
+                People who did it
+                    ...
+                Paid for?
+        User
+            Completed Jobs with ID
+         */
+        public View.OnClickListener getOnClickApplyToJob(View slot) {
+            return v -> {
+                TextView jobTitle = slot.findViewById(R.id.slotJobTitleDescriptor);
+            };
+        }
+
+        /**
+         * Employees need to be able to do the following:
+            * List all of their jobs
+                * In progress
+                * Completed
+                * Applied for
+            * See if a previous job is paid for. If it has been paid for,
+              the payment total should be added to the employee's total income.
+            * Click a button to rate the employer.
+         For these reasons, the job from the employee's perspective should contain
+         the following data:
+            * The PostedJob object, as to access the information about the job
+              and display its details. Must include the employer's ID so that
+              the employer can be rated!
+            * A boolean stating whether or not it's been paid for.
+         * Employers need to be able to do the following:
+            * List all of their previous jobs
+                * Previously posted
+                * Completed
+                * Currently available
+            * Pay employees for completing jobs.
+            * Rate employees.
+         For these reasons, the job from the employer's perspective
+         should have the following data:
+            * The PostedJob object.
+            * The user's ID.
+            * A boolean stating whether or not it's been paid for.
+         */
+    }
+
 }
