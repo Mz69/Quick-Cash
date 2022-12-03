@@ -1,95 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PastJobs"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:id="@+id/loadjobBox"
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/loadJob"
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Load jobs" />
-    </LinearLayout>
+        android:layout_weight="0"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-    android:id="@+id/JobTitleBox"
-    android:layout_width="match_parent"
-    android:layout_height="20dp"
-    android:orientation="horizontal">
-        <TextView
-            android:id="@+id/JobTitleTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Job Title" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/JobPayBox"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/JobPayTV"
-            android:layout_width="wrap_content"
+            android:id="@+id/postedJobsTag"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="PAY" />
+            android:text="Posted Jobs" />
+
+        <ListView
+            android:id="@+id/postedJobsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/JobDurationBox"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/JobDurationTV"
-            android:layout_width="wrap_content"
+            android:id="@+id/jobsCompletedEmployerTag"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="DURATION" />
+            android:text="Completed Jobs" />
+
+        <ListView
+            android:id="@+id/jobsCompletedEmployerList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/UrgencyBox"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/UrgencyTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="URGENCY" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/PayForJob"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:text="Payment"
-        tools:layout_editor_absoluteX="259dp"
-        tools:layout_editor_absoluteY="64dp" />
-
-    <TextView
-        android:id="@+id/payment"
-        android:layout_width="350dp"
-        android:layout_height="103dp"
-        android:text="past job"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

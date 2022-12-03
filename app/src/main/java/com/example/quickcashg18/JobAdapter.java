@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -52,7 +53,7 @@ import java.util.List;
  * Useless methods from ArrayAdapter, along with its all of its comments, have been removed, so that
  * our own comments are easily distinguished.
  */
-public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinnerAdapter {
+public abstract class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinnerAdapter {
 
     private final Object mLock = new Object();
     private final LayoutInflater mInflater;
@@ -114,23 +115,62 @@ public class JobAdapter extends BaseAdapter implements Filterable, ThemedSpinner
         return position;
     }
 
+    /*
+    For posted jobs:
+        * When "Apply" is clicked, the user should be listed as
+        having taken the job
+        * Perhaps the employer should be able to accept an applicant for the job
+        * Should jobs have a list of applicants? Maybe in the database?
+            * In that case, have the job appear under "To Be Accepted" in the
+              employer's list of jobs
+            * Applicants can then be listed underneath the job in "To Be Accepted",
+              perhaps as a separate ArrayAdapter
+        * The job should appear as "In Progress" in the employer's "Past Jobs" page
+          and it should display the user who has taken the job
+        * The job should also appear under the user's "Past Jobs" as in progress
+        * Once the employer clicks a "Job Completed" button, the job should be
+          moved under their "Completed Jobs" section on "Past Jobs"
+            * Should also be moved under employee's "Current Jobs"
+            * Jobs marked under the employer's "Completed Jobs" section should
+              have a "Make Payment" option
+            * Once payment is made, the employee's total income should be updated.
+              So maybe employees should have a variable noting their total income
+              on the Firebase.
+              This doesn't need to be just an employee thing. It can just be listed
+              under the user.
+
+        * Under the employee's completed jobs, there should be an option to
+          rate the employer (regardless of whether or not payment has been made)
+        * Employers should also have the option to rate an employee under the
+          completed jobs section
+     Other goals:
+        * Move preference settings to account settings
+        * Profile page should list the visualization of the user's reputation
+            * Or maybe that should be listed on the landing page?
+            * A five-star rating on the landing page would look pretty good.
+              Wouldn't need to change Profile then
+     */
+
     /**
-     * Given a job, constructs the layout seen in listed_job.xml.
-     * Note that this assumes that mDropDownResource is listed_job.xml,
-     * but we have not deleted mDropDownResource. This is because we may
-     * want to use this class in the future for something else
-     * (e.g. JOB HISTORY), and it is easy to simply extend this class
-     * and override getView as desired. For this reason, we have also made
-     * a getter method for mDropDownResource (note its use in the inflater here).
+     * We leave getView abstract so that any class which wishes to
+     * filter by preferences can implement their own extension of
+     * JobAdapter without having JobAdapter rely on another
+     * (unrelated) class, e.g. JobSearch.
+     *
+     * For this reason, we left a getter method for mDropDownResource,
+     * which is typically used in getView.
      */
     @Override
-    public @NonNull View getView(int position, View convertView,
-                                 @NonNull ViewGroup parent) {
+    public abstract @NonNull View getView(int position, View convertView,
+                                          @NonNull ViewGroup parent);
+
+    public @NonNull View getJobSlot(int position, View convertView,
+                                    @NonNull ViewGroup parent) {
         View slot = convertView;
 
         if (slot == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            slot = inflater.inflate(mDropDownResource, parent, false);
+            slot = inflater.inflate(getmDropDownResource(), parent, false);
         }
 
         TextView title = slot.findViewById(R.id.slotJobTitleDescriptor);

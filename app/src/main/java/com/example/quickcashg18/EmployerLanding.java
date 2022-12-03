@@ -1,6 +1,5 @@
 package com.example.quickcashg18;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,9 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class EmployerLanding extends AppCompatActivity {
 
@@ -63,7 +59,7 @@ public class EmployerLanding extends AppCompatActivity {
         startActivity(postJob);
     }
     public void onClickPastJob(View view) {
-        Intent pastJob = new Intent(EmployerLanding.this, PastJobs.class);
+        Intent pastJob = new Intent(EmployerLanding.this, EmployerPastJobs.class);
         startActivity(pastJob);
     }
 

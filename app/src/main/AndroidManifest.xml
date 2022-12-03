@@ -68,7 +68,7 @@
             android:name=".payment_portal"
             android:exported="false"/>
         <activity
-            android:name=".PastJobs"
+            android:name=".EmployerPastJobs"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"

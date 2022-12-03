@@ -6,6 +6,8 @@ public class PostedJob extends Job {
     private String jobID;
     private static final String JOB_ID_CONNECT = " BY_USER ";
 
+    public PostedJob() { super(); }
+
     public PostedJob(String jobTitle, double duration, double totalPay,
                      String urgency, MyLocation location, String posterID) {
         super(jobTitle, duration, totalPay, urgency, location);
@@ -22,7 +24,7 @@ public class PostedJob extends Job {
 
     @Override
     public void setJobTitle(String jobTitle) {
-        setJobTitle(jobTitle);
+        super.setJobTitle(jobTitle);
         updateJobID();
     }
 

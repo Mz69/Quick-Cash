@@ -1,0 +1,34 @@
+
+F
+java:S3740ø"/Provide the parametrized type for this generic.(€ÇÒş
+F
+java:S3740ù"/Provide the parametrized type for this generic.(¬‘ÀŞ
+F
+java:S1604ù"(Make this anonymous inner class a lambda(¬‘ÀŞ8Ş·ûøÄ0
+K
+java:S1604¥"(Make this anonymous inner class a lambda(í·ÊØûÿÿÿÿ8Ş·ûøÄ0
+n
+java:S1301³"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ8Ş·ûøÄ0
+M
+java:S5411à"*Use the primitive boolean expression here.(–Ë—Ğûÿÿÿÿ8ß·ûøÄ0
+M
+java:S5411÷"*Use the primitive boolean expression here.(–Ë—Ğûÿÿÿÿ8ß·ûøÄ0
+–
+java:S4165¸"xRemove this useless assignment; "mLocationPermissionGranted" already holds the assigned value along all execution paths.(ıÆ·8ˆ¸ûøÄ0
+Ÿ
+java:S1186ğ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ºßÿæ8ôÜ•æÊ0
+x
+java:S1450?"VRemove the "binding" field and declare it as a local variable in the relevant methods.(…Öéÿÿÿÿÿ8‹¸ûøÄ0
+ˆ
+java:S1450H"kRemove the "mFusedLocationProviderClient" field and declare it as a local variable in the relevant methods.(¾àŸ£8‹¸ûøÄ0
+K
+java:S1905…"-Remove this unnecessary cast to "Parcelable".(Û§³ú8÷©ôÌ0
+m
+java:S1874¯"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ó»×¶şÿÿÿÿ8”¸ûøÄ0
+D	java:S131³""Add a default case to this switch.(×ö³–úÿÿÿÿ8•¸ûøÄ0
+u
+java:S3252ã"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí8–¸ûøÄ0
+u
+java:S3252ã"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí8—¸ûøÄ0
+\
+java:S1155Ã">Use isEmpty() to check whether the collection is empty or not.(Î°¶š8¸ûøÄ0
