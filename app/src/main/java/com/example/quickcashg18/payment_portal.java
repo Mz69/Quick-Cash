@@ -43,6 +43,7 @@ public class payment_portal extends AppCompatActivity {
     private static final int PAYPAL_REQUEST_CODE = 555;
     private static PayPalConfiguration config;
     Button  btnPayNow;
+    TextView edtPay;
     EditText edtAmount;
     EditText edtTip;
     TextView paymentTV;
@@ -57,6 +58,10 @@ public class payment_portal extends AppCompatActivity {
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
                 .clientId(Config.PAYPAL_CLIENT_ID);
         edtAmount = findViewById(R.id.edtAmount);
+        edtPay= findViewById(R.id.edtPay);
+        Intent intent= getIntent();
+        String payAmount=intent.getStringExtra("pay_key");
+        edtPay.setText(payAmount);
         edtTip=findViewById(R.id.edtTip);
         btnPayNow = findViewById(R.id.btnPayNow);
         paymentTV = findViewById(R.id.idTVStatus);
@@ -64,7 +69,6 @@ public class payment_portal extends AppCompatActivity {
         // initiallizing Activity Launcher and database
         initializeActivityLauncher();
         initializeDatabase();
-
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +103,7 @@ public class payment_portal extends AppCompatActivity {
         });
     }
     public void processPayment() {
+
         amount = edtAmount.getText().toString();
         PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "CAD", "Purchase Goods", PayPalPayment.PAYMENT_INTENT_SALE);
 
