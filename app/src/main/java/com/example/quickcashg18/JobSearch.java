@@ -65,8 +65,8 @@ public class JobSearch extends ToolbarActivity {
         initViews();
         initLocation();
         initListeners();
+
         refreshJobList();
-        initJobList();
     }
 
     private void initViews() {
@@ -112,7 +112,7 @@ public class JobSearch extends ToolbarActivity {
      * with the adapter used to perform filtering.
      */
     private void initJobList() {
-        adapter = new JobSearchAdapter(this, R.layout.listed_job, R.id.slotJobTitleDescriptor, availableJobs);
+        adapter = new JobSearchAdapter(this, R.layout.incomplete_job_for_search, R.id.slotJobTitleDescriptor, availableJobs);
         listView.setAdapter(adapter);
         enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -143,7 +143,6 @@ public class JobSearch extends ToolbarActivity {
 
             @Override
             public boolean onQueryTextChange(String jobTitle) {
-                refreshJobList();
                 return onQueryTextSubmit(jobTitle);
             }
         });
@@ -156,19 +155,22 @@ public class JobSearch extends ToolbarActivity {
      */
     private void refreshJobList() {
         availableJobs = new ArrayList();
-        jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot incompleteJobs) {
-                for (DataSnapshot job : incompleteJobs.getChildren()) {
-                    availableJobs.add(job.getValue(Job.class));
+        synchronized (availableJobs) {
+            jobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot incompleteJobs) {
+                    for (DataSnapshot job : incompleteJobs.getChildren()) {
+                        availableJobs.add(job.getValue(Job.class));
+                    }
+                    initJobList();
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("JobSearch", error.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("JobSearch", error.getMessage());
+                }
+            });
+        }
     }
 
 
@@ -251,25 +253,8 @@ public class JobSearch extends ToolbarActivity {
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            View slot = convertView;
-
-            if (slot == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                slot = inflater.inflate(getmDropDownResource(), parent, false);
-            }
-
-            TextView title = slot.findViewById(R.id.slotJobTitleDescriptor);
-            TextView totalPay = slot.findViewById(R.id.slotTotalPayDescriptor);
-            TextView duration = slot.findViewById(R.id.slotDurationDescriptor);
-            TextView urgency = slot.findViewById(R.id.slotUrgencyDescriptor);
+            View slot = getJobSlot(position, convertView, parent);
             Button apply = slot.findViewById(R.id.applyToJob);
-
-            Job job = getItem(position);
-
-            title.setText(job.getJobTitle());
-            totalPay.setText("" + job.getTotalPay());
-            duration.setText("" + job.getDuration());
-            urgency.setText(job.getUrgency());
             apply.setOnClickListener(getOnClickApplyToJob(slot));
 
             return slot;
@@ -298,31 +283,31 @@ public class JobSearch extends ToolbarActivity {
 
         /**
          * Employees need to be able to do the following:
-            * List all of their jobs
-                * In progress
-                * Completed
-                * Applied for
-            * See if a previous job is paid for. If it has been paid for,
-              the payment total should be added to the employee's total income.
-            * Click a button to rate the employer.
+         * List all of their jobs
+         * In progress
+         * Completed
+         * Applied for
+         * See if a previous job is paid for. If it has been paid for,
+         the payment total should be added to the employee's total income.
+         * Click a button to rate the employer.
          For these reasons, the job from the employee's perspective should contain
          the following data:
-            * The PostedJob object, as to access the information about the job
-              and display its details. Must include the employer's ID so that
-              the employer can be rated!
-            * A boolean stating whether or not it's been paid for.
+         * The PostedJob object, as to access the information about the job
+         and display its details. Must include the employer's ID so that
+         the employer can be rated!
+         * A boolean stating whether or not it's been paid for.
          * Employers need to be able to do the following:
-            * List all of their previous jobs
-                * Previously posted
-                * Completed
-                * Currently available
-            * Pay employees for completing jobs.
-            * Rate employees.
+         * List all of their previous jobs
+         * Previously posted
+         * Completed
+         * Currently available
+         * Pay employees for completing jobs.
+         * Rate employees.
          For these reasons, the job from the employer's perspective
          should have the following data:
-            * The PostedJob object.
-            * The user's ID.
-            * A boolean stating whether or not it's been paid for.
+         * The PostedJob object.
+         * The user's ID.
+         * A boolean stating whether or not it's been paid for.
          */
     }
 

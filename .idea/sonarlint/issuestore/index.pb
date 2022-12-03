@@ -28,11 +28,7 @@ j
 e
 5app/src/main/java/com/example/quickcashg18/Alert.java,d/7/d73767d6716f99c22b680c77066a3386e50d8724
 n
->app/src/main/java/com/example/quickcashg18/payment_portal.java,7/5/7504d9476ee7146419ad749c612c83d6ddd20a0e
-n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
-h
-8app/src/main/java/com/example/quickcashg18/PastJobs.java,b/c/bc1b6bcb98b97a927e54cdf44b445ce5b160a969
 l
 <app/src/main/java/com/example/quickcashg18/MainActivity.java,a/8/a8091c44325ae96365efac58f993a126101456fa
 o

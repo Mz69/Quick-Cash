@@ -162,7 +162,31 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
      */
     @Override
     public abstract @NonNull View getView(int position, View convertView,
-                                 @NonNull ViewGroup parent);
+                                          @NonNull ViewGroup parent);
+
+    public @NonNull View getJobSlot(int position, View convertView,
+                                    @NonNull ViewGroup parent) {
+        View slot = convertView;
+
+        if (slot == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            slot = inflater.inflate(getmDropDownResource(), parent, false);
+        }
+
+        TextView title = slot.findViewById(R.id.slotJobTitleDescriptor);
+        TextView totalPay = slot.findViewById(R.id.slotTotalPayDescriptor);
+        TextView duration = slot.findViewById(R.id.slotDurationDescriptor);
+        TextView urgency = slot.findViewById(R.id.slotUrgencyDescriptor);
+
+        Job job = getItem(position);
+
+        title.setText(job.getJobTitle());
+        totalPay.setText("" + job.getTotalPay());
+        duration.setText("" + job.getDuration());
+        urgency.setText(job.getUrgency());
+
+        return slot;
+    }
 
     private @NonNull View createViewFromResource(@NonNull LayoutInflater inflater, int position,
                                                  View convertView, @NonNull ViewGroup parent, int resource) {
