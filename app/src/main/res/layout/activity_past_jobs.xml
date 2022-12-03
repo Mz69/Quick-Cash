@@ -80,5 +80,16 @@
         android:id="@+id/PayForJob"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:text="Payment" />
-</LinearLayout>
+        android:text="Payment"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="64dp" />
+
+    <TextView
+        android:id="@+id/payment"
+        android:layout_width="350dp"
+        android:layout_height="103dp"
+        android:text="past job"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
