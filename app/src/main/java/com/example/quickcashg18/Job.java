@@ -1,62 +1,83 @@
 package com.example.quickcashg18;
 
-public class Job {
-    private String personName;
-    private String jobDescription;
-    private String durationInHours;
-    private String hourlyPay;
+import java.io.Serializable;
+
+public class Job implements Serializable {
+    private String jobTitle;
+    private double totalPay;
+    private double duration;
+    private MyLocation location;
     private String urgency;
 
+    public Job() {}
+
     //Constructor
-    public Job(String personName,String jobDescription,String durationInHours,String hourlyPay,String urgency) {
-        this.personName = personName ;
-        this.jobDescription=jobDescription;
-        this.durationInHours=durationInHours;
-        this.hourlyPay=hourlyPay;
-        this.urgency=urgency;
+    public Job(String jobTitle, double duration, double totalPay,
+               String urgency, MyLocation location) {
+        this.jobTitle = jobTitle;
+        this.location = location;
+        this.duration = duration;
+        this.totalPay = totalPay;
+        this.urgency = urgency;
+    }
+
+    public Job(String jobTitle, String duration, String totalPay,
+               String urgency, MyLocation location) {
+        this.jobTitle = jobTitle;
+        this.duration = Double.MAX_VALUE;
+        if (Validation.isNumeric(duration)) {
+            this.duration = Double.parseDouble(duration);
+        }
+        this.totalPay = Double.MAX_VALUE;
+        if (Validation.isNumeric(totalPay)) {
+            this.totalPay = Double.parseDouble(totalPay);
+        }
+        this.urgency = urgency;
+        this.location = location;
     }
 
     //Setters for each variable
-    public void setPersonName(String personName) {
-        this.personName = personName ;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
-    public void setJobDescription(String jobDescription){
-        this.jobDescription=jobDescription;
+    public void setMyLocation(MyLocation location){
+        this.location = location;
     }
 
-    public  void  setDurationInHours(String durationInHours){
-        this.durationInHours = durationInHours;
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 
-    public void setHourlyPay(String hourlyPay) {
-        this.hourlyPay = hourlyPay;
+    public void setTotalPay(double totalPay) {
+        this.totalPay = totalPay;
     }
 
     public void setUrgency(String urgency) {
         this.urgency = urgency;
     }
 
-
     //getters for each variable
-    public String getPersonName() {
-        return personName;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public String getJobDescription() {
-        return jobDescription;
+    public MyLocation getMyLocation() {
+        return location;
     }
 
-    public String getDurationInHours() {
-        return durationInHours;
-    }
+    public double getDuration() { return duration; }
 
-    public String getHourlyPay() {
-        return hourlyPay;
-    }
+    public double getTotalPay() { return totalPay; }
 
     public String getUrgency() {
         return urgency;
     }
+
+    public double getDistanceFrom(Job job) {
+        return getMyLocation().getDistance(job.getMyLocation());
+    }
+
+    public String toString() { return jobTitle; }
 }
 

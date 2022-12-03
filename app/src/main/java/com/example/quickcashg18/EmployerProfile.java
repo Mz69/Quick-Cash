@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -17,20 +19,21 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class EmployerProfile extends ToolbarActivity {
 
-    private EditText enterHourlyWage;
-    private EditText enterMinHours;
-    private EditText enterMaxHours;
+    private EditText enterJobTitle;
+    private EditText enterTotalPay;
+    private EditText enterDuration;
+    private EditText enterUrgency;
+    private Button selectPreferredLocation;
     private Button applyChanges;
-
+    private MyLocation location;
+    private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
+            this::setLocation);
     private DatabaseReference userRef;
 
-    // If the employee's preferences are ever required,
+    // If the employer's preferences are ever required,
     // these variables should be used to reference them
     // in case the fields are ever renamed in the database.
     public static final String PREFERENCES = "EmployerPreferences";
-    public static final String HOURLY_WAGE = "HourlyWage";
-    public static final String MIN_HOURS = "MinHours";
-    public static final String MAX_HOURS = "MaxHours";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +46,13 @@ public class EmployerProfile extends ToolbarActivity {
     }
 
     private void init() {
-        enterHourlyWage = findViewById(R.id.enterHourlyWageEmployer);
-        enterMinHours = findViewById(R.id.enterMinHoursEmployer);
-        enterMaxHours = findViewById(R.id.enterMaxHoursEmployer);
+        enterJobTitle = findViewById(R.id.enterJobTitleEmployer);
+        enterTotalPay = findViewById(R.id.enterTotalPayEmployer);
+        enterDuration = findViewById(R.id.enterHoursEmployer);
+        enterUrgency = findViewById(R.id.enterUrgencyEmployer);
+        selectPreferredLocation = findViewById(R.id.selectPreferredLocationEmployer);
         applyChanges = findViewById(R.id.applyEmployerProfileChanges);
+        location = null;
     }
 
     private void initDBRef() {
@@ -54,54 +60,64 @@ public class EmployerProfile extends ToolbarActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
-        userRef.child(HOURLY_WAGE).setValue("");
-        userRef.child(MIN_HOURS).setValue("");
-        userRef.child(MAX_HOURS).setValue("");
     }
 
     private void initListeners() {
+        selectPreferredLocation.setOnClickListener(this::onClickGetLocation);
         applyChanges.setOnClickListener(this::onClickApply);
     }
 
-    private boolean isValidMinHourlyWage() {
-        return Validation.isValidDoubleField(enterHourlyWage.getText().toString());
+    private boolean isValidTotalPay() {
+        return Validation.isValidDoubleField(enterTotalPay.getText().toString());
     }
 
-    private boolean isValidMinHours() {
-        return Validation.isValidDoubleField(enterMinHours.getText().toString());
+    private boolean isValidDuration() {
+        return Validation.isValidDoubleField(enterDuration.getText().toString());
     }
 
-    private boolean isValidMaxHours() {
-        return Validation.isValidDoubleField(enterMaxHours.getText().toString());
+    public boolean isValidUrgency() {
+        String urgency = getEnteredUrgency();
+        return urgency.equalsIgnoreCase("Urgent") ||
+                urgency.equalsIgnoreCase("Not Urgent");
     }
 
     /**
      * Check that all preferences entered by the employer are in the valid formats.
      */
     public boolean isValidProfile() {
-        return isValidMinHourlyWage() && isValidMinHours()
-                && isValidMaxHours();
+        return isValidTotalPay() && isValidDuration() && isValidUrgency();
     }
 
-    private String getEnteredHourlyWage() {
-        return enterHourlyWage.getText().toString();
+    private String getEnteredJobTitle() {
+        return enterJobTitle.getText().toString().trim();
     }
 
-    private String getEnteredMinHours() {
-        return enterMinHours.getText().toString();
+    private String getEnteredTotalPay() {
+        return enterTotalPay.getText().toString().trim();
     }
 
-    private String getEnteredMaxHours() {
-        return enterMaxHours.getText().toString();
+    private String getEnteredDuration() {
+        return enterDuration.getText().toString().trim();
+    }
+
+    private String getEnteredUrgency() { return enterUrgency.getText().toString(); }
+
+    private MyLocation getEnteredJobLocation() {
+        return location;
+    }
+
+    private void setLocation(MyLocation l) {
+        this.location = l;
     }
 
     private void saveProfile() {
-        userRef.child(HOURLY_WAGE)
-                .setValue(getEnteredHourlyWage());
-        userRef.child(MIN_HOURS)
-                .setValue(getEnteredMinHours());
-        userRef.child(MAX_HOURS)
-                .setValue(getEnteredMaxHours());
+        EmployerPreferredJob job = new EmployerPreferredJob(getEnteredJobTitle(), getEnteredDuration(),
+                getEnteredTotalPay(), getEnteredUrgency(), getEnteredJobLocation());
+        userRef.setValue(job);
+    }
+
+    public void onClickGetLocation(View view) {
+        getLocation.launch(null);
     }
 
     /**

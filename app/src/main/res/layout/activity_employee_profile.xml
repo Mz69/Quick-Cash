@@ -25,34 +25,44 @@
         app:layout_constraintTop_toBottomOf="@+id/employeeProfileTitle" />
 
     <EditText
-        android:id="@+id/enterMinHourlyWageEmployee"
+        android:id="@+id/enterMinTotalPayEmployee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:hint="Enter Min. Hourly Wage"
+        android:hint="Enter Min. Total Pay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterJobTitleEmployee" />
 
     <EditText
-        android:id="@+id/enterMinHoursEmployee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
-        android:hint="Enter Min. Hours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHourlyWageEmployee" />
-
-    <EditText
-        android:id="@+id/enterMaxHoursEmployee"
+        android:id="@+id/enterMaxDurationEmployee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:hint="Enter Max. Hours"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMinHoursEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/enterUrgencyEmployee" />
+
+    <EditText
+        android:id="@+id/enterUrgencyEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Urgency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterMinTotalPayEmployee" />
+
+    <EditText
+        android:id="@+id/enterMaxDistanceEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Max. Distance (KM)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterMaxDurationEmployee" />
 
     <Button
         android:id="@+id/applyEmployeeProfileChanges"
@@ -62,7 +72,17 @@
         android:layout_marginTop="24dp"
         android:text="Apply Changes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterMaxHoursEmployee" />
+        app:layout_constraintTop_toBottomOf="@+id/selectPreferredLocationEmployee" />
+
+    <Button
+        android:id="@+id/selectPreferredLocationEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Select Preferred Location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterMaxDistanceEmployee" />
 
     <TextView
         android:id="@+id/employeeProfileTitle"

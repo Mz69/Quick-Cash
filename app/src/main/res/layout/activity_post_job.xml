@@ -2,57 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".PostJob">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="8dp" />
+
     <LinearLayout
-        android:layout_width="276dp"
-        android:layout_height="455dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
         android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/include"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="106dp">
+        tools:layout_editor_absoluteX="90dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter Job Details to add job"></TextView>
 
+        <Button
+            android:id="@+id/importEmployerPreferences"
+            android:layout_width="215dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="0dp"
+            android:text="Import Preferences"
+            tools:ignore="MissingConstraints" />
+
         <EditText
-            android:id="@+id/JobName"
-            android:layout_width="212dp"
+            android:id="@+id/jobTitle"
+            android:layout_width="215dp"
             android:layout_height="60dp"
             android:width="200dp"
-            android:hint="Job Name:"
+            android:hint="Job Name"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
         <EditText
-            android:id="@+id/location"
-            android:layout_width="214dp"
-            android:layout_height="55dp"
-            android:width="200dp"
-            android:hint="Job location:"
-            android:inputType="text"
-            android:textSize="16dp"></EditText>
-
-        <EditText
-            android:id="@+id/salary"
+            android:id="@+id/totalPay"
             android:layout_width="214dp"
             android:layout_height="61dp"
             android:width="200dp"
-            android:hint="Job salary:"
+            android:hint="Job Total Pay ($)"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
         <EditText
-            android:id="@+id/timeFrame"
-            android:layout_width="215dp"
+            android:id="@+id/duration"
+            android:layout_width="214dp"
             android:layout_height="61dp"
             android:width="200dp"
-            android:hint="Job Length:"
+            android:hint="Duration in Hours"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
@@ -61,15 +69,23 @@
             android:layout_width="215dp"
             android:layout_height="59dp"
             android:width="200dp"
-            android:hint="Job urgency:"
+            android:hint="Job Urgency"
             android:inputType="text"
             android:textSize="16dp"></EditText>
 
         <Button
+            android:id="@+id/jobOpenLocationSelect"
+            android:layout_width="175dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:text="Select Location"
+            tools:ignore="MissingConstraints" />
+
+        <Button
             android:id="@+id/JobButton"
-            android:layout_width="121dp"
-            android:layout_height="59dp"
-            android:layout_marginLeft="35dp"
+            android:layout_width="175dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
             android:text="Add Job"
             tools:ignore="MissingConstraints" />
 

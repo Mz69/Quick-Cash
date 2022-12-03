@@ -99,6 +99,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/Notifications"
+        android:layout_width="387dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileEmployee" />
+
+    <Button
         android:id="@+id/logout2"
         android:layout_width="116dp"
         android:layout_height="53dp"

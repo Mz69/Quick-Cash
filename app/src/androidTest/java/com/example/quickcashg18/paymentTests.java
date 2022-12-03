@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import android.content.Context;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
+//import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.AfterClass;

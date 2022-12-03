@@ -34,8 +34,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.Duration;
-
 public class EmployeeProfileInstrumentedTest {
 
     // Note that we start from SignInActivity for security reasons.
@@ -95,7 +93,7 @@ public class EmployeeProfileInstrumentedTest {
     }
 
     private void enterValidMinHourlyWage() {
-        onView(withId(R.id.enterMinHourlyWageEmployee)).perform(typeText(VALID_MIN_HOURLY_WAGE));
+        onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(VALID_MIN_HOURLY_WAGE));
     }
 
     private void enterValidMinHours() {
@@ -103,11 +101,11 @@ public class EmployeeProfileInstrumentedTest {
     }
 
     private void enterValidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(VALID_MAX_HOURS));
+        onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(VALID_MAX_HOURS));
     }
 
     private void enterInvalidMinHourlyWage() {
-        onView(withId(R.id.enterMinHourlyWageEmployee)).perform(typeText(INVALID_MIN_HOURLY_WAGE));
+        onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(INVALID_MIN_HOURLY_WAGE));
     }
 
     private void enterInvalidMinHours() {
@@ -115,7 +113,7 @@ public class EmployeeProfileInstrumentedTest {
     }
 
     private void enterInvalidMaxHours() {
-        onView(withId(R.id.enterMaxHoursEmployee)).perform(typeText(INVALID_MAX_HOURS));
+        onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(INVALID_MAX_HOURS));
     }
 
     private void applyChanges() {
@@ -142,7 +140,7 @@ public class EmployeeProfileInstrumentedTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMinHourlyWage = snapshot.child(EmployeeProfile.MIN_HOURLY_WAGE).getValue(String.class);
+                actualMinHourlyWage = snapshot.child(EmployeeProfile.MIN_TOTAL_PAY).getValue(String.class);
             }
 
             @Override
@@ -172,7 +170,7 @@ public class EmployeeProfileInstrumentedTest {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                actualMaxHours = snapshot.child(EmployeeProfile.MAX_HOURS).getValue(String.class);
+                actualMaxHours = snapshot.child(EmployeeProfile.MAX_DURATION).getValue(String.class);
             }
 
             @Override
@@ -185,11 +183,11 @@ public class EmployeeProfileInstrumentedTest {
     private void resetTestUserDB() {
         userRef.child(EmployeeProfile.JOB_TITLE)
                 .setValue("");
-        userRef.child(EmployeeProfile.MIN_HOURLY_WAGE)
+        userRef.child(EmployeeProfile.MIN_TOTAL_PAY)
                 .setValue("");
         userRef.child(EmployeeProfile.MIN_HOURS)
                 .setValue("");
-        userRef.child(EmployeeProfile.MAX_HOURS)
+        userRef.child(EmployeeProfile.MAX_DURATION)
                 .setValue("");
     }
 
