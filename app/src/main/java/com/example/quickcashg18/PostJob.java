@@ -1,7 +1,5 @@
 package com.example.quickcashg18;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,9 +57,9 @@ public class PostJob extends ToolbarActivity {
 
     protected void initializeDatabase() {
         //initialize the database and the references relating to the job details
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER)
+        userRef = firebaseDB.getReference(FirebaseCommon.USER)
                 .child(user.getUid());
         jobDBRef = firebaseDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
     }

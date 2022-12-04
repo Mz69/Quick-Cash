@@ -30,6 +30,11 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
 
     public double getMaxDistance() { return maxDistance; }
 
+    /**
+     * A given job satisfies the given preferences if
+     * the title, total ay, duration, urgency, and maximum distance from
+     * the current location are acceptable
+     */
     @Override
     public boolean acceptableJob(Job job) {
         return acceptableJobTitle(job) && acceptableTotalPay(job) &&
