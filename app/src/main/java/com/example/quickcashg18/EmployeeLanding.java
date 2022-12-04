@@ -26,16 +26,14 @@ import java.util.ArrayList;
 public class EmployeeLanding extends AppCompatActivity {
 
     // initializing an arraylist to store the users notifications
-    private ArrayList<String> notifications = new ArrayList<>();
-
+    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
     private FirebaseUser user;
 
     private Button signOutButton;
     private Button roleSwitch;
-    private Button jobHistoryButton;
     private Button profile;
-    private Button findJobButton;
+    private Button findjob_button;
     private Button notificationButton;
     private Button pastJobsButton;
     private RatingBar ratingBar;
@@ -52,7 +50,7 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
                 .child(FirebaseConstants.USER)
@@ -63,10 +61,9 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton = findViewById(R.id.logout2);
         roleSwitch = findViewById(R.id.role);
         profile = findViewById(R.id.profileEmployee);
-        findJobButton = findViewById(R.id.post_job);
+        findjob_button = findViewById(R.id.post_job);
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
-        jobHistoryButton = findViewById(R.id.job_history);
 
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
         totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
@@ -99,11 +96,10 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton.setOnClickListener(this::onClickLogout);
         roleSwitch.setOnClickListener(this::onClickRole);
         profile.setOnClickListener(this::onClickProfile);
-        findJobButton.setOnClickListener(this::onClickFindJob);
+        findjob_button.setOnClickListener(this::onClickFindJob);
         // button to view user notifications
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
-        jobHistoryButton.setOnClickListener(this::onClickJobHistory);
     }
 
     public void onClickLogout(View view) {
@@ -122,14 +118,10 @@ public class EmployeeLanding extends AppCompatActivity {
         }
     }
 
-    public void addNotification(String message) {
-        // adding the sent message to the users list of notifications
-        notifications.add(message);
-    }
 
     public void onClickRole(View view) {
-           Intent switchToEmployerLanding = new Intent(EmployeeLanding.this, EmployerLanding.class);
-           startActivity(switchToEmployerLanding);
+           Intent roleSwitch= (new Intent(EmployeeLanding.this, EmployerLanding.class));
+           startActivity(roleSwitch);
     }
 
     public void onClickProfile(View view) {
@@ -141,20 +133,31 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     public void onClickNotifications(View view){
-        // displaying the users notifications
-        for (int i=0;i<notifications.size();i++) {
-            Toast.makeText(getApplicationContext(),notifications.get(i),Toast.LENGTH_LONG);
-        }
+
+        // Read from the database the user notifications
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // outputs the current notification(s) for the user
+                String message = userRef.child("Notifications").toString();
+                Toast toast = Toast.makeText(getApplicationContext(), message,
+                        Toast.LENGTH_LONG);
+                toast.show();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // if nothing is read then there are no current notifications
+                Toast toast = Toast.makeText(getApplicationContext(), "No current notifications",
+                        Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
 
     }
 
     public void onClickPastJobs(View view) {
         startActivity(new Intent(EmployeeLanding.this, EmployeePastJobs.class));
     }
-    public void onClickJobHistory(View view) {
-        startActivity(new Intent(EmployeeLanding.this, Job_History.class));
-    }
-
 
 }
 
