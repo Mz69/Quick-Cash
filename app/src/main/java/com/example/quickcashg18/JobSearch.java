@@ -40,7 +40,6 @@ public class JobSearch extends ToolbarActivity {
 
     private ArrayList<PostedJob> availableJobs;
     private JobAdapter adapter;
-    private FirebaseDatabase firebaseDB;
     private DatabaseReference jobsRef;
     private DatabaseReference userRef;
     private DatabaseReference userPrefRef;
@@ -57,6 +56,7 @@ public class JobSearch extends ToolbarActivity {
             this::setEnteredLocation);
     private MyLocation selectedLocation;
     public static final String APPLICANTS = "Applicants";
+    private static final String JOB_SEARCH_LOG = "JobSearch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class JobSearch extends ToolbarActivity {
     }
 
     private void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
@@ -104,7 +104,7 @@ public class JobSearch extends ToolbarActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("JobSearch", error.getMessage());
+                Log.e(JOB_SEARCH_LOG, error.getMessage());
             }
         });
     }
@@ -170,7 +170,7 @@ public class JobSearch extends ToolbarActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("JobSearch", error.getMessage());
+                    Log.e(JOB_SEARCH_LOG, error.getMessage());
                 }
             });
         }
@@ -194,7 +194,7 @@ public class JobSearch extends ToolbarActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("JobSearch", error.getMessage());
+                Log.e(JOB_SEARCH_LOG, error.getMessage());
             }
         });
     }
@@ -271,7 +271,7 @@ public class JobSearch extends ToolbarActivity {
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View slot = getJobSlot(position, convertView, parent);
             Button apply = slot.findViewById(R.id.applyToJob);
-            apply.setOnClickListener(getOnClickApplyToJob(slot, getItem(position)));
+            apply.setOnClickListener(getOnClickApplyToJob(getItem(position)));
 
             return slot;
         }
@@ -291,7 +291,7 @@ public class JobSearch extends ToolbarActivity {
         User
             Completed Jobs with ID
          */
-        public View.OnClickListener getOnClickApplyToJob(View slot, PostedJob job) {
+        public View.OnClickListener getOnClickApplyToJob(PostedJob job) {
             return v -> {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 applyToJob(job, user.getUid());

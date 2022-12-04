@@ -74,7 +74,7 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
 
     private LayoutInflater mDropDownInflater;
 
-    public JobAdapter(@NonNull Context context, @LayoutRes int resource,
+    protected JobAdapter(@NonNull Context context, @LayoutRes int resource,
                       @IdRes int textViewResourceId, @NonNull List<PostedJob> objects) {
         this(context, resource, textViewResourceId, objects, false);
     }

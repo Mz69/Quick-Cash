@@ -29,10 +29,7 @@ public class EmployeePastJobs extends ToolbarActivity {
 
     private ListView pastJobs;
     private ArrayList<CompletedJob> pastJobsList;
-    private ArrayAdapter<CompletedJob> adapter;
     private FirebaseUser user;
-    private FirebaseDatabase firebaseDB;
-    private DatabaseReference userRef;
     private DatabaseReference pastJobsRef;
 
     @Override
@@ -46,11 +43,9 @@ public class EmployeePastJobs extends ToolbarActivity {
     }
 
     protected void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         DatabaseReference firebaseDBRef = firebaseDB.getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseDBRef.child(FirebaseConstants.USER)
-                .child(user.getUid());
         pastJobsRef = firebaseDBRef.child(PostJob.JOB_LIST)
                 .child(FirebaseConstants.COMPLETE_JOBS);
     }
@@ -60,7 +55,7 @@ public class EmployeePastJobs extends ToolbarActivity {
     }
 
     protected void updatePastJobs() {
-        adapter = new CompletedJobsAdapter(this, pastJobsList);
+        CompletedJobsAdapter adapter = new CompletedJobsAdapter(this, pastJobsList);
         pastJobs.setAdapter(adapter);
     }
 

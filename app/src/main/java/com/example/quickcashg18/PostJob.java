@@ -28,7 +28,6 @@ group before he got moved to this group. He has adapted it for this project.
  */
 public class PostJob extends ToolbarActivity {
 
-    private FirebaseDatabase firebaseJobDB;
     private DatabaseReference userRef;
     private DatabaseReference jobDBRef;
     private MyLocation selectedLocation;
@@ -58,11 +57,11 @@ public class PostJob extends ToolbarActivity {
 
     protected void initializeDatabase() {
         //initialize the database and the references relating to the job details
-        firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseJobDB.getReference(FirebaseConstants.USER)
+        userRef = firebaseDB.getReference(FirebaseConstants.USER)
                 .child(user.getUid());
-        jobDBRef = firebaseJobDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
+        jobDBRef = firebaseDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
     }
 
     // getters for the job details
@@ -128,16 +127,10 @@ public class PostJob extends ToolbarActivity {
     }
 
     public boolean isValidUrgency() {
-        if (!(getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent"))) {
-            System.out.println("Failed urgency");
-        }
         return getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent");
     }
 
     public boolean isValidLocation() {
-        if (getLocation == null) {
-            System.out.println("Failed location");
-        }
         return getSelectedLocation() != null;
     }
 
@@ -189,14 +182,12 @@ public class PostJob extends ToolbarActivity {
 
         String jobTitle = getJobTitle();
         MyLocation location = getSelectedLocation();
-        System.out.println("Location from PostJob is " + getSelectedLocation());
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         double duration = Double.parseDouble(getDuration());
         String posterID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         PostedJob job = new PostedJob(jobTitle, duration, totalPay, urgency, location, posterID);
-        System.out.println("Using getMyLocation: " + job.getMyLocation());
         // Saving the job details to the database
         saveJobtoFirebase(job);
         Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);

@@ -1,14 +1,14 @@
 package com.example.quickcashg18;
 
-import android.view.View;
-import android.widget.EditText;
-
 /**
  * This class consists of common validation methods used across the code.
  * For example, we often need to verify that an entered value corresponds to a
  * valid wage in dollars. The isNumeric method will ensure this.
  */
 public class Validation {
+
+    // Created according to guidelines given by SonarQube
+    private Validation() { throw new IllegalStateException("Utility class"); }
 
     public static final String NUMERIC = "\\d+(\\.\\d{1,2})?";
 

@@ -31,25 +31,20 @@ import java.util.List;
 public class EmployerPastJobs extends ToolbarActivity {
 
     private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
-    private FirebaseDatabase firebaseDB;
-    private DatabaseReference userRef;
     private DatabaseReference postedJobsRef;
     private DatabaseReference completedJobsRef;
     private FirebaseUser user;
     private ListView postedJobs;
-    private PostedJobsAdapter postedJobsAdapter;
     private ArrayList<PostedJob> postedJobsList;
     private HashMap<String, CircularNode<String>> jobToApplicants;
     private ListView completedJobs;
     private ArrayList<CompletedJob> completedJobsList;
+    private static final String EMPLOYER_PAST_JOBS_LOG = "EmployerPastJobs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employer_past_jobs);
-
-        //Button payJob =findViewById(R.id.paymentPage);
-        //payJob.setOnClickListener(this::onClickPayJob);
 
         //initialize the database instance and creating references for the job details
         initDatabase();
@@ -61,9 +56,8 @@ public class EmployerPastJobs extends ToolbarActivity {
 
     protected void initDatabase() {
         //initialize the database and the references relating to the job details
-        firebaseDB = FirebaseDatabase.getInstance(FIREBASEDB_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FIREBASEDB_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
         postedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
         completedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(FirebaseConstants.COMPLETE_JOBS);
     }
@@ -74,7 +68,7 @@ public class EmployerPastJobs extends ToolbarActivity {
     }
 
     private void updatePostedJobsList() {
-        postedJobsAdapter = new PostedJobsAdapter(this, postedJobsList);
+        PostedJobsAdapter postedJobsAdapter = new PostedJobsAdapter(this, postedJobsList);
         postedJobs.setAdapter(postedJobsAdapter);
     }
 
@@ -89,7 +83,7 @@ public class EmployerPastJobs extends ToolbarActivity {
                     if (job != null &&
                             job.getPosterID().equals(user.getUid())) {
                         postedJobsList.add(job);
-                        CircularNode<String> applicants = new CircularNode<String>();
+                        CircularNode<String> applicants = new CircularNode<>();
                         for (DataSnapshot applicant : incompleteJobs.child(job.getJobID())
                                 .child(JobSearch.APPLICANTS).getChildren()) {
                             applicants.add(applicant.getValue(String.class));
@@ -102,7 +96,7 @@ public class EmployerPastJobs extends ToolbarActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployerPastJobs", error.getMessage());
+                Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
                 updatePostedJobsList();
             }
         });
@@ -129,15 +123,10 @@ public class EmployerPastJobs extends ToolbarActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployerPastJobs", error.getMessage());
+                Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
             }
         });
     }
-
-    /*public void onClickPayJob(View view) {
-        Intent payment = (new Intent(EmployerPastJobs.this, payment_portal.class));
-        startActivity(payment);
-    }*/
 
     /**
      * Removes the job from the list of incomplete jobs in the
@@ -166,7 +155,7 @@ public class EmployerPastJobs extends ToolbarActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployerPastJobs", error.getMessage());
+                Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
             }
         });
     }
@@ -198,14 +187,14 @@ public class EmployerPastJobs extends ToolbarActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("EmployerPastJobs", error.getMessage());
+                        Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("EmployerPastJobs", error.getMessage());
+                Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
             }
         });
     }
@@ -243,7 +232,7 @@ public class EmployerPastJobs extends ToolbarActivity {
             paidCheck.setText("" + job.isPaid());
 
             View.OnClickListener paymentListener = v -> {
-                Intent payment = new Intent(EmployerPastJobs.this, payment_portal.class);
+                Intent payment = new Intent(EmployerPastJobs.this, PaymentPortal.class);
                 payment.putExtra("pay_key", String.valueOf(job.getTotalPay()));
                 startActivity(payment);
                 payUser(job.getJobID());
@@ -277,7 +266,7 @@ public class EmployerPastJobs extends ToolbarActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("EmployeePastJobs", error.getMessage());
+                    Log.e(EMPLOYER_PAST_JOBS_LOG, error.getMessage());
                 }
             });
 
@@ -322,6 +311,7 @@ public class EmployerPastJobs extends ToolbarActivity {
             CircularNode<String> applicants = jobToApplicants.get(jobID);
             if (applicants == null || applicants.isEmpty()) {
                 slot.findViewById(R.id.applicantsList).setVisibility(View.GONE);
+                return;
             }
             TextView applicantID = slot.findViewById(R.id.userRepDescriptor);
             applicantID.setText(applicants.getData());
@@ -340,76 +330,12 @@ public class EmployerPastJobs extends ToolbarActivity {
         }
 
         public View.OnClickListener onClickGetNextApplicant(View slot, String jobID) {
-            return v -> {
-                getNextApplicant(slot, jobID);
-            };
+            return v -> getNextApplicant(slot, jobID);
         }
 
         public View.OnClickListener onClickGetPrevApplicant(View slot, String jobID) {
-            return v -> {
-                getPrevApplicant(slot, jobID);
-            };
+            return v -> getPrevApplicant(slot, jobID);
         }
 
     }
-
-    /*
-    private void initViews() {
-        JobTitle = findViewById(R.id.JobTitleTV);
-        JobPay = findViewById(R.id.JobPayTV);
-        JobDuration = findViewById(R.id.JobDurationTV);
-        JobUrgency = findViewById(R.id.UrgencyTV);
-        PayForJob = findViewById(R.id.PayForJob);
-        LoadJobs = findViewById(R.id.loadJob);
-    }
-
-    private void setListeners() {
-        PayForJob.setOnClickListener(this::onClickPayJob);
-        LoadJobs.setOnClickListener(this::onClickJobLoad);
-        }
-
-    private void onClickPayJob(View view) {
-        String payAmount=JobPay.getText().toString();
-        Intent payment = (new Intent(PastJobs.this, payment_portal.class));
-        payment.putExtra("pay_key",payAmount);
-        startActivity(payment);
-    }
-
-    private void onClickJobLoad(View view) {
-        String user= String.valueOf(userRef);
-        getJobsFromDatabase(user);
-    }
-
-    private void getJobsFromDatabase(String user) {
-        final Query jobQuery=firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
-        jobQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot incompleteJobs) {
-                Job jobs;
-                for (DataSnapshot job : incompleteJobs.getChildren()) {
-                    jobs=job.getValue(Job.class);
-                    if(jobs!=null){
-                        JobTitle.setText(String.format("Job Title: %s",jobs.getJobTitle()));
-                        JobPay.setText(String.format("Job Pay: %s",String.valueOf(jobs.getTotalPay())));
-                        JobDuration.setText(String.format("Job Duration: %s",jobs.getDuration()));
-                        JobUrgency.setText(String.format("Job Urgency: %s",jobs.getUrgency()));
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("JobSearch", error.getMessage());
-            }
-        });
-    }
-    protected void initializeDatabase() {
-        //initialize the database and the references relating to the job details
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
-        jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
-    }*/
 }

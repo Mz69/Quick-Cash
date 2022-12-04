@@ -16,7 +16,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,7 +37,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
@@ -60,7 +58,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private static final float DEFAULT_ZOOM = 15f;
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -69,7 +66,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
 
     private Boolean mLocationPermissionGranted = false;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     // The location selected by the user.
     private Location selectedLocation;
@@ -94,7 +90,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onCreate: Starts");
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         init();
@@ -130,7 +126,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * returned via setResult to the activity that called MapsActivity for processing.
      */
     public void onClickYes(View view) {
-        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, (Parcelable) selectedLocation);
+        Intent locationResult = new Intent().putExtra(LOCATION_TAG_RESULT, selectedLocation);
         setResult(Activity.RESULT_OK, locationResult);
         finish();
     }
@@ -176,23 +172,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onRequestPermissionsResult: Requesting for permissions");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mLocationPermissionGranted = false;
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionGranted = false;
-                            return;
-                        }
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE)
+            if (grantResults.length > 0) {
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        return;
                     }
-                    mLocationPermissionGranted = true;
-                    Log.d(TAG, "onRequestPermissionsResult: permissions given by user");
-                    //initialize our map
-                    initMap();
                 }
+                mLocationPermissionGranted = true;
+                Log.d(TAG, "onRequestPermissionsResult: permissions given by user");
+                //initialize our map
+                initMap();
             }
-
-        }
     }
 
     private void initMap() {
@@ -221,7 +212,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onMapReady: starts");
         mMap = googleMap;
         Toast.makeText(this, "Google Map is ready", Toast.LENGTH_SHORT).show();
-        if (mLocationPermissionGranted) {
+        if (mLocationPermissionGranted != null && mLocationPermissionGranted) {
             Log.d(TAG, "onMapReady: getting Device current location!!");
             getDeviceLocation();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -242,32 +233,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     public void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: starts");
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try{
-            if(mLocationPermissionGranted){
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "getDeviceLocation: onComplete: found location");
-                            Location currentLocation = (Location) task.getResult();
-                            if(currentLocation != null) {
-                                Log.d(TAG, "getDeviceLocation: currentLocation Lattitude: " + currentLocation.getLatitude());
-                                Log.d(TAG, "getDeviceLocation: currentLocation Longitude: " + currentLocation.getLongitude());
-                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                        DEFAULT_ZOOM,"current location");
+            if(mLocationPermissionGranted != null && mLocationPermissionGranted){
+                Task<Location> location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Log.d(TAG, "getDeviceLocation: onComplete: found location");
+                        Location currentLocation = task.getResult();
+                        if(currentLocation != null) {
+                            Log.d(TAG, "getDeviceLocation: currentLocation Lattitude: " + currentLocation.getLatitude());
+                            Log.d(TAG, "getDeviceLocation: currentLocation Longitude: " + currentLocation.getLongitude());
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                    DEFAULT_ZOOM,"current location");
 
-                                // The user's current location has been determined.
-                                // Check if they will use this as their selected location.
-                                setSelectedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
-                                makeConfirmationVisible();
-                            }else
-                                Log.d(TAG, "getDeviceLocation: Current location is null");
-                        }else {
+                            // The user's current location has been determined.
+                            // Check if they will use this as their selected location.
+                            setSelectedLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                            makeConfirmationVisible();
+                        }else
                             Log.d(TAG, "getDeviceLocation: Current location is null");
-                            Toast.makeText(MapsActivity.this, "Unable to get curent location", Toast.LENGTH_SHORT).show();
-                        }
+                    }else {
+                        Log.d(TAG, "getDeviceLocation: Current location is null");
+                        Toast.makeText(MapsActivity.this, "Unable to get curent location", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -290,19 +278,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void searchInitialize(){
         Log.d(TAG, "init tsarts");
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN
-                        || event.getAction() == KeyEvent.KEYCODE_ENTER){
-                    // perform search
-                    geoLocate();
-                }
-                return false;
+        mSearchText.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH
+                    || actionId == EditorInfo.IME_ACTION_DONE
+                    || event.getAction() == KeyEvent.ACTION_DOWN
+                    || event.getAction() == KeyEvent.KEYCODE_ENTER){
+                // perform search
+                geoLocate();
             }
-
+            return false;
         });
 
     }
@@ -360,12 +344,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void hideSoftKeyboard(){
         Log.d(TAG, "hideSoftKeyboard: called");
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    /**
-     * Given a location, convert it into a human-readable address.
-     */
-    public static void reverseGeocode(Location l) {
-
     }
 }
