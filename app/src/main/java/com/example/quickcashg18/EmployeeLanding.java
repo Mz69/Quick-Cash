@@ -32,6 +32,8 @@ public class EmployeeLanding extends AppCompatActivity {
         // button to view user notifications
         Button notificationButton = findViewById(R.id.Notifications);
         notificationButton.setOnClickListener(this::onClickNotifications);
+        Button pastJobsButton = findViewById(R.id.past_jobs_employer);
+        pastJobsButton.setOnClickListener(this::onClickPastJobs);
     }
 
     public void onClickLogout(View view) {
@@ -74,6 +76,10 @@ public class EmployeeLanding extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),notifications.get(i),Toast.LENGTH_LONG);
         }
 
+    }
+
+    public void onClickPastJobs(View view) {
+        startActivity(new Intent(EmployeeLanding.this, EmployeePastJobs.class));
     }
 
 }

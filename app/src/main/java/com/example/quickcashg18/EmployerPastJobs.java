@@ -41,12 +41,11 @@ public class EmployerPastJobs extends ToolbarActivity {
     private HashMap<String, CircularNode<String>> jobToApplicants;
     private ListView completedJobs;
     private ArrayList<CompletedJob> completedJobsList;
-    public static final String COMPLETE_JOBS = "Complete";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_past_jobs);
+        setContentView(R.layout.activity_employer_past_jobs);
 
         //Button payJob =findViewById(R.id.paymentPage);
         //payJob.setOnClickListener(this::onClickPayJob);
@@ -65,7 +64,7 @@ public class EmployerPastJobs extends ToolbarActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
         postedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
-        completedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(COMPLETE_JOBS);
+        completedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(FirebaseConstants.COMPLETE_JOBS);
     }
 
     private void initViews() {
@@ -149,7 +148,7 @@ public class EmployerPastJobs extends ToolbarActivity {
         FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         DatabaseReference completedRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
-                .child(COMPLETE_JOBS)
+                .child(FirebaseConstants.COMPLETE_JOBS)
                 .child(jobID);
         DatabaseReference jobRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
@@ -175,7 +174,7 @@ public class EmployerPastJobs extends ToolbarActivity {
         DatabaseReference firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL)
                 .getReference();
         DatabaseReference jobRef = firebaseDB.child(PostJob.JOB_LIST)
-                .child(COMPLETE_JOBS)
+                .child(FirebaseConstants.COMPLETE_JOBS)
                 .child(jobID);
         jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -212,7 +211,7 @@ public class EmployerPastJobs extends ToolbarActivity {
 
     private class CompletedJobsAdapter extends ArrayAdapter<CompletedJob> {
         public CompletedJobsAdapter(Context context, List<CompletedJob> objects) {
-            super(context, R.layout.completed_job_for_employer, R.id.jobTitle, objects);
+            super(context, R.layout.completed_job_for_employer, R.id.slotJobTitleDescriptor, objects);
         }
 
         @Override
@@ -226,6 +225,7 @@ public class EmployerPastJobs extends ToolbarActivity {
             TextView totalPay = slot.findViewById(R.id.slotTotalPayDescriptor);
             TextView duration = slot.findViewById(R.id.slotDurationDescriptor);
             TextView urgency = slot.findViewById(R.id.slotUrgencyDescriptor);
+            TextView userIDTag = slot.findViewById(R.id.userRepTag);
             TextView userID = slot.findViewById(R.id.userRepDescriptor);
             TextView paidCheck = slot.findViewById(R.id.isPaidDescriptor);
             RatingBar repBar = slot.findViewById(R.id.repBar);
@@ -237,6 +237,7 @@ public class EmployerPastJobs extends ToolbarActivity {
             totalPay.setText("" + job.getTotalPay());
             duration.setText("" + job.getDuration());
             urgency.setText(job.getUrgency());
+            userIDTag.setText("Completer ID:  ");
             userID.setText(job.getCompleterID());
             paidCheck.setText("" + job.isPaid());
 
