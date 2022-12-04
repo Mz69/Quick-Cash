@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,11 +45,8 @@ public class payment_portal extends AppCompatActivity {
     private static PayPalConfiguration config;
     Button  btnPayNow;
     TextView edtPay;
-    EditText edtAmount;
     EditText edtTip;
     TextView paymentTV;
-
-    String amount="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,6 @@ public class payment_portal extends AppCompatActivity {
         config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
                 .clientId(Config.PAYPAL_CLIENT_ID);
-        edtAmount = findViewById(R.id.edtAmount);
         edtPay= findViewById(R.id.edtPay);
         Intent intent= getIntent();
         String payAmount=intent.getStringExtra("pay_key");
@@ -69,11 +66,16 @@ public class payment_portal extends AppCompatActivity {
         // initiallizing Activity Launcher and database
         initializeActivityLauncher();
         initializeDatabase();
-        btnPayNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnPayNow.setOnClickListener(v -> {
+            String tip = edtTip.getText().toString();
+            if ((Validation.isNumeric(tip) && Double.parseDouble(tip) < 0) ||
+                !Validation.isValidDoubleField(tip)) {
+                Toast.makeText(payment_portal.this,
+                        "Please enter a valid tip amount", Toast.LENGTH_LONG)
+                        .show();
+            } else {
                 processPayment();
-            }
+           }
         });
     }
     private void initializeActivityLauncher() {
@@ -104,13 +106,18 @@ public class payment_portal extends AppCompatActivity {
     }
     public void processPayment() {
 
-        amount = edtAmount.getText().toString();
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "CAD", "Purchase Goods", PayPalPayment.PAYMENT_INTENT_SALE);
+        double toBePaid = Double.parseDouble(edtPay.getText().toString());
+        String tip = edtTip.getText().toString();
+        if (!tip.isEmpty()) {
+            toBePaid += Double.parseDouble(tip);
+        }
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(toBePaid), "CAD", "Purchase Goods", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
         activityResultLauncher.launch(intent);
+        finish();
     }
     protected void initializeDatabase() {
         //initialize the database and the references relating to the job details

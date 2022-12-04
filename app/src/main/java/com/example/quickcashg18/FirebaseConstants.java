@@ -25,6 +25,8 @@ public class FirebaseConstants {
      */
     public static final String USER = "User";
 
+    public static final String USER_INCOME = "Income";
+
     /**
      * When a user has no preference.
      */

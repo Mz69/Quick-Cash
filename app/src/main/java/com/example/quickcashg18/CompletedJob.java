@@ -4,6 +4,10 @@ public class CompletedJob extends PostedJob {
     private String completerID;
     private boolean isPaid;
 
+    public CompletedJob() {
+        super();
+    }
+
     public CompletedJob(PostedJob job, String completerID) {
         super(job);
         this.completerID = completerID;
@@ -18,7 +22,7 @@ public class CompletedJob extends PostedJob {
         this.isPaid = paid;
     }
 
-    public void setPaid() {
+    public void makePayment() {
         this.isPaid = true;
     }
 
