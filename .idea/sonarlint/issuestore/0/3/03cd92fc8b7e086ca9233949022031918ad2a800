@@ -1,0 +1,7 @@
+
+n
+java:S1450"SRemove the "user" field and declare it as a local variable in the relevant methods.(š·àŽûÿÿÿÿ
+q
+java:S1450"VRemove the "userRef" field and declare it as a local variable in the relevant methods.(À¾˜ôüÿÿÿÿ
+F
+java:S1068"+Remove this unused "userRef" private field.(À¾˜ôüÿÿÿÿ
