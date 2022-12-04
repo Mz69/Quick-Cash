@@ -109,11 +109,10 @@
             android:layout_width="322dp"
             android:layout_height="89dp"
             android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="20dp"
             android:text="Post A Job"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo" />
+            app:layout_constraintTop_toBottomOf="@+id/employerLandingRatingBar" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -136,5 +135,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="1dp" />
+
+        <RatingBar
+            android:id="@+id/employerLandingRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/role" />
+
+        <TextView
+            android:id="@+id/employerLandingRatingTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="115dp"
+            android:layout_marginBottom="5dp"
+            android:text="Your Employer Rating:"
+            app:layout_constraintBottom_toTopOf="@+id/employerLandingRatingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/role"
+            app:layout_constraintVertical_bias="0.444" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

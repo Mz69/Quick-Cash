@@ -48,6 +48,7 @@ public class FirebaseConstants {
         DatabaseReference completedRef = firebaseDB.child(PostJob.JOB_LIST)
                 .child(COMPLETE_JOBS);
         DatabaseReference ratingRef = firebaseDB.child(USER)
+                .child(userID)
                 .child(EMPLOYER_RATING);
         completedRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,6 +85,7 @@ public class FirebaseConstants {
         DatabaseReference completedRef = firebaseDB.child(PostJob.JOB_LIST)
                 .child(COMPLETE_JOBS);
         DatabaseReference ratingRef = firebaseDB.child(USER)
+                .child(userID)
                 .child(EMPLOYEE_RATING);
         completedRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

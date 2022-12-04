@@ -1,14 +1,24 @@
 package com.example.quickcashg18;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -17,22 +27,71 @@ public class EmployeeLanding extends AppCompatActivity {
     // initializing an arraylist to store the users notifications
     private ArrayList<String> notifications = new ArrayList<String>();
 
+    private FirebaseDatabase firebaseDB;
+    private DatabaseReference userRef;
+    private FirebaseUser user;
+
+    private Button signOutButton;
+    private Button roleSwitch;
+    private Button profile;
+    private Button findjob_button;
+    private Button notificationButton;
+    private Button pastJobsButton;
+    private RatingBar ratingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_landing);
-        Button signOutButton = findViewById(R.id.logout2);
+
+        initDatabase();
+        initViews();
+        initListeners();
+    }
+
+    protected void initDatabase() {
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userRef = firebaseDB.getReference()
+                .child(FirebaseConstants.USER)
+                .child(user.getUid());
+    }
+
+    protected void initViews() {
+        signOutButton = findViewById(R.id.logout2);
+        roleSwitch = findViewById(R.id.role);
+        profile = findViewById(R.id.profileEmployee);
+        findjob_button = findViewById(R.id.post_job);
+        notificationButton = findViewById(R.id.Notifications);
+        pastJobsButton = findViewById(R.id.past_jobs_employer);
+
+        ratingBar = findViewById(R.id.employeeLandingRatingBar);
+        FirebaseConstants.calculateRatingOfEmployee(user.getUid());
+        userRef.child(FirebaseConstants.EMPLOYEE_RATING)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Float rating = snapshot.getValue(Float.class);
+                if (rating != null) {
+                    ratingBar.setRating(rating);
+                    ratingBar.setIsIndicator(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("EmployeeLanding", error.getMessage());
+            }
+        });
+    }
+
+    protected void initListeners() {
         signOutButton.setOnClickListener(this::onClickLogout);
-        Button roleSwitch = findViewById(R.id.role);
         roleSwitch.setOnClickListener(this::onClickRole);
-        Button profile = findViewById(R.id.profileEmployee);
         profile.setOnClickListener(this::onClickProfile);
-        Button findjob_button = findViewById(R.id.post_job);
         findjob_button.setOnClickListener(this::onClickFindJob);
         // button to view user notifications
-        Button notificationButton = findViewById(R.id.Notifications);
         notificationButton.setOnClickListener(this::onClickNotifications);
-        Button pastJobsButton = findViewById(R.id.past_jobs_employer);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
     }
 

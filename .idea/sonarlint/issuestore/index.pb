@@ -63,7 +63,3 @@ n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
 l
 <app/src/main/java/com/example/quickcashg18/CompletedJob.java,3/6/36d4661753047d328731f811885c2ef87097fd7b
-o
-?app/src/main/java/com/example/quickcashg18/EmployerLanding.java,1/4/14897af14e6a1032d742e30d1e6c71a82a52cfbc
-o
-?app/src/main/java/com/example/quickcashg18/EmployeeLanding.java,8/5/85a3708487aeaf66cc801264a1e8136243198d23

@@ -23,13 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="4dp"
         android:contentDescription="a image of the user who has an employee role"
-        app:layout_constraintBottom_toTopOf="@+id/post_job"
+        app:layout_constraintBottom_toTopOf="@+id/employeeLandingRatingBar"
         app:layout_constraintEnd_toStartOf="@+id/role"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
@@ -92,11 +91,13 @@
         android:layout_width="148dp"
         android:layout_height="58dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="41dp"
         android:text="Role: Employee"
         app:layout_constraintBottom_toTopOf="@+id/post_job"
         app:layout_constraintEnd_toStartOf="@+id/logout2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125" />
 
     <Button
         android:id="@+id/Notifications"
@@ -112,23 +113,23 @@
         android:id="@+id/logout2"
         android:layout_width="116dp"
         android:layout_height="53dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:text="logout"
-        app:layout_constraintBottom_toTopOf="@+id/post_job"
-        app:layout_constraintStart_toEndOf="@+id/role" />
+        app:layout_constraintStart_toEndOf="@+id/role"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/post_job"
         android:layout_width="322dp"
         android:layout_height="89dp"
         android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="34dp"
         android:text="Find A Job"
         app:layout_constraintBottom_toTopOf="@+id/past_jobs_employer"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/employeeLandingRatingBar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -151,5 +152,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="1dp" />
+
+    <RatingBar
+        android:id="@+id/employeeLandingRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/role" />
+
+    <TextView
+        android:id="@+id/employeeLandingRatingTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="5dp"
+        android:text="Your Employee Rating:"
+        app:layout_constraintBottom_toTopOf="@+id/employeeLandingRatingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/role" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
