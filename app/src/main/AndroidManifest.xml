@@ -24,6 +24,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Job_History"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EmployeePastJobs"
             android:exported="false">
             <meta-data

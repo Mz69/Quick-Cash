@@ -20,7 +20,7 @@
         android:textColor="@color/black"/>
 
     <ListView
-        android:id="@+id/listViewDetails"
+        android:id="@+id/available_jobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
@@ -34,7 +34,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="17dp"
-        android:text="Accept Job"
+        android:text="Recommend Employee"
         android:textAlignment="center" />
 
 
