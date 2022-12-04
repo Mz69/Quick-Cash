@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -254,6 +255,32 @@ public class EmployerPastJobs extends ToolbarActivity {
             if (job.isPaid()) {
                 makePayment.setVisibility(View.GONE);
             }
+
+            DatabaseReference ratingRef = completedJobsRef.child(job.getJobID())
+                    .child(FirebaseConstants.EMPLOYEE_RATING);
+            ratingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue(Float.class) != null) {
+                        repBar.setRating(snapshot.getValue(Float.class));
+                        repBar.setIsIndicator(true);
+                    }
+                    // User can make a single rating
+                    repBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+                        Toast.makeText(getContext(), "You gave the employee a " +
+                                        rating + "-star rating", Toast.LENGTH_LONG)
+                                .show();
+                        repBar.setIsIndicator(true);
+                        FirebaseConstants.employerRateEmployee(job, rating);
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("EmployeePastJobs", error.getMessage());
+                }
+            });
+
             return slot;
         }
     }

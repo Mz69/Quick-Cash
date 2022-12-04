@@ -1,7 +1,6 @@
 package com.example.quickcashg18;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -118,8 +117,7 @@ public class EmployeePastJobs extends ToolbarActivity {
             paidCheck.setText("" + job.isPaid());
 
             DatabaseReference ratingRef = pastJobsRef.child(job.getJobID())
-                    .child(FirebaseConstants.POSTER_RATING);
-
+                    .child(FirebaseConstants.EMPLOYER_RATING);
             ratingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -133,7 +131,7 @@ public class EmployeePastJobs extends ToolbarActivity {
                                 rating + "-star rating", Toast.LENGTH_LONG)
                                 .show();
                         repBar.setIsIndicator(true);
-                        FirebaseConstants.setUserEmployerRating(job, rating);
+                        FirebaseConstants.employeeRateEmployer(job, rating);
                     });
                 }
 

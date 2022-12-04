@@ -67,5 +67,3 @@ o
 ?app/src/main/java/com/example/quickcashg18/EmployerLanding.java,1/4/14897af14e6a1032d742e30d1e6c71a82a52cfbc
 o
 ?app/src/main/java/com/example/quickcashg18/EmployeeLanding.java,8/5/85a3708487aeaf66cc801264a1e8136243198d23
-p
-@app/src/main/java/com/example/quickcashg18/EmployerPastJobs.java,0/9/097570a4c8b41c4f6025f2c1ca074f4eaac8ba08
