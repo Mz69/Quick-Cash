@@ -61,7 +61,7 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
 
     private int mDropDownResource;
 
-    private List<Job> mObjects;
+    private List<PostedJob> mObjects;
 
     private boolean mObjectsFromResources;
 
@@ -69,18 +69,18 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
 
     private boolean mNotifyOnChange = true;
 
-    private ArrayList<Job> mOriginalValues;
+    private ArrayList<PostedJob> mOriginalValues;
     private JobFilter mFilter;
 
     private LayoutInflater mDropDownInflater;
 
     public JobAdapter(@NonNull Context context, @LayoutRes int resource,
-                      @IdRes int textViewResourceId, @NonNull List<Job> objects) {
+                      @IdRes int textViewResourceId, @NonNull List<PostedJob> objects) {
         this(context, resource, textViewResourceId, objects, false);
     }
 
     private JobAdapter(@NonNull Context context, @LayoutRes int resource,
-                       @IdRes int textViewResourceId, @NonNull List<Job> objects, boolean objsFromResources) {
+                       @IdRes int textViewResourceId, @NonNull List<PostedJob> objects, boolean objsFromResources) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDropDownResource = resource;
@@ -104,7 +104,7 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
     }
 
     @Override
-    public Job getItem(int position) {
+    public PostedJob getItem(int position) {
         return mObjects.get(position);
     }
 
@@ -334,7 +334,7 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mObjects = (List<Job>) results.values;
+            mObjects = (List<PostedJob>) results.values;
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {

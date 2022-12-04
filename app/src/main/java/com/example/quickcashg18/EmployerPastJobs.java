@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EmployerPastJobs extends ToolbarActivity {
 
@@ -33,6 +34,7 @@ public class EmployerPastJobs extends ToolbarActivity {
     private ListView postedJobs;
     private PostedJobsAdapter postedJobsAdapter;
     private ArrayList<PostedJob> postedJobsList;
+    private HashMap<String, ArrayList<String>> jobToApplicants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class EmployerPastJobs extends ToolbarActivity {
 
     private void refreshPostedJobs() {
         postedJobsList = new ArrayList<>();
+        jobToApplicants = new HashMap<>();
         postedJobsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot incompleteJobs) {
@@ -77,6 +80,12 @@ public class EmployerPastJobs extends ToolbarActivity {
                     if (job != null &&
                             job.getPosterID().equals(user.getUid())) {
                         postedJobsList.add(job);
+                        ArrayList<String> applicants = new ArrayList<String>();
+                        for (DataSnapshot applicant : incompleteJobs.child(job.getJobID())
+                                .child(JobSearch.APPLICANTS).getChildren()) {
+                            applicants.add(applicant.getValue(String.class));
+                        }
+                        jobToApplicants.put(job.getJobID(), applicants);
                     }
                 }
                 updatePostedJobsList();
