@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class EmployerLanding extends AppCompatActivity {
 
-    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
     private FirebaseUser user;
 
@@ -42,7 +41,7 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
                 .child(FirebaseConstants.USER)
@@ -62,9 +61,7 @@ public class EmployerLanding extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Float rating = snapshot.getValue(Float.class);
-                        System.out.println("Snapshot is " + snapshot.getValue());
                         if (rating != null) {
-                            System.out.println("Got here??");
                             ratingBar.setRating(rating);
                             ratingBar.setIsIndicator(true);
                         }
@@ -101,8 +98,8 @@ public class EmployerLanding extends AppCompatActivity {
         }
     }
     public void onClickRole(View view) {
-        Intent roleSwitch= (new Intent(EmployerLanding.this, EmployeeLanding.class));
-        startActivity(roleSwitch);
+        Intent switchToEmployeeLanding = new Intent(EmployerLanding.this, EmployeeLanding.class);
+        startActivity(switchToEmployeeLanding);
     }
 
     public void onClickProfile(View view) {
@@ -111,12 +108,12 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     public void onClickPostJob(View view) {
-        Intent postJob= (new Intent(EmployerLanding.this, PostJob.class));
-        startActivity(postJob);
+        Intent goToPostJob = new Intent(EmployerLanding.this, PostJob.class);
+        startActivity(goToPostJob);
     }
     public void onClickPastJob(View view) {
-        Intent pastJob = new Intent(EmployerLanding.this, EmployerPastJobs.class);
-        startActivity(pastJob);
+        Intent goToPastJobs = new Intent(EmployerLanding.this, EmployerPastJobs.class);
+        startActivity(goToPastJobs);
     }
 
 }

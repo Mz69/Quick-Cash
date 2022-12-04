@@ -62,21 +62,13 @@ public class CircularNode<T> {
         }
 
         if (!contains(item)) {
-            CircularNode<T> itemNode = new CircularNode<T>();
+            CircularNode<T> itemNode = new CircularNode<>();
             itemNode.setData(item);
             CircularNode<T> itemNodeNext = getNext();
             itemNodeNext.setPrev(itemNode);
             setNext(itemNode);
             itemNode.setNext(itemNodeNext);
             itemNode.setPrev(this);
-        }
-    }
-
-    public void enumerate() {
-        CircularNode<T> curr = this;
-        System.out.println(curr.getData());
-        while (!(curr = curr.getNext()).getData().equals(getData())) {
-            System.out.println(curr.getData());
         }
     }
 

@@ -32,13 +32,12 @@ public class EmployeeProfile extends ToolbarActivity {
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setLocation);
 
-    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
 
     // If the employee's preferences are ever required,
     // these variables should be used to reference them
     // in case the fields are ever renamed in the database.
-    public static String PREFERENCES = "EmployeePreferences";
+    public static final String PREFERENCES = "EmployeePreferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class EmployeeProfile extends ToolbarActivity {
     }
 
     private void initDBRef() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
@@ -87,11 +86,6 @@ public class EmployeeProfile extends ToolbarActivity {
 
     private boolean isValidMaxDistance() {
         return Validation.isValidDoubleField(getEnteredMaxDistance());
-    }
-
-    private boolean isValidUrgency() {
-        String urgency = getEnteredUrgency();
-        return urgency.equals("") || urgency.equals("Urgent") || urgency.equals("Not Urgent");
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.example.quickcashg18;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,6 @@ group before he got moved to this group. He has adapted it for this project.
  */
 public class PostJob extends ToolbarActivity {
 
-    private FirebaseDatabase firebaseJobDB;
     private DatabaseReference userRef;
     private DatabaseReference jobDBRef;
     private MyLocation selectedLocation;
@@ -58,11 +59,11 @@ public class PostJob extends ToolbarActivity {
 
     protected void initializeDatabase() {
         //initialize the database and the references relating to the job details
-        firebaseJobDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseJobDB.getReference(FirebaseConstants.USER)
+        userRef = firebaseDB.getReference(FirebaseConstants.USER)
                 .child(user.getUid());
-        jobDBRef = firebaseJobDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
+        jobDBRef = firebaseDB.getReference(JOB_LIST).child(INCOMPLETE_JOBS);
     }
 
     // getters for the job details
@@ -128,23 +129,17 @@ public class PostJob extends ToolbarActivity {
     }
 
     public boolean isValidUrgency() {
-        if (!(getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent"))) {
-            System.out.println("Failed urgency");
-        }
         return getUrgency().equalsIgnoreCase("Urgent") || getUrgency().equalsIgnoreCase("Not Urgent");
     }
 
     public boolean isValidLocation() {
-        if (getLocation == null) {
-            System.out.println("Failed location");
-        }
         return getSelectedLocation() != null;
     }
 
     // method checks if all the job details have been entered
     protected boolean isJobValid() {
         // validating that all the fields have been entered correctly
-        return isValidJobTitle() && isValidTotalPay() && isValidDuration() && isValidUrgency() && isValidLocation();
+        return isValidJobTitle() && isValidTotalPay() && isValidDuration() && isValidUrgency() ;
     }
 
     // methods to save job details in firebase database
@@ -176,6 +171,7 @@ public class PostJob extends ToolbarActivity {
         });
     }
 
+
     public void onClickGetLocation(View view) {
         getLocation.launch(null);
     }
@@ -189,24 +185,39 @@ public class PostJob extends ToolbarActivity {
 
         String jobTitle = getJobTitle();
         MyLocation location = getSelectedLocation();
-        System.out.println("Location from PostJob is " + getSelectedLocation());
         String urgency = getUrgency();
         double totalPay = Double.parseDouble(getTotalPay());
         double duration = Double.parseDouble(getDuration());
         String posterID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         PostedJob job = new PostedJob(jobTitle, duration, totalPay, urgency, location, posterID);
-        System.out.println("Using getMyLocation: " + job.getMyLocation());
+
         // Saving the job details to the database
         saveJobtoFirebase(job);
         Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
         successMsg.show();
 
-        Alert jobAlert = new Alert();
-        //jobAlert.notifyEmployee(job);
+        // checking if the new job matches any user preferences and if it does then adding a notification to their account
+        DatabaseReference preferences = userRef.child(EmployeeProfile.PREFERENCES);
+        preferences.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EmployeePreferredJob prefJob = snapshot.getValue(EmployeePreferredJob.class);
+                if (prefJob != null) {
+                    prefJob.acceptableJob(job);
+                    userRef.child("Notifications").setValue("There is a new job posting for you: " + jobTitle);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("CheckJob", error.getMessage());
+            }
+        });
+
         // switching back to the employer landing screen after the job is posted
         Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
         startActivity(employerLandingIntent);
+
     }
 
 }

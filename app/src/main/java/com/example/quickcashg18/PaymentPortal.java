@@ -5,12 +5,10 @@ import static android.content.ContentValues.TAG;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,14 +32,11 @@ import java.math.BigDecimal;
 
 //code from Paypal tutorials in CSCI3130
 
-public class payment_portal extends AppCompatActivity {
+public class PaymentPortal extends AppCompatActivity {
     ActivityResultLauncher activityResultLauncher;
 
     private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
-    private FirebaseDatabase firebaseJobDB;
-    private DatabaseReference jobName;
 
-    private static final int PAYPAL_REQUEST_CODE = 555;
     private static PayPalConfiguration config;
     Button  btnPayNow;
     TextView edtPay;
@@ -65,12 +60,11 @@ public class payment_portal extends AppCompatActivity {
 
         // initiallizing Activity Launcher and database
         initializeActivityLauncher();
-        initializeDatabase();
         btnPayNow.setOnClickListener(v -> {
             String tip = edtTip.getText().toString();
             if ((Validation.isNumeric(tip) && Double.parseDouble(tip) < 0) ||
                 !Validation.isValidDoubleField(tip)) {
-                Toast.makeText(payment_portal.this,
+                Toast.makeText(PaymentPortal.this,
                         "Please enter a valid tip amount", Toast.LENGTH_LONG)
                         .show();
             } else {
@@ -118,11 +112,6 @@ public class payment_portal extends AppCompatActivity {
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
         activityResultLauncher.launch(intent);
         finish();
-    }
-    protected void initializeDatabase() {
-        //initialize the database and the references relating to the job details
-        firebaseJobDB = FirebaseDatabase.getInstance(FIREBASEDB_URL);
-        jobName = firebaseJobDB.getReference("Jobs/Incomplete");
     }
 }
 
