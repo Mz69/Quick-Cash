@@ -26,16 +26,15 @@ import java.util.ArrayList;
 public class EmployeeLanding extends AppCompatActivity {
 
     // initializing an arraylist to store the users notifications
-    private ArrayList<String> notifications = new ArrayList<String>();
+    private ArrayList<String> notifications = new ArrayList<>();
 
-    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
     private FirebaseUser user;
 
     private Button signOutButton;
     private Button roleSwitch;
     private Button profile;
-    private Button findjob_button;
+    private Button findJobButton;
     private Button notificationButton;
     private Button pastJobsButton;
     private RatingBar ratingBar;
@@ -52,7 +51,7 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
                 .child(FirebaseConstants.USER)
@@ -63,7 +62,7 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton = findViewById(R.id.logout2);
         roleSwitch = findViewById(R.id.role);
         profile = findViewById(R.id.profileEmployee);
-        findjob_button = findViewById(R.id.post_job);
+        findJobButton = findViewById(R.id.post_job);
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
 
@@ -98,7 +97,7 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton.setOnClickListener(this::onClickLogout);
         roleSwitch.setOnClickListener(this::onClickRole);
         profile.setOnClickListener(this::onClickProfile);
-        findjob_button.setOnClickListener(this::onClickFindJob);
+        findJobButton.setOnClickListener(this::onClickFindJob);
         // button to view user notifications
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
@@ -126,8 +125,8 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     public void onClickRole(View view) {
-           Intent roleSwitch= (new Intent(EmployeeLanding.this, EmployerLanding.class));
-           startActivity(roleSwitch);
+           Intent switchToEmployerLanding = new Intent(EmployeeLanding.this, EmployerLanding.class);
+           startActivity(switchToEmployerLanding);
     }
 
     public void onClickProfile(View view) {
