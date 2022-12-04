@@ -34,6 +34,7 @@ public class EmployeeLanding extends AppCompatActivity {
 
     private Button signOutButton;
     private Button roleSwitch;
+    private Button jobHistoryButton;
     private Button profile;
     private Button findjob_button;
     private Button notificationButton;
@@ -66,6 +67,7 @@ public class EmployeeLanding extends AppCompatActivity {
         findjob_button = findViewById(R.id.post_job);
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
+        jobHistoryButton = findViewById(R.id.job_history);
 
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
         totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
@@ -102,6 +104,7 @@ public class EmployeeLanding extends AppCompatActivity {
         // button to view user notifications
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
+        jobHistoryButton.setOnClickListener(this::onClickJobHistory);
     }
 
     public void onClickLogout(View view) {
@@ -149,6 +152,10 @@ public class EmployeeLanding extends AppCompatActivity {
     public void onClickPastJobs(View view) {
         startActivity(new Intent(EmployeeLanding.this, EmployeePastJobs.class));
     }
+    public void onClickJobHistory(View view) {
+        startActivity(new Intent(EmployeeLanding.this, Job_History.class));
+    }
+
 
 }
 
