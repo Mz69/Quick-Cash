@@ -39,10 +39,6 @@ j
 :app/src/main/java/com/example/quickcashg18/MyLocation.java,3/c/3c03bb334f5b740b3ca7dc0f659ff84f2ed3df22
 v
 Fapp/src/main/java/com/example/quickcashg18/LocationResultContract.java,2/3/2313e81b76cf9f2700bf0a258c2a2b5c422d0c6b
-g
-7app/src/main/java/com/example/quickcashg18/PostJob.java,9/f/9fd3484401d5f9236460ab6187e67193a8d6411c
-c
-3app/src/main/java/com/example/quickcashg18/Job.java,5/b/5bc4f80c1d25a0a8a06b38b5b736fad787f71e8e
 o
 ?app/src/main/java/com/example/quickcashg18/EmployeeProfile.java,b/8/b8068e8b700e3858b79f4de05db183eb07dceded
 o

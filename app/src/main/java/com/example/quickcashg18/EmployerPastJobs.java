@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +33,8 @@ public class EmployerPastJobs extends ToolbarActivity {
     private ListView postedJobs;
     private PostedJobsAdapter postedJobsAdapter;
     private ArrayList<PostedJob> postedJobsList;
-    private HashMap<String, ArrayList<String>> jobToApplicants;
+    private HashMap<String, CircularNode<String>> jobToApplicants;
+    public static final String COMPLETE_JOBS = "Complete";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class EmployerPastJobs extends ToolbarActivity {
                     if (job != null &&
                             job.getPosterID().equals(user.getUid())) {
                         postedJobsList.add(job);
-                        ArrayList<String> applicants = new ArrayList<String>();
+                        CircularNode<String> applicants = new CircularNode<String>();
                         for (DataSnapshot applicant : incompleteJobs.child(job.getJobID())
                                 .child(JobSearch.APPLICANTS).getChildren()) {
                             applicants.add(applicant.getValue(String.class));
@@ -104,33 +104,102 @@ public class EmployerPastJobs extends ToolbarActivity {
         startActivity(payment);
     }
 
-    private class PostedJobsAdapter extends ArrayAdapter<PostedJob> {
+    /**
+     * Removes the job from the list of incomplete jobs in the
+     * database and adds it to the list of complete jobs, in which
+     * the user associated with userID is the one who was
+     * accepted for the job.
+     */
+    public static void grantJob(String jobID, String userID) {
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        DatabaseReference completedRef = firebaseDB.getReference()
+                .child(PostJob.JOB_LIST)
+                .child(COMPLETE_JOBS)
+                .child(jobID);
+        DatabaseReference jobRef = firebaseDB.getReference()
+                .child(PostJob.JOB_LIST)
+                .child(PostJob.INCOMPLETE_JOBS)
+                .child(jobID);
+        jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PostedJob job = snapshot.getValue(PostedJob.class);
+                CompletedJob completed = new CompletedJob(job, userID);
+                completedRef.setValue(completed);
+                jobRef.removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("EmployerPastJobs", error.getMessage());
+            }
+        });
+    }
+
+    private class PostedJobsAdapter extends JobAdapter {
 
         public PostedJobsAdapter(@NonNull Context context, @NonNull ArrayList<PostedJob> objects) {
-            super(context, R.layout.job_slot, R.id.slotJobTitleDescriptor, objects);
+            super(context, R.layout.posted_job_for_employer, R.id.slotJobTitleDescriptor, objects);
         }
 
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(R.layout.job_slot, parent, false);
-            }
-
-            TextView title = convertView.findViewById(R.id.slotJobTitleDescriptor);
-            TextView pay = convertView.findViewById(R.id.slotTotalPayDescriptor);
-            TextView duration = convertView.findViewById(R.id.slotDurationDescriptor);
-            TextView urgency = convertView.findViewById(R.id.slotUrgencyDescriptor);
-
+            View slot = getJobSlot(position, convertView, parent);
             PostedJob job = getItem(position);
+            String jobID = job.getJobID();
 
-            title.setText(job.getJobTitle());
-            pay.setText(String.valueOf(job.getTotalPay()));
-            duration.setText(String.valueOf(job.getDuration()));
-            urgency.setText(String.valueOf(job.getUrgency()));
+            Button nextApplicant = slot.findViewById(R.id.nextApplicant);
+            nextApplicant.setOnClickListener(onClickGetNextApplicant(slot, jobID));
+            Button prevApplicant = slot.findViewById(R.id.previousApplicant);
+            prevApplicant.setOnClickListener(onClickGetPrevApplicant(slot, jobID));
+            constructApplicant(slot, job.getJobID());
 
-            return convertView;
+            Button accept = slot.findViewById(R.id.acceptApplicant);
+            accept.setOnClickListener(onClickAcceptApplicant(slot, job));
+            return slot;
+        }
+
+        public View.OnClickListener onClickAcceptApplicant(View slot, PostedJob job) {
+            return v -> {
+                TextView applicant = slot.findViewById(R.id.userRepDescriptor);
+                String applicantID = applicant.getText().toString();
+                grantJob(job.getJobID(), applicantID);
+                remove(job);
+            };
+        }
+
+        public void constructApplicant(View slot, String jobID) {
+            CircularNode<String> applicants = jobToApplicants.get(jobID);
+            if (applicants == null || applicants.isEmpty()) {
+                slot.findViewById(R.id.applicantsList).setVisibility(View.GONE);
+            }
+            TextView applicantID = slot.findViewById(R.id.userRepDescriptor);
+            applicantID.setText(applicants.getData());
+        }
+
+        public void getNextApplicant(View slot, String jobID) {
+            if (!jobToApplicants.containsKey(jobID)) { return; }
+            jobToApplicants.replace(jobID, jobToApplicants.get(jobID).getNext());
+            constructApplicant(slot, jobID);
+        }
+
+        public void getPrevApplicant(View slot, String jobID) {
+            if (!jobToApplicants.containsKey(jobID)) { return; }
+            jobToApplicants.replace(jobID, jobToApplicants.get(jobID).getPrev());
+            constructApplicant(slot, jobID);
+        }
+
+        public View.OnClickListener onClickGetNextApplicant(View slot, String jobID) {
+            return v -> {
+                getNextApplicant(slot, jobID);
+            };
+        }
+
+        public View.OnClickListener onClickGetPrevApplicant(View slot, String jobID) {
+            return v -> {
+                getPrevApplicant(slot, jobID);
+            };
         }
 
     }

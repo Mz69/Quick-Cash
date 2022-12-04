@@ -36,6 +36,14 @@ public class Job implements Serializable {
         this.location = location;
     }
 
+    public Job(Job job) {
+        this.jobTitle = job.getJobTitle();
+        this.location = job.getMyLocation();
+        this.totalPay = job.getTotalPay();
+        this.duration = job.getDuration();
+        this.urgency = job.getUrgency();
+    }
+
     //Setters for each variable
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;

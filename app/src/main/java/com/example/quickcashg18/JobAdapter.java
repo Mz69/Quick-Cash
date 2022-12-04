@@ -188,6 +188,18 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
         return slot;
     }
 
+    public void remove(PostedJob object) {
+        synchronized (mLock) {
+            if (mOriginalValues != null) {
+                mOriginalValues.remove(object);
+            } else {
+                mObjects.remove(object);
+            }
+            mObjectsFromResources = false;
+        }
+        if (mNotifyOnChange) notifyDataSetChanged();
+    }
+
     private @NonNull View createViewFromResource(@NonNull LayoutInflater inflater, int position,
                                                  View convertView, @NonNull ViewGroup parent, int resource) {
         final View view;
