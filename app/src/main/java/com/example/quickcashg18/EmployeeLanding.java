@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -38,6 +39,7 @@ public class EmployeeLanding extends AppCompatActivity {
     private Button notificationButton;
     private Button pastJobsButton;
     private RatingBar ratingBar;
+    private TextView totalIncome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +68,22 @@ public class EmployeeLanding extends AppCompatActivity {
         pastJobsButton = findViewById(R.id.past_jobs_employer);
 
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
+        totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
+
         FirebaseConstants.calculateRatingOfEmployee(user.getUid());
-        userRef.child(FirebaseConstants.EMPLOYEE_RATING)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Float rating = snapshot.getValue(Float.class);
+                Float rating = snapshot.child(FirebaseConstants.EMPLOYEE_RATING)
+                        .getValue(Float.class);
+                Double income = snapshot.child(FirebaseConstants.USER_INCOME)
+                        .getValue(Double.class);
                 if (rating != null) {
                     ratingBar.setRating(rating);
                     ratingBar.setIsIndicator(true);
+                }
+                if (income != null) {
+                    totalIncome.setText(String.valueOf(income));
                 }
             }
 

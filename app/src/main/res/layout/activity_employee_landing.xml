@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/employeeEmployerlink"
+    android:id="@+id/employeeLandingTotalIncomeTag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EmployeeLanding">
@@ -173,5 +173,24 @@
         app:layout_constraintBottom_toTopOf="@+id/employeeLandingRatingBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/role" />
+
+    <TextView
+        android:id="@+id/employeeLandingIncomeTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:text="Total Income (CAD)"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/logo2" />
+
+    <TextView
+        android:id="@+id/employeeLandingIncomeDescriptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="TOTAL INCOME"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/employeeLandingIncomeTag" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
