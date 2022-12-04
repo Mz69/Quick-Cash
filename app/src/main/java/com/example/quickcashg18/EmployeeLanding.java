@@ -38,8 +38,10 @@ public class EmployeeLanding extends AppCompatActivity {
     private Button findJobButton;
     private Button notificationButton;
     private Button pastJobsButton;
+    private Button recommendationsButton;
     private RatingBar ratingBar;
     private TextView totalIncome;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class EmployeeLanding extends AppCompatActivity {
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
         jobHistoryButton = findViewById(R.id.job_history);
+        recommendationsButton = findViewById(R.id.Recom_boss);
 
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
         totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
@@ -104,6 +107,7 @@ public class EmployeeLanding extends AppCompatActivity {
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
         jobHistoryButton.setOnClickListener(this::onClickJobHistory);
+        recommendationsButton.setOnClickListener(this::onCickRecommenations);
     }
 
     public void onClickLogout(View view) {
@@ -153,6 +157,9 @@ public class EmployeeLanding extends AppCompatActivity {
     }
     public void onClickJobHistory(View view) {
         startActivity(new Intent(EmployeeLanding.this, Job_History.class));
+    }
+    public void onCickRecommenations(View view){
+        startActivity(new Intent(EmployeeLanding.this, RecommedEmployees.class));
     }
 
 

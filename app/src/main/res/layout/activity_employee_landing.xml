@@ -143,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="left"
-        app:constraint_referenced_ids="Recom_boss,fav_boss,past_jobs_employer,past_boss"
+        app:constraint_referenced_ids="Recom_boss,fav_boss,past_jobs_employer,job_history"
         tools:layout_editor_absoluteX="8dp" />
 
     <androidx.constraintlayout.widget.Guideline
