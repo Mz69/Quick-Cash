@@ -1,5 +1,7 @@
 package com.example.quickcashg18;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -137,7 +139,7 @@ public class PostJob extends ToolbarActivity {
     // method checks if all the job details have been entered
     protected boolean isJobValid() {
         // validating that all the fields have been entered correctly
-        return isValidJobTitle() && isValidTotalPay() && isValidDuration() && isValidUrgency() && isValidLocation();
+        return isValidJobTitle() && isValidTotalPay() && isValidDuration() && isValidUrgency() ;
     }
 
     // methods to save job details in firebase database
@@ -169,6 +171,7 @@ public class PostJob extends ToolbarActivity {
         });
     }
 
+
     public void onClickGetLocation(View view) {
         getLocation.launch(null);
     }
@@ -188,16 +191,33 @@ public class PostJob extends ToolbarActivity {
         String posterID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         PostedJob job = new PostedJob(jobTitle, duration, totalPay, urgency, location, posterID);
+
         // Saving the job details to the database
         saveJobtoFirebase(job);
         Toast successMsg = Toast.makeText(getApplicationContext(), "Job Created Successfully", Toast.LENGTH_LONG);
         successMsg.show();
 
-        Alert jobAlert = new Alert();
-        //jobAlert.notifyEmployee(job);
+        // checking if the new job matches any user preferences and if it does then adding a notification to their account
+        DatabaseReference preferences = userRef.child(EmployeeProfile.PREFERENCES);
+        preferences.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EmployeePreferredJob prefJob = snapshot.getValue(EmployeePreferredJob.class);
+                if (prefJob != null) {
+                    prefJob.acceptableJob(job);
+                    userRef.child("Notifications").setValue("There is a new job posting for you: " + jobTitle);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("CheckJob", error.getMessage());
+            }
+        });
+
         // switching back to the employer landing screen after the job is posted
         Intent employerLandingIntent = new Intent(this, EmployerLanding.class);
         startActivity(employerLandingIntent);
+
     }
 
 }
