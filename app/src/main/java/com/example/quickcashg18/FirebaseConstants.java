@@ -43,28 +43,36 @@ public class FirebaseConstants {
 
     public static final String NUM_JOBS_COMPLETED_BY_USER = "NumCompletedJobsByUser";
 
+    public static final String NUM_RATINGS_AS_EMPLOYER = "NumRatingsAsEmployer";
+
+    public static final String NUM_RATINGS_AS_EMPLOYEE = "NumRatingsAsEmployee";
+
     public static final String NO_PREFERENCE = "NoPreference";
 
-    private static void calculateNumJobsCompletedByUser(String userID) {
+    /**
+     * Get the number of an employee's ratings by employers
+     */
+    private static void calculateNumRatingsAsEmployee(String userID) {
         FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FIREBASE_URL);
         DatabaseReference completedRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
                 .child(COMPLETE_JOBS);
-        DatabaseReference completedNumRef = firebaseDB.getReference()
+        DatabaseReference ratingNumRef = firebaseDB.getReference()
                 .child(USER)
                 .child(userID)
-                .child(NUM_JOBS_COMPLETED_BY_USER);
+                .child(NUM_RATINGS_AS_EMPLOYEE);
         completedRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int completedNum = 0;
+                int ratingNum = 0;
                 for (DataSnapshot jobShot : snapshot.getChildren()) {
                     CompletedJob job = jobShot.getValue(CompletedJob.class);
-                    if (job != null && job.getCompleterID().equals(userID)) {
-                        completedNum++;
+                    if (job != null && job.getCompleterID().equals(userID) &&
+                        snapshot.child(COMPLETER_RATING).exists()) {
+                        ratingNum++;
                     }
                 }
-                completedNumRef.setValue(completedNum);
+                ratingNumRef.setValue(ratingNum);
             }
 
             @Override
@@ -74,26 +82,30 @@ public class FirebaseConstants {
         });
     }
 
-    public static void calculateNumJobsCompletedByEmployees(String userID) {
+    /**
+     * Get the number of an employer's ratings by employees
+     */
+    public static void calculateNumRatingsAsEmployer(String userID) {
         FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FIREBASE_URL);
         DatabaseReference completedRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
                 .child(COMPLETE_JOBS);
-        DatabaseReference completedNumRef = firebaseDB.getReference()
+        DatabaseReference ratingNumRef = firebaseDB.getReference()
                 .child(USER)
                 .child(userID)
-                .child(NUM_JOBS_COMPLETED_BY_EMPLOYEES);
+                .child(NUM_RATINGS_AS_EMPLOYER);
         completedRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int completedNum = 0;
+                int ratingNum = 0;
                 for (DataSnapshot jobShot : snapshot.getChildren()) {
                     CompletedJob job = jobShot.getValue(CompletedJob.class);
-                    if (job != null && job.getPosterID().equals(userID)) {
-                        completedNum++;
+                    if (job != null && job.getPosterID().equals(userID) &&
+                        jobShot.child(POSTER_RATING).exists()) {
+                        ratingNum++;
                     }
                 }
-                completedNumRef.setValue(completedNum);
+                ratingNumRef.setValue(ratingNum);
             }
 
             @Override
@@ -111,10 +123,10 @@ public class FirebaseConstants {
     private static void runNumCalculator(String userID, String numKind) {
         if (numKind == null) {
             return;
-        } else if (numKind.equals(NUM_JOBS_COMPLETED_BY_USER)) {
-            calculateNumJobsCompletedByUser(userID);
-        } else if (numKind.equals(NUM_JOBS_COMPLETED_BY_EMPLOYEES)) {
-            calculateNumJobsCompletedByEmployees(userID);
+        } else if (numKind.equals(NUM_RATINGS_AS_EMPLOYEE)) {
+            calculateNumRatingsAsEmployee(userID);
+        } else if (numKind.equals(NUM_RATINGS_AS_EMPLOYER)) {
+            calculateNumRatingsAsEmployer(userID);
         }
     }
 
@@ -127,9 +139,9 @@ public class FirebaseConstants {
     private static String runNumCalculatorForRating(String userID, String ratingKind) {
         String numKind = null;
         if (ratingKind.equals(POSTER_RATING)) {
-            numKind = NUM_JOBS_COMPLETED_BY_EMPLOYEES;
+            numKind = NUM_RATINGS_AS_EMPLOYER;
         } else if (ratingKind.equals(COMPLETER_RATING)) {
-            numKind = NUM_JOBS_COMPLETED_BY_USER;
+            numKind = NUM_RATINGS_AS_EMPLOYEE;
         }
         if (numKind != null) {
             runNumCalculator(userID, numKind);
@@ -149,6 +161,33 @@ public class FirebaseConstants {
         DatabaseReference userRef = firebaseDB.child(USER).child(userID);
         DatabaseReference numRef = userRef.child(numKind);
         DatabaseReference ratingRef = userRef.child(ratingKind);
+        /*ratingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot prevRatingShot) {
+                Float prevRatingCheck = prevRatingShot.getValue(Float.class);
+                numRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot numShot) {
+                        Integer numCheck = numShot.getValue(Integer.class);
+                        if (prevRatingCheck != null && numCheck != null) {
+                            Float prevRating = prevRatingCheck;
+                            int num = numCheck;
+                            ratingRef.
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
         numRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot numShot) {
@@ -161,9 +200,10 @@ public class FirebaseConstants {
                             // Get the user's previous total rating, and compute new rating
                             Float prevRatingCheck = snapshot.getValue(Float.class);
                             if (prevRatingCheck != null) {
-                                int num = numCheck;
+                                int num = numCheck + 1;
                                 float prevRating = prevRatingCheck;
                                 ratingRef.setValue((prevRating + ratingToAdd) / num);
+                                numRef.setValue(num);
                             } else {
                                 ratingRef.setValue(ratingToAdd);
                             }
