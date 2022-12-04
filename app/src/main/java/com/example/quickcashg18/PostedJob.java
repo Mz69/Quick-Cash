@@ -8,6 +8,12 @@ public class PostedJob extends Job {
 
     public PostedJob() { super(); }
 
+    public PostedJob(PostedJob job) {
+        super(job);
+        this.posterID = job.getPosterID();
+        this.jobID = job.getJobID();
+    }
+
     public PostedJob(String jobTitle, double duration, double totalPay,
                      String urgency, MyLocation location, String posterID) {
         super(jobTitle, duration, totalPay, urgency, location);

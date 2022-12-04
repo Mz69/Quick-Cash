@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +38,7 @@ import java.util.List;
  */
 public class JobSearch extends ToolbarActivity {
 
-    private ArrayList<Job> availableJobs;
+    private ArrayList<PostedJob> availableJobs;
     private JobAdapter adapter;
     private FirebaseDatabase firebaseDB;
     private DatabaseReference jobsRef;
@@ -55,6 +56,7 @@ public class JobSearch extends ToolbarActivity {
     private ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
             this::setEnteredLocation);
     private MyLocation selectedLocation;
+    public static final String APPLICANTS = "Applicants";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +114,8 @@ public class JobSearch extends ToolbarActivity {
      * with the adapter used to perform filtering.
      */
     private void initJobList() {
-        adapter = new JobSearchAdapter(this, R.layout.incomplete_job_for_search, R.id.slotJobTitleDescriptor, availableJobs);
+        adapter = new JobSearchAdapter(this, R.layout.incomplete_job_for_search,
+                R.id.slotJobTitleDescriptor, availableJobs);
         listView.setAdapter(adapter);
         enterJobTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -160,7 +163,7 @@ public class JobSearch extends ToolbarActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot incompleteJobs) {
                     for (DataSnapshot job : incompleteJobs.getChildren()) {
-                        availableJobs.add(job.getValue(Job.class));
+                        availableJobs.add(job.getValue(PostedJob.class));
                     }
                     initJobList();
                 }
@@ -244,9 +247,22 @@ public class JobSearch extends ToolbarActivity {
         selectedLocation = l;
     }
 
+    public static void applyToJob(PostedJob job, String userID) {
+        // find the job in the database
+        // add the applicant to the list
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        DatabaseReference applicantsRef = firebaseDB.getReference()
+                .child(PostJob.JOB_LIST)
+                .child(PostJob.INCOMPLETE_JOBS)
+                .child(job.getJobID())
+                .child(APPLICANTS);
+        applicantsRef.child(userID).setValue(userID);
+    }
+
     private class JobSearchAdapter extends JobAdapter {
 
-        public JobSearchAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<Job> objects) {
+        public JobSearchAdapter(@NonNull Context context, int resource, int textViewResourceId,
+                                @NonNull List<PostedJob> objects) {
             super(context, resource, textViewResourceId, objects);
         }
 
@@ -255,7 +271,7 @@ public class JobSearch extends ToolbarActivity {
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View slot = getJobSlot(position, convertView, parent);
             Button apply = slot.findViewById(R.id.applyToJob);
-            apply.setOnClickListener(getOnClickApplyToJob(slot));
+            apply.setOnClickListener(getOnClickApplyToJob(slot, getItem(position)));
 
             return slot;
         }
@@ -275,9 +291,11 @@ public class JobSearch extends ToolbarActivity {
         User
             Completed Jobs with ID
          */
-        public View.OnClickListener getOnClickApplyToJob(View slot) {
+        public View.OnClickListener getOnClickApplyToJob(View slot, PostedJob job) {
             return v -> {
-                TextView jobTitle = slot.findViewById(R.id.slotJobTitleDescriptor);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                applyToJob(job, user.getUid());
+                Toast.makeText(getContext(), "Applied successfully", Toast.LENGTH_LONG).show();
             };
         }
 

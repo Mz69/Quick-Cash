@@ -44,7 +44,7 @@
             android:text="Completed Jobs" />
 
         <ListView
-            android:id="@+id/jobsCompletedEmployerList"
+            android:id="@+id/completedJobsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

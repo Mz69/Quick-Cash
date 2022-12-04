@@ -7,22 +7,30 @@
     tools:context=".payment_portal"
     >
 
-    <EditText
-        android:id="@+id/edtAmount"
-        android:layout_width="316dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="100dp"
-        android:hint="Total"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/edtTip"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/job_details"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/edtPayTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Pay from Job (CAD):  " />
+
+        <TextView
+            android:id="@+id/edtPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ems="10"
+            android:text="JOB PAY HERE" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edtTip"
@@ -30,22 +38,8 @@
         android:layout_height="64dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="220dp"
         android:hint="Enter Tip (If you want to)"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/edtPay"
-        android:layout_width="316dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="350dp"
-        android:hint="Amount from job payment will display here"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,17 +50,14 @@
         android:id="@+id/btnPayNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtAmount"
         android:layout_centerInParent="true"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="20dp"
         android:text="Make Payment"
         app:layout_constraintBottom_toTopOf="@+id/idTVStatus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edtAmount" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/idTVStatus"
@@ -86,24 +77,5 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnPayNow" />
-
-    <TextView
-        android:id="@+id/job_details"
-        android:layout_width="316dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        android:contentDescription="details about the job that is being paided"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/edtAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="EditableContentDescCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
