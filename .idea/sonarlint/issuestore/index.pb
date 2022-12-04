@@ -1,28 +1,6 @@
 
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-~
-Napp/src/androidTest/java/com/example/quickcashg18/PostJobInstrumentedTest.java,5/9/59015e29995e6aa5e830f06be1e1e7e6883fc13c
-z
-Japp/src/androidTest/java/com/example/quickcashg18/CommonTestFunctions.java,1/3/13de121cbaa61b3c5a77b88d726f5ff6cb45b377
-†
-Vapp/src/androidTest/java/com/example/quickcashg18/EmployerLandingInstrumentedTest.java,4/5/456fe1ac6bc5e6db7698f9c5f148831e78157b01
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-†
-Vapp/src/androidTest/java/com/example/quickcashg18/EmployeeProfileInstrumentedTest.java,a/1/a11fbb8295ca843ff5ef71392f198655c4af5037
-†
-Vapp/src/androidTest/java/com/example/quickcashg18/EmployerProfileInstrumentedTest.java,6/1/61ef74e2410557a5e5180ca82b42a696e7aa5caf
-n
->app/src/test/java/com/example/quickcashg18/ValidationTest.java,7/a/7acb35fa8cf4797d12d41c5d65ac9a314164157d
-o
-?app/src/test/java/com/example/quickcashg18/JobPostUnitTest.java,0/7/07c9f056891c7928e125192afb0ecfa2951cb835
-n
->app/src/test/java/com/example/quickcashg18/SignInUnitTest.java,6/e/6e74792aebbfdfbc3f9500ef88b23b5ab6154a8a
-†
-Vapp/src/androidTest/java/com/example/quickcashg18/EmployeeLandingInstrumentedTest.java,e/b/eb275976b8a4764db50ebbe953acce7a9f7dadc8
 j
 :app/src/main/java/com/example/quickcashg18/Validation.java,f/5/f5bd9ca034bc9c43cae8fce643332fd4d01e9303
 e
@@ -39,8 +17,6 @@ t
 Dapp/src/main/java/com/example/quickcashg18/EmployeePreferredJob.java,a/7/a7dbeab28b2dfbd32677e9e09873fb0f37fa5444
 o
 ?app/src/main/java/com/example/quickcashg18/EmployerProfile.java,5/7/579b26a59194c965850b0f7b902b25b35f5e4230
-t
-Dapp/src/androidTest/java/com/example/quickcashg18/JobSearchTest.java,c/d/cdfcc12f51559569fe4645ed5b6df8f824c60c3b
 t
 Dapp/src/main/java/com/example/quickcashg18/EmployerPreferredJob.java,4/5/4541489b6a079ffc235e746574d53f96dfa417d7
 i
@@ -63,3 +39,7 @@ n
 >app/src/main/java/com/example/quickcashg18/SignInActivity.java,f/5/f50e1930c8b59595203904da5bcd721b16ac465a
 l
 <app/src/main/java/com/example/quickcashg18/CompletedJob.java,3/6/36d4661753047d328731f811885c2ef87097fd7b
+p
+@app/src/main/java/com/example/quickcashg18/EmployerPastJobs.java,0/9/097570a4c8b41c4f6025f2c1ca074f4eaac8ba08
+q
+Aapp/src/main/java/com/example/quickcashg18/FirebaseConstants.java,5/8/582b09ca5b0fb1e5632911f5fb7264544f3ec8fe

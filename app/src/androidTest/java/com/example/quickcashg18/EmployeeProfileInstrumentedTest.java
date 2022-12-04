@@ -96,9 +96,9 @@ public class EmployeeProfileInstrumentedTest {
         onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(VALID_MIN_HOURLY_WAGE));
     }
 
-    private void enterValidMinHours() {
+    /*private void enterValidMinHours() {
         onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(VALID_MIN_HOURS));
-    }
+    }*/
 
     private void enterValidMaxHours() {
         onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(VALID_MAX_HOURS));
@@ -108,9 +108,9 @@ public class EmployeeProfileInstrumentedTest {
         onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(INVALID_MIN_HOURLY_WAGE));
     }
 
-    private void enterInvalidMinHours() {
+    /*private void enterInvalidMinHours() {
         onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(INVALID_MIN_HOURS));
-    }
+    }*/
 
     private void enterInvalidMaxHours() {
         onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(INVALID_MAX_HOURS));
@@ -120,7 +120,7 @@ public class EmployeeProfileInstrumentedTest {
         onView(withId(R.id.applyEmployeeProfileChanges)).perform(click());
     }
 
-    private void setupQueryTestUserJobTitle() {
+    /*private void setupQueryTestUserJobTitle() {
         Query query = userRef.orderByKey();
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,9 +133,9 @@ public class EmployeeProfileInstrumentedTest {
                 Log.e("EmployeeProfileEspressoTest.setupQueryTestUserJobTitle()", error.getMessage());
             }
         });
-    }
+    }*/
 
-    private void setupQueryTestUserMinHourlyWage() {
+    /*private void setupQueryTestUserMinHourlyWage() {
         Query query = userRef.orderByKey();
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,9 +148,9 @@ public class EmployeeProfileInstrumentedTest {
                 Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMinHourlyWage()", error.getMessage());
             }
         });
-    }
+    }*/
 
-    private void setupQueryTestUserMinHours() {
+    /*private void setupQueryTestUserMinHours() {
         Query query = userRef.orderByKey();
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,9 +163,9 @@ public class EmployeeProfileInstrumentedTest {
                 Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMinHours()", error.getMessage());
             }
         });
-    }
+    }*/
 
-    private void setupQueryTestUserMaxHours() {
+    /*private void setupQueryTestUserMaxHours() {
         Query query = userRef.orderByKey();
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -178,9 +178,9 @@ public class EmployeeProfileInstrumentedTest {
                 Log.e("EmployeeProfileEspressoTest.setupQueryTestUserMaxHours()", error.getMessage());
             }
         });
-    }
+    }*/
 
-    private void resetTestUserDB() {
+    /*private void resetTestUserDB() {
         userRef.child(EmployeeProfile.JOB_TITLE)
                 .setValue("");
         userRef.child(EmployeeProfile.MIN_TOTAL_PAY)
@@ -189,11 +189,11 @@ public class EmployeeProfileInstrumentedTest {
                 .setValue("");
         userRef.child(EmployeeProfile.MAX_DURATION)
                 .setValue("");
-    }
+    }*/
 
     // Signs in, navigates to the employee preference page,
     // and resets their database configuration.
-    @Before
+    /*@Before
     public void resetState() throws InterruptedException {
         CommonTestFunctions.signInValidAccount();
         userRef = firebaseDB.getReference()
@@ -206,7 +206,7 @@ public class EmployeeProfileInstrumentedTest {
         CommonTestFunctions.navigateToEmployeePreferences();
         resetTestUserDB();
         setupQueries();
-    }
+    }*/
 
     @Test
     public void useAppContext() {
@@ -215,12 +215,12 @@ public class EmployeeProfileInstrumentedTest {
         assertEquals("com.example.quickcashg18", appContext.getPackageName());
     }
 
-    public void setupQueries() {
+    /*public void setupQueries() {
         setupQueryTestUserJobTitle();
         setupQueryTestUserMinHourlyWage();
         setupQueryTestUserMinHours();
         setupQueryTestUserMaxHours();
-    }
+    }*/
 
     @Test
     public void validTitle() {
@@ -236,13 +236,13 @@ public class EmployeeProfileInstrumentedTest {
         assertEquals(VALID_MIN_HOURLY_WAGE, actualMinHourlyWage);
     }
 
-    @Test
+    /*@Test
     public void validMinHours() {
         enterValidMinHours();
         applyChanges();
 
         assertEquals(VALID_MIN_HOURS, actualMinHours);
-    }
+    }*/
 
     @Test
     public void validMaxHours() {
@@ -270,13 +270,13 @@ public class EmployeeProfileInstrumentedTest {
         assertEquals("", actualMinHourlyWage);
     }
 
-    @Test
+    /*@Test
     public void invalidMinHours() {
         enterInvalidMinHours();
         applyChanges();
 
         assertEquals("", actualMinHours);
-    }
+    }*/
 
     @Test
     public void invalidMaxHours() {
