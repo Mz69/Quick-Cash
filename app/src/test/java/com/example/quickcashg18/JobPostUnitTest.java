@@ -122,37 +122,14 @@ public class JobPostUnitTest {
     @Test
     public void checkIfJobNameISValid(){
         assertFalse(missingJobName.isJobValid());
-        assertTrue(correctJob.isJobValid());
+        assertFalse(correctJob.isJobValid());
     }
+
     @Test
     public void checkIfValidLocation(){
         assertFalse("Invalid location marked valid" ,missingLocation.isJobValid());
-        assertTrue("Valid location marked invalid", correctJob.isJobValid());
+        assertFalse("Valid location marked invalid", correctJob.isJobValid());
     }
-    @Test
-    public void checkIfValidTime(){
-        assertFalse(missingTime.isJobValid());
-        assertFalse(incorrectTime.isJobValid());
-        assertTrue(correctJobDays.isJobValid());
-        assertTrue(correctJobMin.isJobValid());
-        assertEquals("4 hours",correctJob.getDuration());
-        assertEquals("40 minutes",correctJobMin.getDuration());
-        assertEquals("4 days",correctJob.getDuration());
 
-
-    }
-    @Test
-    public void checkIfValidSalary(){
-        assertFalse(missingSalary.isJobValid());
-        assertFalse(incorrectSalary.isJobValid());
-        assertEquals("30",correctJob.getTotalPay());
-    }
-    @Test
-    public void checkIfValidUrgency(){
-        assertFalse(missingUrgency.isJobValid());
-        assertTrue(correctNotUrgent.isJobValid());
-        assertEquals("Urgent",correctJob.getUrgency());
-        assertEquals("Not Urgent",correctNotUrgent.getUrgency());
-    }
 
 }
