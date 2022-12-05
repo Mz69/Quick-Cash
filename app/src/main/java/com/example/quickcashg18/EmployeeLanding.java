@@ -66,7 +66,7 @@ public class EmployeeLanding extends AppCompatActivity {
         findjob_button = findViewById(R.id.post_job);
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
-        jobHistoryButton = findViewById(R.id.job_history);
+        //jobHistoryButton = findViewById(R.id.job_history);
         recommendationsButton = findViewById(R.id.Recom_boss);
 
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
@@ -104,7 +104,7 @@ public class EmployeeLanding extends AppCompatActivity {
         // button to view user notifications
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
-        jobHistoryButton.setOnClickListener(this::onClickJobHistory);
+        //jobHistoryButton.setOnClickListener(this::onClickJobHistory);
         recommendationsButton.setOnClickListener(this::onCickRecommenations);
     }
 
