@@ -21,10 +21,10 @@ public class RecommedEmployees extends AppCompatActivity {
         initDatabase();
     }
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER)
+                .child(FirebaseCommon.USER)
                 .child(user.getUid());
     }
 

@@ -41,10 +41,10 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER)
+                .child(FirebaseCommon.USER)
                 .child(user.getUid());
     }
 
@@ -55,8 +55,8 @@ public class EmployerLanding extends AppCompatActivity {
         profile = findViewById(R.id.profileEmployer);
         postJob = findViewById(R.id.post_job);
         ratingBar = findViewById(R.id.employerLandingRatingBar);
-        FirebaseConstants.calculateRatingOfEmployer(user.getUid());
-        userRef.child(FirebaseConstants.EMPLOYER_RATING)
+        FirebaseCommon.calculateRatingOfEmployer(user.getUid());
+        userRef.child(FirebaseCommon.EMPLOYER_RATING)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

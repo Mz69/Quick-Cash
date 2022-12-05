@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class EmployeeLanding extends AppCompatActivity {
 
     // initializing an arraylist to store the users notifications
@@ -52,10 +50,10 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER)
+                .child(FirebaseCommon.USER)
                 .child(user.getUid());
     }
 
@@ -72,13 +70,13 @@ public class EmployeeLanding extends AppCompatActivity {
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
         totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
 
-        FirebaseConstants.calculateRatingOfEmployee(user.getUid());
+        FirebaseCommon.calculateRatingOfEmployee(user.getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Float rating = snapshot.child(FirebaseConstants.EMPLOYEE_RATING)
+                Float rating = snapshot.child(FirebaseCommon.EMPLOYEE_RATING)
                         .getValue(Float.class);
-                Double income = snapshot.child(FirebaseConstants.USER_INCOME)
+                Double income = snapshot.child(FirebaseCommon.USER_INCOME)
                         .getValue(Double.class);
                 if (rating != null) {
                     ratingBar.setRating(rating);

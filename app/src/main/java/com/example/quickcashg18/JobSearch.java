@@ -6,14 +6,12 @@ import androidx.annotation.NonNull;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,10 +86,10 @@ public class JobSearch extends ToolbarActivity {
     }
 
     private void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         jobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(user.getUid());
+        userRef = firebaseDB.getReference(FirebaseCommon.USER).child(user.getUid());
         userPrefRef = userRef.child(EmployeeProfile.PREFERENCES);
     }
 
@@ -250,7 +248,7 @@ public class JobSearch extends ToolbarActivity {
     public static void applyToJob(PostedJob job, String userID) {
         // find the job in the database
         // add the applicant to the list
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         DatabaseReference applicantsRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
                 .child(PostJob.INCOMPLETE_JOBS)
