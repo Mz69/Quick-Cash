@@ -89,10 +89,6 @@ public class EmployeeProfileInstrumentedTest {
         onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(VALID_MIN_HOURLY_WAGE));
     }
 
-    /*private void enterValidMinHours() {
-        onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(VALID_MIN_HOURS));
-    }*/
-
     private void enterValidMaxHours() {
         onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(VALID_MAX_HOURS));
     }
@@ -100,10 +96,6 @@ public class EmployeeProfileInstrumentedTest {
     private void enterInvalidMinHourlyWage() {
         onView(withId(R.id.enterMinTotalPayEmployee)).perform(typeText(INVALID_MIN_HOURLY_WAGE));
     }
-
-    /*private void enterInvalidMinHours() {
-        onView(withId(R.id.enterMinHoursEmployee)).perform(typeText(INVALID_MIN_HOURS));
-    }*/
 
     private void enterInvalidMaxHours() {
         onView(withId(R.id.enterMaxDurationEmployee)).perform(typeText(INVALID_MAX_HOURS));

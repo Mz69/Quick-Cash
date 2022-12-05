@@ -44,7 +44,7 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
                 .child(FirebaseCommon.USER)
@@ -75,10 +75,11 @@ public class EmployerLanding extends AppCompatActivity {
                         Log.e("EmployerLanding", error.getMessage());
                     }
                 });
+        //notificationButton = findViewById();
     }
 
     protected void initListeners() {
-        notificationButton.setOnClickListener(this::onClickNotifications);
+        //notificationButton.setOnClickListener(this::onClickNotifications);
         signOutButton.setOnClickListener(this::onClicklogout);
         roleSwitch.setOnClickListener(this::onClickRole);
         pastJob.setOnClickListener(this::onClickPastJob);
@@ -121,7 +122,7 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     public void onClickNotifications(View view){
-        DatabaseReference notif = firebaseDB.getReference().child(FirebaseConstants.USER).child(user.getUid()).child("notifications");
+        DatabaseReference notif = firebaseDB.getReference().child(FirebaseCommon.USER).child(user.getUid()).child("notifications");
         // Read from the database the user notifications
         notif.addValueEventListener(new ValueEventListener() {
             @Override
