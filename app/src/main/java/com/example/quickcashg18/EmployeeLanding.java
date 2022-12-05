@@ -35,6 +35,7 @@ public class EmployeeLanding extends AppCompatActivity {
     private Button profile;
     private Button findjob_button;
     private Button notificationButton;
+    private Button jobHistoryButton;
     private Button pastJobsButton;
     private Button recommendationsButton;
     private RatingBar ratingBar;

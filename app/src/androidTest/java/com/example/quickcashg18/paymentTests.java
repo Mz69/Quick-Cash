@@ -70,7 +70,7 @@ public class paymentTests {
         onView(withId(R.id.past_jobs_employer)).perform(click());
         onView(withId(R.id.btnPayNow)).perform(click());
         Thread.sleep(1000);
-        intended(hasComponent(payment_portal.class.getName()));
+        intended(hasComponent(PaymentPortal.class.getName()));
     }
     @Test
     public void paymentTest1() throws InterruptedException {
