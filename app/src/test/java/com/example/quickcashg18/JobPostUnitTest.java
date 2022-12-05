@@ -150,5 +150,14 @@ public class JobPostUnitTest {
     }
 
 
+    @Test
+    public void checkIfValidUrgency(){
+        assertFalse(missingUrgency.isJobValid());
+        assertFalse(correctNotUrgent.isJobValid());
+        assertEquals("Urgent",correctJob.getUrgency());
+        assertEquals("Not Urgent",correctNotUrgent.getUrgency());
+    }
+
+
 
 }
