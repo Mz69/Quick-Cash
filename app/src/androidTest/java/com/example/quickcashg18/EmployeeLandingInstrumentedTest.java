@@ -12,6 +12,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +29,7 @@ import java.time.Duration;
 public class EmployeeLandingInstrumentedTest {
 
     @Rule
-    public ActivityScenarioRule<EmployeeLanding> myRule = new ActivityScenarioRule<>(EmployeeLanding.class);
+    public ActivityScenarioRule<SignInActivity> myRule = new ActivityScenarioRule<>(SignInActivity.class);
 
     @BeforeClass
     public static void setup() { Intents.init(); }
@@ -36,6 +37,14 @@ public class EmployeeLandingInstrumentedTest {
     @AfterClass
     public static void tearDown() {
         System.gc();
+    }
+
+    @Before
+    public void resetState() throws InterruptedException {
+        CommonTestFunctions.signInValidAccount();
+        Thread.sleep(3000);
+        CommonTestFunctions.confirmLocation();
+        Thread.sleep(1500);
     }
 
     @Test
