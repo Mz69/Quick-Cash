@@ -292,6 +292,29 @@ public class JobSearch extends ToolbarActivity {
             Completed Jobs with ID
          */
         public View.OnClickListener getOnClickApplyToJob(PostedJob job) {
+            // getting the user that posted the job
+//            DatabaseReference jobPoster = jobsRef.child("jobTitle");
+//            jobPoster.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    String jobName = (String) snapshot.getValue();
+//                    if (jobName.equals(enterJobTitle)) {
+//
+//                    }
+//
+//                    Toast.makeText(getContext(), jobName, Toast.LENGTH_LONG).show();
+//
+//
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                    Log.e("acceptJob", error.getMessage());
+//                }
+//            });
+
+
+            // adding a notification to the user that their job was applied for
+            userRef.child("Notifications").setValue("Someone has applied for your job posting: " + enterJobTitle);
             return v -> {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 applyToJob(job, user.getUid());

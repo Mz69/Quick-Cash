@@ -33,6 +33,7 @@ public class EmployeeLanding extends AppCompatActivity {
     private Button signOutButton;
     private Button roleSwitch;
     private Button profile;
+    private Button jobHistoryButton;
     private Button findjob_button;
     private Button notificationButton;
     private Button pastJobsButton;
@@ -139,15 +140,14 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     public void onClickNotifications(View view){
-
+        DatabaseReference notif = firebaseDB.getReference().child(FirebaseConstants.USER).child(user.getUid()).child("notifications");
         // Read from the database the user notifications
-        userRef.addValueEventListener(new ValueEventListener() {
+        notif.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // outputs the current notification(s) for the user
-                String message = userRef.child("Notifications").toString();
-                Toast toast = Toast.makeText(getApplicationContext(), message,
-                        Toast.LENGTH_LONG);
+                String message = (String) dataSnapshot.getValue();
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                 toast.show();
             }
             @Override
