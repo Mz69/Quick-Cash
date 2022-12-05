@@ -1,16 +1,11 @@
 package com.example.quickcashg18;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.navigation.ui.AppBarConfiguration;
-
-import com.example.quickcashg18.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Initialize Firebase state
-        FirebaseConstants.initDatabaseConstants();
+        FirebaseCommon.initDatabaseConstants();
 
         initDB();
 
@@ -48,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityResultLauncher<Void> getLocation = registerForActivityResult(new LocationResultContract(),
                     result -> {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        firebaseDB.getReference(FirebaseConstants.USER)
+                        firebaseDB.getReference(FirebaseCommon.USER)
                                 .child(user.getUid())
                                 .child(MapsActivity.CURRENT_LOCATION)
                                 .setValue(result);

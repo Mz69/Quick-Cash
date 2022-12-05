@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class EmployerLanding extends AppCompatActivity {
 
+    private FirebaseDatabase firebaseDB;
     private DatabaseReference userRef;
     private FirebaseUser user;
 
@@ -30,6 +32,7 @@ public class EmployerLanding extends AppCompatActivity {
     private Button profile;
     private Button postJob;
     private RatingBar ratingBar;
+    private Button notificationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,10 @@ public class EmployerLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER)
+                .child(FirebaseCommon.USER)
                 .child(user.getUid());
     }
 
@@ -55,8 +58,8 @@ public class EmployerLanding extends AppCompatActivity {
         profile = findViewById(R.id.profileEmployer);
         postJob = findViewById(R.id.post_job);
         ratingBar = findViewById(R.id.employerLandingRatingBar);
-        FirebaseConstants.calculateRatingOfEmployer(user.getUid());
-        userRef.child(FirebaseConstants.EMPLOYER_RATING)
+        FirebaseCommon.calculateRatingOfEmployer(user.getUid());
+        userRef.child(FirebaseCommon.EMPLOYER_RATING)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,9 +75,11 @@ public class EmployerLanding extends AppCompatActivity {
                         Log.e("EmployerLanding", error.getMessage());
                     }
                 });
+        //notificationButton = findViewById();
     }
 
     protected void initListeners() {
+        //notificationButton.setOnClickListener(this::onClickNotifications);
         signOutButton.setOnClickListener(this::onClicklogout);
         roleSwitch.setOnClickListener(this::onClickRole);
         pastJob.setOnClickListener(this::onClickPastJob);
@@ -114,6 +119,28 @@ public class EmployerLanding extends AppCompatActivity {
     public void onClickPastJob(View view) {
         Intent goToPastJobs = new Intent(EmployerLanding.this, EmployerPastJobs.class);
         startActivity(goToPastJobs);
+    }
+
+    public void onClickNotifications(View view){
+        DatabaseReference notif = firebaseDB.getReference().child(FirebaseCommon.USER).child(user.getUid()).child("notifications");
+        // Read from the database the user notifications
+        notif.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // outputs the current notification(s) for the user
+                String message = (String) dataSnapshot.getValue();
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                toast.show();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // if nothing is read then there are no current notifications
+                Toast toast = Toast.makeText(getApplicationContext(), "No current notifications",
+                        Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
     }
 
 }

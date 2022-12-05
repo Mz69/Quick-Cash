@@ -47,8 +47,7 @@ public class EmployerLandingInstrumentedTest {
 
     @Test
     public void signOut() throws InterruptedException {
-        await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
-                onView(withId(R.id.logout2)).perform(click()));
+        onView(withId(R.id.logout2)).perform(click());
         await().atMost(Duration.ofSeconds(2)).untilAsserted(() ->
                 intended(hasComponent(com.firebase.ui.auth.ui.email.EmailActivity.class.getName())));
     }

@@ -1,5 +1,6 @@
 package com.example.quickcashg18;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -65,10 +66,10 @@ public class EmployeeProfile extends ToolbarActivity {
     }
 
     private void initDBRef() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
+        userRef = firebaseDB.getReference(FirebaseCommon.USER).child(userId).child(PREFERENCES);
     }
 
     private void initListeners() {
@@ -137,6 +138,9 @@ public class EmployeeProfile extends ToolbarActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "Your changes have been saved",
                 Toast.LENGTH_LONG);
         toast.show();
+
+        Intent intent = new Intent(this,EmployeeLanding.class);
+        startActivity(intent);
     }
 
 }

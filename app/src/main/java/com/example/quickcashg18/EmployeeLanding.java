@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class EmployeeLanding extends AppCompatActivity {
 
     // initializing an arraylist to store the users notifications
@@ -33,7 +31,7 @@ public class EmployeeLanding extends AppCompatActivity {
     private Button signOutButton;
     private Button roleSwitch;
     private Button profile;
-    private Button findjob_button;
+    private Button findJobButton;
     private Button jobHistoryButton;
     private Button notificationButton;
     private Button pastJobsButton;
@@ -53,10 +51,10 @@ public class EmployeeLanding extends AppCompatActivity {
     }
 
     protected void initDatabase() {
-        firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER)
+                .child(FirebaseCommon.USER)
                 .child(user.getUid());
     }
 
@@ -64,7 +62,7 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton = findViewById(R.id.logout2);
         roleSwitch = findViewById(R.id.role);
         profile = findViewById(R.id.profileEmployee);
-        findjob_button = findViewById(R.id.post_job);
+        findJobButton = findViewById(R.id.post_job);
         notificationButton = findViewById(R.id.Notifications);
         pastJobsButton = findViewById(R.id.past_jobs_employer);
         jobHistoryButton = findViewById(R.id.job_history);
@@ -73,13 +71,13 @@ public class EmployeeLanding extends AppCompatActivity {
         ratingBar = findViewById(R.id.employeeLandingRatingBar);
         totalIncome = findViewById(R.id.employeeLandingIncomeDescriptor);
 
-        FirebaseConstants.calculateRatingOfEmployee(user.getUid());
+        FirebaseCommon.calculateRatingOfEmployee(user.getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Float rating = snapshot.child(FirebaseConstants.EMPLOYEE_RATING)
+                Float rating = snapshot.child(FirebaseCommon.EMPLOYEE_RATING)
                         .getValue(Float.class);
-                Double income = snapshot.child(FirebaseConstants.USER_INCOME)
+                Double income = snapshot.child(FirebaseCommon.USER_INCOME)
                         .getValue(Double.class);
                 if (rating != null) {
                     ratingBar.setRating(rating);
@@ -101,7 +99,7 @@ public class EmployeeLanding extends AppCompatActivity {
         signOutButton.setOnClickListener(this::onClickLogout);
         roleSwitch.setOnClickListener(this::onClickRole);
         profile.setOnClickListener(this::onClickProfile);
-        findjob_button.setOnClickListener(this::onClickFindJob);
+        findJobButton.setOnClickListener(this::onClickFindJob);
         // button to view user notifications
         notificationButton.setOnClickListener(this::onClickNotifications);
         pastJobsButton.setOnClickListener(this::onClickPastJobs);
@@ -166,10 +164,10 @@ public class EmployeeLanding extends AppCompatActivity {
         startActivity(new Intent(EmployeeLanding.this, EmployeePastJobs.class));
     }
     public void onClickJobHistory(View view) {
-        startActivity(new Intent(EmployeeLanding.this, Job_History.class));
+        startActivity(new Intent(EmployeeLanding.this, JobHistory.class));
     }
     public void onCickRecommenations(View view){
-        startActivity(new Intent(EmployeeLanding.this, RecommedEmployees.class));
+        startActivity(new Intent(EmployeeLanding.this, RecommendEmployees.class));
     }
 
 

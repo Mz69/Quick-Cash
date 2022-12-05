@@ -56,10 +56,10 @@ public class EmployerProfile extends ToolbarActivity {
     }
 
     private void initDBRef() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-        userRef = firebaseDB.getReference(FirebaseConstants.USER).child(userId).child(PREFERENCES);
+        userRef = firebaseDB.getReference(FirebaseCommon.USER).child(userId).child(PREFERENCES);
     }
 
     private void initListeners() {

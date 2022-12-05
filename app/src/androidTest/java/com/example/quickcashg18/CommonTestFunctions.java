@@ -8,18 +8,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import static org.awaitility.Awaitility.await;
 
-import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.awaitility.core.ThrowingRunnable;
-
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class consists of a set of common espresso
@@ -97,7 +91,7 @@ public class CommonTestFunctions {
     private static DatabaseReference getToUserDB() {
         FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance();
         DatabaseReference userRef = firebaseDB.getReference()
-                .child(FirebaseConstants.USER);
+                .child(FirebaseCommon.USER);
         return userRef;
     }
 

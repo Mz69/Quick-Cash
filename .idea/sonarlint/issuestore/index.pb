@@ -1,24 +1,10 @@
 
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-e
-5app/src/main/java/com/example/quickcashg18/Alert.java,d/7/d73767d6716f99c22b680c77066a3386e50d8724
-j
-:app/src/main/java/com/example/quickcashg18/MyLocation.java,3/c/3c03bb334f5b740b3ca7dc0f659ff84f2ed3df22
 v
 Fapp/src/main/java/com/example/quickcashg18/LocationResultContract.java,2/3/2313e81b76cf9f2700bf0a258c2a2b5c422d0c6b
-t
-Dapp/src/main/java/com/example/quickcashg18/EmployeePreferredJob.java,a/7/a7dbeab28b2dfbd32677e9e09873fb0f37fa5444
-o
-?app/src/main/java/com/example/quickcashg18/EmployerProfile.java,5/7/579b26a59194c965850b0f7b902b25b35f5e4230
-t
-Dapp/src/main/java/com/example/quickcashg18/EmployerPreferredJob.java,4/5/4541489b6a079ffc235e746574d53f96dfa417d7
-c
-3app/src/main/java/com/example/quickcashg18/Job.java,5/b/5bc4f80c1d25a0a8a06b38b5b736fad787f71e8e
 i
 9app/src/main/java/com/example/quickcashg18/PostedJob.java,a/2/a2fc78d39cbf49a2b3e849281f097a70b0a29572
-n
->app/src/main/java/com/example/quickcashg18/payment_portal.java,7/5/7504d9476ee7146419ad749c612c83d6ddd20a0e
 l
 <app/src/main/java/com/example/quickcashg18/MainActivity.java,a/8/a8091c44325ae96365efac58f993a126101456fa
 n

@@ -30,7 +30,6 @@ import java.util.List;
 
 public class EmployerPastJobs extends ToolbarActivity {
 
-    private static final String FIREBASEDB_URL = "https://quick-cash-g18-default-rtdb.firebaseio.com/";
     private DatabaseReference postedJobsRef;
     private DatabaseReference completedJobsRef;
     private FirebaseUser user;
@@ -56,10 +55,10 @@ public class EmployerPastJobs extends ToolbarActivity {
 
     protected void initDatabase() {
         //initialize the database and the references relating to the job details
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FIREBASEDB_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         user = FirebaseAuth.getInstance().getCurrentUser();
         postedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(PostJob.INCOMPLETE_JOBS);
-        completedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(FirebaseConstants.COMPLETE_JOBS);
+        completedJobsRef = firebaseDB.getReference(PostJob.JOB_LIST).child(FirebaseCommon.COMPLETE_JOBS);
     }
 
     private void initViews() {
@@ -135,10 +134,10 @@ public class EmployerPastJobs extends ToolbarActivity {
      * accepted for the job.
      */
     public static void grantJob(String jobID, String userID) {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         DatabaseReference completedRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
-                .child(FirebaseConstants.COMPLETE_JOBS)
+                .child(FirebaseCommon.COMPLETE_JOBS)
                 .child(jobID);
         DatabaseReference jobRef = firebaseDB.getReference()
                 .child(PostJob.JOB_LIST)
@@ -161,10 +160,10 @@ public class EmployerPastJobs extends ToolbarActivity {
     }
 
     public static void payUser(String jobID) {
-        DatabaseReference firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL)
+        DatabaseReference firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL)
                 .getReference();
         DatabaseReference jobRef = firebaseDB.child(PostJob.JOB_LIST)
-                .child(FirebaseConstants.COMPLETE_JOBS)
+                .child(FirebaseCommon.COMPLETE_JOBS)
                 .child(jobID);
         jobRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -172,9 +171,9 @@ public class EmployerPastJobs extends ToolbarActivity {
                 CompletedJob completed = jobSnapshot.getValue(CompletedJob.class);
                 completed.makePayment();
                 jobRef.setValue(completed);
-                DatabaseReference incomeRef = firebaseDB.child(FirebaseConstants.USER)
+                DatabaseReference incomeRef = firebaseDB.child(FirebaseCommon.USER)
                         .child(completed.getCompleterID())
-                        .child(FirebaseConstants.USER_INCOME);
+                        .child(FirebaseCommon.USER_INCOME);
                 incomeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot incomeSnapshot) {
@@ -246,7 +245,7 @@ public class EmployerPastJobs extends ToolbarActivity {
             }
 
             DatabaseReference ratingRef = completedJobsRef.child(job.getJobID())
-                    .child(FirebaseConstants.EMPLOYEE_RATING);
+                    .child(FirebaseCommon.EMPLOYEE_RATING);
             ratingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -260,7 +259,7 @@ public class EmployerPastJobs extends ToolbarActivity {
                                         rating + "-star rating", Toast.LENGTH_LONG)
                                 .show();
                         repBar.setIsIndicator(true);
-                        FirebaseConstants.employerRateEmployee(job, rating);
+                        FirebaseCommon.employerRateEmployee(job, rating);
                     });
                 }
 
