@@ -131,5 +131,16 @@ public class JobPostUnitTest {
         assertFalse("Valid location marked invalid", correctJob.isJobValid());
     }
 
+    @Test
+    public void checkIfValidTime(){
+        assertFalse(missingTime.isJobValid());
+        assertFalse(incorrectTime.isJobValid());
+        assertFalse(correctJobDays.isJobValid());
+        assertFalse(correctJobMin.isJobValid());
+        assertEquals("4 hours",correctJob.getDuration());
+        assertEquals("40 minutes",correctJobMin.getDuration());
+
+    }
+
 
 }
