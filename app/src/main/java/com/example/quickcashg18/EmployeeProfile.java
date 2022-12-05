@@ -1,5 +1,6 @@
 package com.example.quickcashg18;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -137,6 +138,9 @@ public class EmployeeProfile extends ToolbarActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "Your changes have been saved",
                 Toast.LENGTH_LONG);
         toast.show();
+
+        Intent intent = new Intent(this,EmployeeLanding.class);
+        startActivity(intent);
     }
 
 }
