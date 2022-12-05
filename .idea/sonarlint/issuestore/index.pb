@@ -7,8 +7,6 @@ j
 :app/src/main/java/com/example/quickcashg18/MyLocation.java,3/c/3c03bb334f5b740b3ca7dc0f659ff84f2ed3df22
 v
 Fapp/src/main/java/com/example/quickcashg18/LocationResultContract.java,2/3/2313e81b76cf9f2700bf0a258c2a2b5c422d0c6b
-t
-Dapp/src/main/java/com/example/quickcashg18/EmployeePreferredJob.java,a/7/a7dbeab28b2dfbd32677e9e09873fb0f37fa5444
 o
 ?app/src/main/java/com/example/quickcashg18/EmployerProfile.java,5/7/579b26a59194c965850b0f7b902b25b35f5e4230
 t

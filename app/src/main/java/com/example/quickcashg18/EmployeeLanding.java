@@ -166,7 +166,7 @@ public class EmployeeLanding extends AppCompatActivity {
         startActivity(new Intent(EmployeeLanding.this, Job_History.class));
     }
     public void onCickRecommenations(View view){
-        startActivity(new Intent(EmployeeLanding.this, RecommedEmployees.class));
+        startActivity(new Intent(EmployeeLanding.this, RecommendEmployees.class));
     }
 
 

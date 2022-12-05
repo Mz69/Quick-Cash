@@ -54,7 +54,7 @@ public class EmployeePreferredJob extends JobPreferences implements Serializable
     }
 
     private boolean acceptableTotalPay(Job job) {
-        return getTotalPay() >= job.getTotalPay();
+        return getTotalPay() <= job.getTotalPay();
     }
 
     private boolean acceptableDuration(Job job) {
