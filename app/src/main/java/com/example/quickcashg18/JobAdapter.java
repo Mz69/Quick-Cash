@@ -115,42 +115,6 @@ public abstract class JobAdapter extends BaseAdapter implements Filterable, Them
         return position;
     }
 
-    /*
-    For posted jobs:
-        * When "Apply" is clicked, the user should be listed as
-        having taken the job
-        * Perhaps the employer should be able to accept an applicant for the job
-        * Should jobs have a list of applicants? Maybe in the database?
-            * In that case, have the job appear under "To Be Accepted" in the
-              employer's list of jobs
-            * Applicants can then be listed underneath the job in "To Be Accepted",
-              perhaps as a separate ArrayAdapter
-        * The job should appear as "In Progress" in the employer's "Past Jobs" page
-          and it should display the user who has taken the job
-        * The job should also appear under the user's "Past Jobs" as in progress
-        * Once the employer clicks a "Job Completed" button, the job should be
-          moved under their "Completed Jobs" section on "Past Jobs"
-            * Should also be moved under employee's "Current Jobs"
-            * Jobs marked under the employer's "Completed Jobs" section should
-              have a "Make Payment" option
-            * Once payment is made, the employee's total income should be updated.
-              So maybe employees should have a variable noting their total income
-              on the Firebase.
-              This doesn't need to be just an employee thing. It can just be listed
-              under the user.
-
-        * Under the employee's completed jobs, there should be an option to
-          rate the employer (regardless of whether or not payment has been made)
-        * Employers should also have the option to rate an employee under the
-          completed jobs section
-     Other goals:
-        * Move preference settings to account settings
-        * Profile page should list the visualization of the user's reputation
-            * Or maybe that should be listed on the landing page?
-            * A five-star rating on the landing page would look pretty good.
-              Wouldn't need to change Profile then
-     */
-
     /**
      * We leave getView abstract so that any class which wishes to
      * filter by preferences can implement their own extension of

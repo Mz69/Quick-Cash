@@ -14,10 +14,10 @@ import com.google.firebase.database.ValueEventListener;
  * This class defines a number of constants in relation to the
  * Firebase database.
  */
-public class FirebaseConstants {
+public class FirebaseCommon {
 
     // Created according to guidelines given by SonarQube
-    private FirebaseConstants() {
+    private FirebaseCommon() {
         throw new IllegalStateException("Utility class");
     }
 

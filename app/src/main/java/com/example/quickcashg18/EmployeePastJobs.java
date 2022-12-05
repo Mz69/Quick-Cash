@@ -43,11 +43,11 @@ public class EmployeePastJobs extends ToolbarActivity {
     }
 
     protected void initDatabase() {
-        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseConstants.FIREBASE_URL);
+        FirebaseDatabase firebaseDB = FirebaseDatabase.getInstance(FirebaseCommon.FIREBASE_URL);
         DatabaseReference firebaseDBRef = firebaseDB.getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
         pastJobsRef = firebaseDBRef.child(PostJob.JOB_LIST)
-                .child(FirebaseConstants.COMPLETE_JOBS);
+                .child(FirebaseCommon.COMPLETE_JOBS);
     }
 
     protected void initViews() {
@@ -112,7 +112,7 @@ public class EmployeePastJobs extends ToolbarActivity {
             paidCheck.setText("" + job.isPaid());
 
             DatabaseReference ratingRef = pastJobsRef.child(job.getJobID())
-                    .child(FirebaseConstants.EMPLOYER_RATING);
+                    .child(FirebaseCommon.EMPLOYER_RATING);
             ratingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,7 +126,7 @@ public class EmployeePastJobs extends ToolbarActivity {
                                 rating + "-star rating", Toast.LENGTH_LONG)
                                 .show();
                         repBar.setIsIndicator(true);
-                        FirebaseConstants.employeeRateEmployer(job, rating);
+                        FirebaseCommon.employeeRateEmployer(job, rating);
                     });
                 }
 
