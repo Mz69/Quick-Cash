@@ -142,5 +142,13 @@ public class JobPostUnitTest {
 
     }
 
+    @Test
+    public void checkIfValidSalary(){
+        assertFalse(missingSalary.isJobValid());
+        assertFalse(incorrectSalary.isJobValid());
+        assertEquals("30",correctJob.getTotalPay());
+    }
+
+
 
 }
